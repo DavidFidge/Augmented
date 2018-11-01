@@ -41,6 +41,13 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Camera\BaseGameCamera.cs" />
+    <Compile Include="Camera\CameraMovement.cs" />
+    <Compile Include="Camera\CameraResetOptions.cs" />
+    <Compile Include="Camera\GameView3D.cs" />
+    <Compile Include="Camera\IGameCamera.cs" />
+    <Compile Include="ITransformable.cs" />
+    <Compile Include="Camera\Camera.cs" />
     <Compile Include="Installers\GameInstaller.cs" />
     <Compile Include="Messages\Game\NewGameRequest.cs" />
     <Compile Include="Messages\InGameOptions\CloseInGameOptionsRequest.cs" />
@@ -53,6 +60,7 @@
     <Compile Include="Messages\Options\CloseVideoOptionsRequest.cs" />
     <Compile Include="Messages\Options\SaveVideoOptionsRequest.cs" />
     <Compile Include="Messages\Options\OpenVideoOptionsRequest.cs" />
+    <Compile Include="Terrain\Terrain.cs" />
     <Compile Include="UserInterface\Data\GameData.cs" />
     <Compile Include="UserInterface\Data\InGameOptionsData.cs" />
     <Compile Include="UserInterface\Data\VideoOptionsData.cs" />

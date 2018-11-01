@@ -74,10 +74,10 @@ namespace Augmented.Installers
                 Component.For<VideoOptionsView>()
                     .DependsOn(Dependency.OnComponent<IKeyboardHandler, VideoOptionsKeyboardHandler>()),
 
-                Component.For<GameView>()
+                Component.For<GameView3D>()
                     .Forward<IRequestHandler<OpenInGameOptionsRequest, Unit>>()
                     .Forward<IRequestHandler<CloseInGameOptionsRequest, Unit>>()
-                    .ImplementedBy<GameView>()
+                    .ImplementedBy<GameView3D>()
                     .DependsOn(Dependency.OnComponent<IKeyboardHandler, GameViewKeyboardHandler>()),
 
                 Component.For<IKeyboardHandler>()

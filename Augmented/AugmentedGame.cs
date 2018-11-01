@@ -15,8 +15,6 @@ using MediatR;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-using MonoGame.Extended.Sprites;
-
 using Serilog;
 
 namespace Augmented
@@ -158,8 +156,10 @@ namespace Augmented
 
             // clear buffer
             GraphicsDevice.Clear(Color.CornflowerBlue);
+            _screenManager.Initialize();
 
             // finalize ui rendering
+
             _userInterface.DrawMainRenderTarget(_spriteBatch);
 
             //_spriteBatch.End();

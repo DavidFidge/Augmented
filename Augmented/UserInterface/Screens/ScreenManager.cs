@@ -5,6 +5,8 @@ using Augmented.Messages;
 using DavidFidge.MonoGame.Core.UserInterface;
 using MediatR;
 
+using Microsoft.Xna.Framework;
+
 namespace Augmented.UserInterface.Screens
 {
     public class ScreenManager : IScreenManager,
@@ -40,6 +42,16 @@ namespace Augmented.UserInterface.Screens
             screen.Show();
 
             _activeScreen = screen;
+        }
+
+        public void Update(GameTime gameTime)
+        {
+            _activeScreen.Update(gameTime);
+        }
+
+        public void Draw(GameTime gameTime)
+        {
+            _activeScreen.Draw(gameTime);
         }
 
         public Task<Unit> Handle(NewGameRequest request, CancellationToken cancellationToken)
