@@ -24,17 +24,18 @@ namespace Augmented.UserInterface.Screens
 
         public void StartNewGame()
         {
+            _gameView3D.Initialise();
         }
 
-        public override void Update(GameTime gameTime)
+        public override void Update()
         {
-            _gameView3D.Update(gameTime);
+            _gameView3D.Update();
         }
 
-        public override void Draw(GameTime gameTime)
+        public override void Draw()
         {
-            _gameView3D.Dr
-            base.Draw(gameTime);
+            _gameView3D.Draw();
+            base.Draw();
         }
     }
 }

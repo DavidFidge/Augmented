@@ -118,6 +118,7 @@
     <Compile Include="Services\DisplayMode.cs" />
     <Compile Include="Interfaces\IView.cs" />
     <Compile Include="Interfaces\IRootPanel.cs" />
+    <Compile Include="UserInterface\BaseMouseHandler.cs" />
     <Compile Include="UserInterface\RootGeonBitPanel.cs" />
     <Compile Include="UserInterface\UserInterface.cs" />
     <Compile Include="Interfaces\IScreen.cs" />

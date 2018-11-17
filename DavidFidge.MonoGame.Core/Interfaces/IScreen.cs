@@ -10,7 +10,7 @@ namespace DavidFidge.MonoGame.Core.Interfaces
         void Initialize();
         void LoadContent();
         void UnloadContent();
-        void Update(GameTime gameTime);
-        void Draw(GameTime gameTime);
+        void Update();
+        void Draw();
     }
 }

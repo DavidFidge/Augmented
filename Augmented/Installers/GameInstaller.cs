@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
+using Augmented.Graphics;
 using Augmented.Messages;
 using Augmented.UserInterface.Input;
 using Augmented.UserInterface.Screens;
@@ -15,6 +16,7 @@ using DavidFidge.MonoGame.Core.Installers;
 using DavidFidge.MonoGame.Core.Interfaces;
 using DavidFidge.MonoGame.Core.Messages;
 using InputHandlers.Keyboard;
+using InputHandlers.Mouse;
 using MediatR;
 
 namespace Augmented.Installers
@@ -26,6 +28,12 @@ namespace Augmented.Installers
             container.Install(new CoreInstaller());
 
             container.Register(
+
+                Component.For<IKeyboardHandler>()
+                    .ImplementedBy<NullKeyboardHandler>(),
+
+                Component.For<IMouseHandler>()
+                    .ImplementedBy<NullMouseHandler>(),
 
                 Component.For<IGame>()
                     .Forward<IRequestHandler<ExitGameRequest, Unit>>()
@@ -74,14 +82,18 @@ namespace Augmented.Installers
                 Component.For<VideoOptionsView>()
                     .DependsOn(Dependency.OnComponent<IKeyboardHandler, VideoOptionsKeyboardHandler>()),
 
-                Component.For<GameView3D>()
+                Component.For<GameView>()
                     .Forward<IRequestHandler<OpenInGameOptionsRequest, Unit>>()
                     .Forward<IRequestHandler<CloseInGameOptionsRequest, Unit>>()
-                    .ImplementedBy<GameView3D>()
-                    .DependsOn(Dependency.OnComponent<IKeyboardHandler, GameViewKeyboardHandler>()),
+                    .ImplementedBy<GameView>()
+                    .DependsOn(Dependency.OnComponent<IKeyboardHandler, GameViewKeyboardHandler>())
+                    .DependsOn(Dependency.OnComponent<IMouseHandler, GameViewMouseHandler>()),
 
                 Component.For<IKeyboardHandler>()
                     .ImplementedBy<GameViewKeyboardHandler>(),
+
+                Component.For<IMouseHandler>()
+                    .ImplementedBy<GameViewMouseHandler>(),
 
                 Component.For<GameViewModel>(),
 
@@ -92,7 +104,25 @@ namespace Augmented.Installers
                 Component.For<IKeyboardHandler>()
                     .ImplementedBy<InGameOptionsKeyboardHandler>(),
 
-                Component.For<InGameOptionsViewModel>()
+                Component.For<InGameOptionsViewModel>(),
+
+                Component.For<GameView3D>()
+                    .Forward<IRequestHandler<Pan3DViewRequest, Unit>>()
+                    .Forward<IRequestHandler<Zoom3DViewRequest, Unit>>(),
+
+                Component.For<TestQuad>()
+                    .LifeStyle.Transient,
+
+                Component.For<MaterialQuadTemplate>()
+                    .LifeStyle.Transient,
+
+                Component.For<IGameCamera>()
+                    .ImplementedBy<GameCamera>()
+                    .LifeStyle.Transient,
+
+                Component.For<IAugmentedGameWorld>()
+                    .ImplementedBy<AugmentedGameWorld>()
+                    .LifeStyle.Transient
             );
         }
     }

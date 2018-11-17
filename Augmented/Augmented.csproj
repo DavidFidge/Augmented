@@ -41,17 +41,28 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Camera\BaseGameCamera.cs" />
+    <Compile Include="Camera\AugmentedGameWorld.cs" />
+    <Compile Include="Camera\BaseCamera.cs" />
     <Compile Include="Camera\CameraMovement.cs" />
     <Compile Include="Camera\CameraResetOptions.cs" />
     <Compile Include="Camera\GameView3D.cs" />
+    <Compile Include="Camera\IAugmentedGameWorld.cs" />
+    <Compile Include="Camera\ICamera.cs" />
     <Compile Include="Camera\IGameCamera.cs" />
-    <Compile Include="ITransformable.cs" />
-    <Compile Include="Camera\Camera.cs" />
+    <Compile Include="Camera\ITransform.cs" />
+    <Compile Include="Camera\GameCamera.cs" />
+    <Compile Include="Graphics\BaseQuadTemplate.cs" />
+    <Compile Include="Graphics\ITextureDictionary.cs" />
+    <Compile Include="Graphics\SimpleWorldTransform.cs" />
+    <Compile Include="Graphics\TestQuad.cs" />
+    <Compile Include="Graphics\MaterialQuadTemplate.cs" />
+    <Compile Include="Graphics\TexturedQuadTemplate.cs" />
     <Compile Include="Installers\GameInstaller.cs" />
     <Compile Include="Messages\Game\NewGameRequest.cs" />
     <Compile Include="Messages\InGameOptions\CloseInGameOptionsRequest.cs" />
     <Compile Include="Messages\InGameOptions\ExitCurrentGameRequest.cs" />
+    <Compile Include="Messages\InGameOptions\Pan3DViewRequest.cs" />
+    <Compile Include="Messages\InGameOptions\Zoom3DViewRequest.cs" />
     <Compile Include="Messages\InGameOptions\OpenInGameOptionsRequest.cs" />
     <Compile Include="Messages\Title\OptionsButtonClickedRequest.cs" />
     <Compile Include="Messages\Options\SetDisplayModeRequest.cs" />
@@ -66,6 +77,9 @@
     <Compile Include="UserInterface\Data\VideoOptionsData.cs" />
     <Compile Include="UserInterface\Data\OptionsData.cs" />
     <Compile Include="UserInterface\Data\TitleData.cs" />
+    <Compile Include="UserInterface\Input\NullKeyboardHandler.cs" />
+    <Compile Include="UserInterface\Input\NullMouseHandler.cs" />
+    <Compile Include="UserInterface\Input\GameViewMouseHandler.cs" />
     <Compile Include="UserInterface\Input\OptionsKeyboardHandler.cs" />
     <Compile Include="UserInterface\Input\VideoOptionsKeyboardHandler.cs" />
     <Compile Include="UserInterface\Input\InGameOptionsKeyboardHandler.cs" />

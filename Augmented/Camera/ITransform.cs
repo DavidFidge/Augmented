@@ -6,16 +6,20 @@ using Microsoft.Xna.Framework;
 
 namespace Augmented
 {
-    public interface IWorldTransformable : ITransformable
+    public interface IWorldTransformable
     {
-        Matrix WorldTransform
+        IWorldTransform WorldTransform { get; }
+    }
+
+    public interface IWorldTransform : ITransform
+    {
+        Matrix World
         {
             get;
         }
-
     }
 
-    public interface ITransformable
+    public interface ITransform
     {
         void ChangeTranslationRelative(Vector3 translationDelta);
         void ChangeTranslation(Vector3 translation);

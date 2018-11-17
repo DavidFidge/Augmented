@@ -63,11 +63,11 @@ namespace DavidFidge.MonoGame.Core.UserInterface
         {
         }
 
-        public virtual void Update(GameTime gameTime)
+        public virtual void Update()
         {
         }
 
-        public virtual void Draw(GameTime gameTime)
+        public virtual void Draw()
         {
         }
     }

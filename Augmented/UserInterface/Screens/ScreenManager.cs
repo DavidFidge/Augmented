@@ -35,6 +35,11 @@ namespace Augmented.UserInterface.Screens
             ShowScreen(_titleScreen);
         }
 
+        public void Draw()
+        {
+            _activeScreen.Draw();
+        }
+
         private void ShowScreen(Screen screen)
         {
             _activeScreen?.Hide();
@@ -44,19 +49,14 @@ namespace Augmented.UserInterface.Screens
             _activeScreen = screen;
         }
 
-        public void Update(GameTime gameTime)
+        public void Update()
         {
-            _activeScreen.Update(gameTime);
+            _activeScreen.Update();
         }
-
-        public void Draw(GameTime gameTime)
-        {
-            _activeScreen.Draw(gameTime);
-        }
-
+        
         public Task<Unit> Handle(NewGameRequest request, CancellationToken cancellationToken)
         {
-            _gameScreen.Show();
+            ShowScreen(_gameScreen);
             _gameScreen.StartNewGame();
 
             return Unit.Task;
@@ -66,7 +66,7 @@ namespace Augmented.UserInterface.Screens
         {
             _gameScreen.EndGame();
 
-            _titleScreen.Show();
+            ShowScreen(_titleScreen);
             return Unit.Task;
         }
     }

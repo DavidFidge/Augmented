@@ -1,16 +1,9 @@
-﻿using Microsoft.Xna.Framework;
-
-namespace Augmented
+﻿namespace Augmented
 {
-    public interface IGameCamera : ITransformable
+    public interface IGameCamera : ICamera
     {
-        void Reset(float z, CameraResetOptions cameraResetOptions);
-        void KeyboardPan(CameraMovement cameraMovement, uint updateNumber);
-        void KeyboardEndPan();
-        void MousePan();
-        void MouseZoom(int z);
-        void SetViewport(float width, float height, int fieldOfView);
-        Matrix ViewTransform { get; }
-        void Update();
+        CameraMovement GameUpdateContinuousMovement { get; set; }
+        void Move(CameraMovement cameraMovement, float magnitude);
+        void Zoom(int magnitude);
     }
 }

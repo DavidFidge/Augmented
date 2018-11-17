@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework.Input;
 
 namespace DavidFidge.MonoGame.Core.UserInterface
 {
-    public class BaseKeyboardHandler : BaseComponent, IKeyboardHandler
+    public abstract class BaseKeyboardHandler : BaseComponent, IKeyboardHandler
     {
         public virtual void HandleKeyboardKeyDown(Keys[] keysDown, Keys keyInFocus, KeyboardModifier keyboardModifier)
         {

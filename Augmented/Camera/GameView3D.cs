@@ -1,55 +1,59 @@
-﻿using DavidFidge.MonoGame.Core.Interfaces;
+﻿using System.Threading;
+using System.Threading.Tasks;
+
+using Augmented.Messages;
+
+using DavidFidge.MonoGame.Core.Interfaces;
+
+using MediatR;
 
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
 
 namespace Augmented
 {
-    public class GameView3D
+    public class GameView3D : IRequestHandler<Zoom3DViewRequest>, IRequestHandler<Pan3DViewRequest>
     {
         private readonly IGameProvider _gameProvider;
+        private readonly IAugmentedGameWorld _augmentedGameWorld;
+
         public IGameCamera Camera { get; }
 
-        private int _projectionAngle = 90;
-
-        public Matrix ProjectionMatrix { get; private set; }
-        
-        public GameView3D(IGameCamera gameCamera, IGameProvider gameProvider)
+        public GameView3D(
+            IGameCamera gameCamera,
+            IGameProvider gameProvider,
+            IAugmentedGameWorld augmentedGameWorld)
         {
             _gameProvider = gameProvider;
+            _augmentedGameWorld = augmentedGameWorld;
             Camera = gameCamera;
         }
 
-        public void RecalculateProjectionMatrix()
+        public void Initialise()
         {
-            ProjectionMatrix = Matrix.CreatePerspectiveFieldOfView(
-                MathHelper.ToRadians(_projectionAngle),
-                (float)_gameProvider.Game.GraphicsDevice.Viewport.Width /
-                (float)_gameProvider.Game.GraphicsDevice.Viewport.Height,
-                0.5f, 1000.0f
-            );
-
-            Camera.SetViewport((float)_gameProvider.Game.GraphicsDevice.Viewport.Width, (float)_gameProvider.Game.GraphicsDevice.Viewport.Height, _projectionAngle);
+            _augmentedGameWorld.Initialise();
+            Camera.Initialise();
         }
 
-        public Ray GetpointerRay(MouseState m)
-        {
-            var nearScreenPoint = new Vector3(m.X, m.Y, 0);
-            var farScreenPoint = new Vector3(m.X, m.Y, 1);
-
-            var near3DPoint = _gameProvider.Game.GraphicsDevice.Viewport.Unproject(nearScreenPoint, ProjectionMatrix, Camera.ViewTransform, Matrix.Identity);
-            var far3DPoint = _gameProvider.Game.GraphicsDevice.Viewport.Unproject(farScreenPoint, ProjectionMatrix, Camera.ViewTransform, Matrix.Identity);
-
-            var pointerRayDirection = far3DPoint - near3DPoint;
-
-            pointerRayDirection.Normalize();
-
-            return new Ray(near3DPoint, pointerRayDirection);
-        }
-
-        public void Update(GameTime gameTime)
+        public void Update()
         {
             Camera.Update();
+        }
+
+        public void Draw()
+        {
+            _augmentedGameWorld.Draw(Camera.Projection, Camera.View);
+        }
+
+        public Task<Unit> Handle(Zoom3DViewRequest request, CancellationToken cancellationToken)
+        {
+            Camera.Zoom(request.Difference);
+            return Unit.Task;
+        }
+
+        public Task<Unit> Handle(Pan3DViewRequest request, CancellationToken cancellationToken)
+        {
+            Camera.GameUpdateContinuousMovement = request.CameraMovementFlags;
+            return Unit.Task;
         }
     }
 }
