@@ -108,6 +108,7 @@
     <Reference Include="System.Web" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Graphics\SimpleWorldTransformTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UserInterface\BaseViewTests.cs" />
     <Compile Include="Services\GameInputServiceTests.cs" />

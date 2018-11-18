@@ -33,7 +33,7 @@ namespace DavidFidge.MonoGame.Core.Graphics
 
         public void ChangeScaleRelative(Vector3 scaleDelta)
         {
-            Scale = Vector3.Multiply(Scale, scaleDelta);
+            Scale = Vector3.Add(Scale, scaleDelta);
             UpdateWorldTransform();
         }
 
@@ -54,7 +54,7 @@ namespace DavidFidge.MonoGame.Core.Graphics
             if (z != 0)
                 rotation *= Matrix.CreateRotationZ(z);
 
-            Rotation = Matrix.Multiply(Rotation, rotation);
+            Rotation = rotation * Rotation;
             UpdateWorldTransform();
         }
 
