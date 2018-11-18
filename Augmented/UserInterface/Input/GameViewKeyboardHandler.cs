@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using Augmented.Messages;
 
+using DavidFidge.MonoGame.Core.Graphics.Camera;
 using DavidFidge.MonoGame.Core.UserInterface;
 
 using InputHandlers.Keyboard;

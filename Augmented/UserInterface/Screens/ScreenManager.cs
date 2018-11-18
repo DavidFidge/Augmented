@@ -1,11 +1,10 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 
+using Augmented.Interfaces;
 using Augmented.Messages;
 using DavidFidge.MonoGame.Core.UserInterface;
 using MediatR;
-
-using Microsoft.Xna.Framework;
 
 namespace Augmented.UserInterface.Screens
 {

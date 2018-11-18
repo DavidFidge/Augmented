@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-
-using GeonBit.UI.Entities;
+﻿using GeonBit.UI.Entities;
 
 namespace DavidFidge.MonoGame.Core.UserInterface
 {

@@ -1,8 +1,7 @@
-﻿using Augmented.UserInterface.Views;
+﻿using Augmented.Graphics.Camera;
+using Augmented.UserInterface.Views;
 
 using DavidFidge.MonoGame.Core.UserInterface;
-
-using Microsoft.Xna.Framework;
 
 namespace Augmented.UserInterface.Screens
 {

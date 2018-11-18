@@ -8,12 +8,13 @@ using Castle.Core.Internal;
 
 using DavidFidge.MonoGame.Core.Components;
 using DavidFidge.MonoGame.Core.Interfaces;
+using DavidFidge.MonoGame.Core.Interfaces.Services;
+using DavidFidge.MonoGame.Core.Interfaces.UserInterface;
+
 using GeonBit.UI.Entities;
 
 using InputHandlers.Keyboard;
 using InputHandlers.Mouse;
-
-using MediatR;
 
 namespace DavidFidge.MonoGame.Core.UserInterface
 {

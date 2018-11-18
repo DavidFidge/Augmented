@@ -1,22 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-
-using Augmented.Graphics;
+﻿using Augmented.Graphics;
+using Augmented.Graphics.Camera;
+using Augmented.Interfaces;
 using Augmented.Messages;
 using Augmented.UserInterface.Input;
 using Augmented.UserInterface.Screens;
 using Augmented.UserInterface.ViewModels;
 using Augmented.UserInterface.Views;
+
 using Castle.MicroKernel.Registration;
 using Castle.MicroKernel.SubSystems.Configuration;
 using Castle.Windsor;
 
+using DavidFidge.MonoGame.Core.Graphics;
 using DavidFidge.MonoGame.Core.Installers;
-using DavidFidge.MonoGame.Core.Interfaces;
+using DavidFidge.MonoGame.Core.Interfaces.Components;
 using DavidFidge.MonoGame.Core.Messages;
+
 using InputHandlers.Keyboard;
 using InputHandlers.Mouse;
+
 using MediatR;
 
 namespace Augmented.Installers

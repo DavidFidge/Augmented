@@ -1,13 +1,13 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-using Augmented.Graphics;
+using Augmented.Interfaces;
 using Augmented.UserInterface.Data;
-using Augmented.UserInterface.Screens;
 
-using DavidFidge.MonoGame.Core.Interfaces;
+using DavidFidge.MonoGame.Core.Interfaces.Components;
+using DavidFidge.MonoGame.Core.Interfaces.Services;
+using DavidFidge.MonoGame.Core.Interfaces.UserInterface;
 using DavidFidge.MonoGame.Core.Messages;
 using DavidFidge.MonoGame.Core.Services;
 

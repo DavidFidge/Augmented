@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DavidFidge.MonoGame.Core.Graphics;
+using DavidFidge.MonoGame.Core.Interfaces.Graphics;
 
 using Microsoft.Xna.Framework;
 

@@ -1,8 +1,7 @@
-﻿using System.Runtime.InteropServices;
-using DavidFidge.MonoGame.Core.Components;
-using DavidFidge.MonoGame.Core.Interfaces;
+﻿using DavidFidge.MonoGame.Core.Components;
+using DavidFidge.MonoGame.Core.Interfaces.UserInterface;
+
 using GeonBit.UI.Entities;
-using Microsoft.Xna.Framework;
 
 namespace DavidFidge.MonoGame.Core.UserInterface
 {

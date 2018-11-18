@@ -1,8 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 
-using DavidFidge.MonoGame.Core.Interfaces;
+using DavidFidge.MonoGame.Core.Interfaces.Components;
+using DavidFidge.MonoGame.Core.Interfaces.Services;
+
 using Newtonsoft.Json;
 
 namespace DavidFidge.MonoGame.Core.Services

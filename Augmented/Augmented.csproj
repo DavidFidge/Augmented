@@ -41,22 +41,12 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Camera\AugmentedGameWorld.cs" />
-    <Compile Include="Camera\BaseCamera.cs" />
-    <Compile Include="Camera\CameraMovement.cs" />
-    <Compile Include="Camera\CameraResetOptions.cs" />
-    <Compile Include="Camera\GameView3D.cs" />
-    <Compile Include="Camera\IAugmentedGameWorld.cs" />
-    <Compile Include="Camera\ICamera.cs" />
-    <Compile Include="Camera\IGameCamera.cs" />
-    <Compile Include="Camera\ITransform.cs" />
-    <Compile Include="Camera\GameCamera.cs" />
-    <Compile Include="Graphics\BaseQuadTemplate.cs" />
-    <Compile Include="Graphics\ITextureDictionary.cs" />
-    <Compile Include="Graphics\SimpleWorldTransform.cs" />
+    <Compile Include="Graphics\Camera\AugmentedGameWorld.cs" />
+    <Compile Include="Graphics\Camera\GameView3D.cs" />
+    <Compile Include="Interfaces\IAugmentedGameWorld.cs" />
+    <Compile Include="Graphics\Camera\GameCamera.cs" />
+    <Compile Include="Graphics\Camera\IGameCamera.cs" />
     <Compile Include="Graphics\TestQuad.cs" />
-    <Compile Include="Graphics\MaterialQuadTemplate.cs" />
-    <Compile Include="Graphics\TexturedQuadTemplate.cs" />
     <Compile Include="Installers\GameInstaller.cs" />
     <Compile Include="Messages\Game\NewGameRequest.cs" />
     <Compile Include="Messages\InGameOptions\CloseInGameOptionsRequest.cs" />
@@ -85,7 +75,7 @@
     <Compile Include="UserInterface\Input\InGameOptionsKeyboardHandler.cs" />
     <Compile Include="UserInterface\Input\TitleViewKeyboardHandler.cs" />
     <Compile Include="UserInterface\Input\GameViewKeyboardHandler.cs" />
-    <Compile Include="UserInterface\Screens\IScreenManager.cs" />
+    <Compile Include="Interfaces\IScreenManager.cs" />
     <Compile Include="UserInterface\Screens\ScreenManager.cs" />
     <Compile Include="UserInterface\Screens\GameScreen.cs" />
     <Compile Include="UserInterface\ViewModels\GameViewModel.cs" />

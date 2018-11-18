@@ -1,6 +1,7 @@
 ﻿using System;
 
-using DavidFidge.MonoGame.Core.Interfaces;
+using DavidFidge.MonoGame.Core.Interfaces.Components;
+using DavidFidge.MonoGame.Core.Interfaces.Services;
 using DavidFidge.MonoGame.Core.Services;
 using DavidFidge.TestInfrastructure;
 

@@ -1,6 +1,4 @@
-﻿using System.Linq;
-
-using DavidFidge.MonoGame.Core.UserInterface;
+﻿using DavidFidge.MonoGame.Core.UserInterface;
 
 namespace Augmented.UserInterface.Input
 {

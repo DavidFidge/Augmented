@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using DavidFidge.MonoGame.Core.Interfaces;
+
+using DavidFidge.MonoGame.Core.Interfaces.Services;
 
 using InputHandlers.Keyboard;
 using InputHandlers.Mouse;

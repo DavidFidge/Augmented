@@ -3,7 +3,11 @@ using Castle.MicroKernel.Registration;
 using Castle.MicroKernel.SubSystems.Configuration;
 using Castle.Windsor;
 
+using DavidFidge.MonoGame.Core.Components;
 using DavidFidge.MonoGame.Core.Interfaces;
+using DavidFidge.MonoGame.Core.Interfaces.Components;
+using DavidFidge.MonoGame.Core.Interfaces.Services;
+using DavidFidge.MonoGame.Core.Interfaces.UserInterface;
 using DavidFidge.MonoGame.Core.Services;
 using DavidFidge.MonoGame.Core.UserInterface;
 using GeonBit.UI.Entities;

@@ -4,7 +4,7 @@ using Augmented.Installers;
 
 using Castle.Windsor;
 
-using DavidFidge.MonoGame.Core.Interfaces;
+using DavidFidge.MonoGame.Core.Interfaces.Components;
 
 namespace Augmented
 {

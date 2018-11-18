@@ -1,4 +1,6 @@
-﻿using MediatR;
+﻿using DavidFidge.MonoGame.Core.Graphics.Camera;
+
+using MediatR;
 
 namespace Augmented.Messages
 {
