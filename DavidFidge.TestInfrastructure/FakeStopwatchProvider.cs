@@ -1,6 +1,6 @@
 ﻿using System;
 
-using DavidFidge.MonoGame.Core.Interfaces;
+using DavidFidge.MonoGame.Core.Interfaces.Components;
 
 namespace DavidFidge.TestInfrastructure
 {

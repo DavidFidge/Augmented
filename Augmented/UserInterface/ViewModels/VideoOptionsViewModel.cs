@@ -5,7 +5,8 @@ using System.Threading.Tasks;
 using Augmented.Messages;
 using Augmented.UserInterface.Data;
 
-using DavidFidge.MonoGame.Core.Interfaces;
+using DavidFidge.MonoGame.Core.Interfaces.Components;
+using DavidFidge.MonoGame.Core.Interfaces.Services;
 using DavidFidge.MonoGame.Core.Services;
 using DavidFidge.MonoGame.Core.UserInterface;
 

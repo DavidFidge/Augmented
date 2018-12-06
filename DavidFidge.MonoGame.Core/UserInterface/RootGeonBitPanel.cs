@@ -18,10 +18,8 @@ namespace DavidFidge.MonoGame.Core.UserInterface
         public void Initialize()
         {
             _panel = new Panel(new Vector2(-1, -1), PanelSkin.None)
-            {
-                Padding = new Vector2(0, 0),
-                Visible = false
-            };
+                .NoPadding()
+                .Hidden();
         }
 
         public void AddChild(Entity child)
@@ -29,9 +27,14 @@ namespace DavidFidge.MonoGame.Core.UserInterface
             _panel.AddChild(child);
         }
 
-        public void AddNestedRoot(IRootPanel<Entity> child)
+        public void AddChild(IRootPanel<Entity> child)
         {
             child.AddRootPanelToGraph(_panel);
+        }
+
+        public void AddAsChildOf(Panel panel)
+        {
+            panel.AddChild(_panel);
         }
 
         public void AddRootPanelToGraph(Entity root)

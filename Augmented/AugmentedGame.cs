@@ -1,12 +1,13 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
+using Augmented.Interfaces;
 using Augmented.UserInterface.Data;
-using Augmented.UserInterface.Screens;
 
-using DavidFidge.MonoGame.Core.Interfaces;
+using DavidFidge.MonoGame.Core.Interfaces.Components;
+using DavidFidge.MonoGame.Core.Interfaces.Services;
+using DavidFidge.MonoGame.Core.Interfaces.UserInterface;
 using DavidFidge.MonoGame.Core.Messages;
 using DavidFidge.MonoGame.Core.Services;
 
@@ -14,8 +15,6 @@ using MediatR;
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-
-using MonoGame.Extended.Sprites;
 
 using Serilog;
 
@@ -70,7 +69,6 @@ namespace Augmented
         {
             _userInterface.Initialize(Content);
 
-            // make the window fullscreen (but still with border and top control bar)
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
             InitializeDisplaySettings();
@@ -115,9 +113,7 @@ namespace Augmented
         /// </summary>
         protected override void LoadContent()
         {
-            // Create a new SpriteBatch, which can be used to draw textures.
-
-            // TODO: use this.Content to load your game content here
+            // use this.Content to load your game content here
         }
 
         /// <summary>
@@ -126,7 +122,7 @@ namespace Augmented
         /// </summary>
         protected override void UnloadContent()
         {
-            // TODO: Unload any non ContentManager content here
+            // Unload any non ContentManager content here
         }
 
         /// <summary>
@@ -140,9 +136,9 @@ namespace Augmented
                 Exit();
 
             _userInterface.Update(gameTime);
-
             _gameTimeService.Update(gameTime);
             _gameInputService.Poll();
+            _screenManager.Update();
 
             base.Update(gameTime);
         }
@@ -153,16 +149,15 @@ namespace Augmented
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            // draw ui
             _userInterface.Draw(_spriteBatch);
 
-            // clear buffer
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(Color.Black);
+            // GraphicsDevice.RasterizerState = new RasterizerState { CullMode = CullMode.None, FillMode = FillMode.WireFrame };
 
-            // finalize ui rendering
+            _screenManager.Draw();
+
             _userInterface.DrawMainRenderTarget(_spriteBatch);
 
-            //_spriteBatch.End();
             base.Draw(gameTime);
         }
 

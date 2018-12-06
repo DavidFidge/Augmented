@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-
-using GeonBit.UI.Entities;
+﻿using GeonBit.UI.Entities;
 
 namespace DavidFidge.MonoGame.Core.UserInterface
 {
@@ -39,6 +35,12 @@ namespace DavidFidge.MonoGame.Core.UserInterface
         }
 
         public static Label H6Heading(this Label label)
+        {
+            label.Scale = 1.2f;
+            return label;
+        }
+
+        public static Label DefaultFontSize(this Label label)
         {
             label.Scale = 1.2f;
             return label;

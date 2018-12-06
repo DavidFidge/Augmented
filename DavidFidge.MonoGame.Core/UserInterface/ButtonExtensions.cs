@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-
-using GeonBit.UI.Entities;
+﻿using GeonBit.UI.Entities;
 
 using MediatR;
 
@@ -10,14 +6,14 @@ namespace DavidFidge.MonoGame.Core.UserInterface
 {
     public static class ButtonExtensions
     {
-        public static Button OnClick<T>(this Button button, IMediator mediator)
+        public static Button SendOnClick<T>(this Button button, IMediator mediator)
             where T : IRequest, new()
         {
             button.OnClick = entity => mediator.Send(new T());
             return button;
         }
 
-        public static Button OnClick<T1, T2>(this Button button, IMediator mediator)
+        public static Button SendOnClick<T1, T2>(this Button button, IMediator mediator)
             where T1 : IRequest, new()
             where T2 : IRequest, new()
         {
@@ -30,9 +26,22 @@ namespace DavidFidge.MonoGame.Core.UserInterface
             return button;
         }
 
+        public static Button SendOnClick(this Button button, IMediator mediator, IRequest request)
+        {
+            button.OnClick = entity => mediator.Send(request);
+            return button;
+        }
+
         public static Button AddTo(this Button button, Panel panel)
         {
             panel.AddChild(button);
+
+            return button;
+        }
+
+        public static Button AsToggle(this Button button)
+        {
+            button.ToggleMode = true;
 
             return button;
         }

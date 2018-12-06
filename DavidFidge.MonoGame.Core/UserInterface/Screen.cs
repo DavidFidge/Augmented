@@ -1,8 +1,7 @@
-﻿using System.Runtime.InteropServices;
-using DavidFidge.MonoGame.Core.Components;
-using DavidFidge.MonoGame.Core.Interfaces;
+﻿using DavidFidge.MonoGame.Core.Components;
+using DavidFidge.MonoGame.Core.Interfaces.UserInterface;
+
 using GeonBit.UI.Entities;
-using Microsoft.Xna.Framework;
 
 namespace DavidFidge.MonoGame.Core.UserInterface
 {
@@ -63,11 +62,11 @@ namespace DavidFidge.MonoGame.Core.UserInterface
         {
         }
 
-        public virtual void Update(GameTime gameTime)
+        public virtual void Update()
         {
         }
 
-        public virtual void Draw(GameTime gameTime)
+        public virtual void Draw()
         {
         }
     }

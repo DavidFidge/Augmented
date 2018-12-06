@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using DavidFidge.MonoGame.Core.Services;
+﻿using DavidFidge.MonoGame.Core.Services;
 using MediatR;
 
 namespace Augmented.Messages

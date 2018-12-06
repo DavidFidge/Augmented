@@ -1,4 +1,12 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using DavidFidge.MonoGame.Core.Components;
+
+using MediatR;
+
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+
+using NSubstitute;
+
+using Serilog;
 
 namespace DavidFidge.TestInfrastructure
 {
@@ -13,6 +21,15 @@ namespace DavidFidge.TestInfrastructure
         [TestCleanup]
         public virtual void TearDown()
         {
+        }
+
+        protected T SetupBaseComponent<T>(T baseComponent)
+            where T : BaseComponent
+        {
+            baseComponent.Mediator = Substitute.For<IMediator>();
+            baseComponent.Logger = Substitute.For<ILogger>();
+
+            return baseComponent;
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 
-using DavidFidge.MonoGame.Core.Interfaces;
+using DavidFidge.MonoGame.Core.Interfaces.Components;
+using DavidFidge.MonoGame.Core.Interfaces.Services;
 
 namespace DavidFidge.MonoGame.Core.Services
 {

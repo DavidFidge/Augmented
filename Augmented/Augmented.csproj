@@ -41,10 +41,19 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Graphics\Camera\AugmentedGameWorld.cs" />
+    <Compile Include="Graphics\Camera\GameView3D.cs" />
+    <Compile Include="Interfaces\IAugmentedGameWorld.cs" />
+    <Compile Include="Graphics\Camera\GameCamera.cs" />
+    <Compile Include="Graphics\Camera\IGameCamera.cs" />
+    <Compile Include="Graphics\TestQuad.cs" />
     <Compile Include="Installers\GameInstaller.cs" />
+    <Compile Include="Messages\GameSpeed\ChangeGameSpeedRequest.cs" />
     <Compile Include="Messages\Game\NewGameRequest.cs" />
     <Compile Include="Messages\InGameOptions\CloseInGameOptionsRequest.cs" />
     <Compile Include="Messages\InGameOptions\ExitCurrentGameRequest.cs" />
+    <Compile Include="Messages\InGameOptions\Pan3DViewRequest.cs" />
+    <Compile Include="Messages\InGameOptions\Zoom3DViewRequest.cs" />
     <Compile Include="Messages\InGameOptions\OpenInGameOptionsRequest.cs" />
     <Compile Include="Messages\Title\OptionsButtonClickedRequest.cs" />
     <Compile Include="Messages\Options\SetDisplayModeRequest.cs" />
@@ -53,22 +62,30 @@
     <Compile Include="Messages\Options\CloseVideoOptionsRequest.cs" />
     <Compile Include="Messages\Options\SaveVideoOptionsRequest.cs" />
     <Compile Include="Messages\Options\OpenVideoOptionsRequest.cs" />
+    <Compile Include="Terrain\Terrain.cs" />
+    <Compile Include="UserInterface\Data\GameSpeedData.cs" />
     <Compile Include="UserInterface\Data\GameData.cs" />
     <Compile Include="UserInterface\Data\InGameOptionsData.cs" />
     <Compile Include="UserInterface\Data\VideoOptionsData.cs" />
     <Compile Include="UserInterface\Data\OptionsData.cs" />
     <Compile Include="UserInterface\Data\TitleData.cs" />
+    <Compile Include="UserInterface\Input\NullKeyboardHandler.cs" />
+    <Compile Include="UserInterface\Input\NullMouseHandler.cs" />
+    <Compile Include="UserInterface\Input\GameViewMouseHandler.cs" />
     <Compile Include="UserInterface\Input\OptionsKeyboardHandler.cs" />
+    <Compile Include="UserInterface\Input\GameSpeedKeyboardHandler.cs" />
     <Compile Include="UserInterface\Input\VideoOptionsKeyboardHandler.cs" />
     <Compile Include="UserInterface\Input\InGameOptionsKeyboardHandler.cs" />
     <Compile Include="UserInterface\Input\TitleViewKeyboardHandler.cs" />
     <Compile Include="UserInterface\Input\GameViewKeyboardHandler.cs" />
-    <Compile Include="UserInterface\Screens\IScreenManager.cs" />
+    <Compile Include="Interfaces\IScreenManager.cs" />
     <Compile Include="UserInterface\Screens\ScreenManager.cs" />
     <Compile Include="UserInterface\Screens\GameScreen.cs" />
+    <Compile Include="UserInterface\ViewModels\GameSpeedViewModel.cs" />
     <Compile Include="UserInterface\ViewModels\GameViewModel.cs" />
     <Compile Include="UserInterface\ViewModels\InGameOptionsViewModel.cs" />
     <Compile Include="UserInterface\ViewModels\TitleViewModel.cs" />
+    <Compile Include="UserInterface\Views\GameSpeedView.cs" />
     <Compile Include="UserInterface\Views\InGameOptionsView.cs" />
     <Compile Include="UserInterface\Views\GameView.cs" />
     <Compile Include="UserInterface\Views\TitleView.cs" />

@@ -48,23 +48,23 @@ namespace Augmented.UserInterface.Views
             SetupVideoOptionsItem();
 
             new Button("Game Options")
-                .OnClick<OpenGameOptionsRequest>(Mediator)
+                .SendOnClick<OpenGameOptionsRequest>(Mediator)
                 .AddTo(_optionsMenuPanel);
 
             new Button("Back")
-                .OnClick<CloseOptionsViewRequest>(Mediator)
+                .SendOnClick<CloseOptionsViewRequest>(Mediator)
                 .AddTo(_optionsMenuPanel);
         }
 
         private void SetupVideoOptionsItem()
         {
             new Button("Video Options")
-                .OnClick<OpenVideoOptionsRequest>(Mediator)
+                .SendOnClick<OpenVideoOptionsRequest>(Mediator)
                 .AddTo(_optionsMenuPanel);
 
             _videoOptionsView.Initialize();
             
-            RootPanel.AddNestedRoot(_videoOptionsView.RootPanel);
+            RootPanel.AddChild(_videoOptionsView.RootPanel);
         }
 
         public Task<Unit> Handle(OpenVideoOptionsRequest request, CancellationToken cancellationToken)

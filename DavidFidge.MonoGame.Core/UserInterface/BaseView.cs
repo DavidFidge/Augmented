@@ -8,12 +8,13 @@ using Castle.Core.Internal;
 
 using DavidFidge.MonoGame.Core.Components;
 using DavidFidge.MonoGame.Core.Interfaces;
+using DavidFidge.MonoGame.Core.Interfaces.Services;
+using DavidFidge.MonoGame.Core.Interfaces.UserInterface;
+
 using GeonBit.UI.Entities;
 
 using InputHandlers.Keyboard;
 using InputHandlers.Mouse;
-
-using MediatR;
 
 namespace DavidFidge.MonoGame.Core.UserInterface
 {
@@ -23,17 +24,18 @@ namespace DavidFidge.MonoGame.Core.UserInterface
     {
         private readonly TViewModel _viewModel;
 
-        public IRootPanel<Entity> RootPanel { get; set; }
+        protected List<IView> _components = new List<IView>();
+        protected ViewType _viewType;
 
+        public IRootPanel<Entity> RootPanel { get; set; }
         public IKeyboardHandler KeyboardHandler { get; set; }
         public IMouseHandler MouseHandler { get; set; }
-
         public TData Data => _viewModel.Data;
-
         public IGameInputService GameInputService { get; set; }
 
         protected BaseView(TViewModel viewModel)
         {
+            _viewType = ViewType.Root;
             _viewModel = viewModel;
         }
 
@@ -50,18 +52,32 @@ namespace DavidFidge.MonoGame.Core.UserInterface
         {
         }
 
-        public void Show()
+        public virtual void Show()
         {
             RootPanel.Visible = true;
 
-            GameInputService?.ChangeInput(KeyboardHandler, MouseHandler);
+            if (_viewType == ViewType.Root)
+                GameInputService?.ChangeInput(MouseHandler, KeyboardHandler);
+            else
+                GameInputService?.AddToCurrentGroup(MouseHandler, KeyboardHandler);
+
+            foreach (var component in _components)
+            {
+                component.Show();
+            }
         }
 
         public void Hide()
         {
             RootPanel.Visible = false;
 
-            GameInputService?.RevertInput();
+            foreach (var component in _components)
+                component.Hide();
+
+            if (_viewType == ViewType.Root)
+                GameInputService?.RevertInputUpToAndIncluding(MouseHandler, KeyboardHandler);
+            else
+                GameInputService?.RemoveFromCurrentGroup(MouseHandler, KeyboardHandler);
         }
 
         public string LabelFor<T>(Expression<Func<T>> expression)

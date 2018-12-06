@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
-using DavidFidge.MonoGame.Core.Interfaces;
+
+using DavidFidge.MonoGame.Core.Interfaces.Services;
 
 using InputHandlers.Keyboard;
 using InputHandlers.Mouse;
@@ -14,8 +16,7 @@ namespace DavidFidge.MonoGame.Core.Services
         private readonly IMouseInput _mouseInput;
         private readonly IKeyboardInput _keyboardInput;
 
-        private readonly Stack<IKeyboardHandler> _keyboardHandlers = new Stack<IKeyboardHandler>();
-        private readonly Stack<IMouseHandler> _mouseHandlers = new Stack<IMouseHandler>();
+        private readonly Stack<InputHandlerGroup> _inputHandlerGroups = new Stack<InputHandlerGroup>();
 
         public GameInputService(IMouseInput mouseInput, IKeyboardInput keyboardInput)
         {
@@ -35,34 +36,88 @@ namespace DavidFidge.MonoGame.Core.Services
             _mouseInput.Reset();
         }
 
-        public void ChangeInput(IKeyboardHandler keyboardHandler, IMouseHandler mouseHandler)
+        public void ChangeInput(IMouseHandler mouseHandler, IKeyboardHandler keyboardHandler)
         {
-            if (_keyboardHandlers.Any())
-                _keyboardInput.Unsubscribe(_keyboardHandlers.Peek());
+            if (keyboardHandler == null)
+                throw new ArgumentNullException(nameof(keyboardHandler));
 
-            if (_mouseHandlers.Any())
-                _mouseInput.Unsubscribe(_mouseHandlers.Peek());
+            if (mouseHandler == null)
+                throw new ArgumentNullException(nameof(mouseHandler));
 
-            _keyboardInput.Subscribe(keyboardHandler);
-            _mouseInput.Subscribe(mouseHandler);
+            if (_inputHandlerGroups.Any())
+            {
+                _inputHandlerGroups
+                    .Peek()
+                    .UnsubscribeGroup(_mouseInput, _keyboardInput);
+            }
 
-            _keyboardHandlers.Push(keyboardHandler);
-            _mouseHandlers.Push(mouseHandler);
+            var inputHandlerGroup = new InputHandlerGroup(mouseHandler, keyboardHandler);
+            _inputHandlerGroups.Push(inputHandlerGroup);
+
+            inputHandlerGroup.SubscribeGroup(_mouseInput, _keyboardInput);
         }
 
-        public void RevertInput()
+        public void AddToCurrentGroup(IMouseHandler mouseHandler, IKeyboardHandler keyboardHandler)
         {
-            if (_keyboardHandlers.Any())
-                _keyboardInput.Unsubscribe(_keyboardHandlers.Pop());
+            if (keyboardHandler == null)
+                throw new ArgumentNullException(nameof(keyboardHandler));
 
-            if (_mouseHandlers.Any())
-                _mouseInput.Unsubscribe(_mouseHandlers.Pop());
+            if (mouseHandler == null)
+                throw new ArgumentNullException(nameof(mouseHandler));
 
-            if (_keyboardHandlers.Any())
-                _keyboardInput.Subscribe(_keyboardHandlers.Peek());
+            if (_inputHandlerGroups.Any())
+            {
+                _mouseInput.Subscribe(mouseHandler);
+                _keyboardInput.Subscribe(keyboardHandler);
 
-            if (_mouseHandlers.Any())
-                _mouseInput.Subscribe(_mouseHandlers.Peek());
+                _inputHandlerGroups
+                    .Peek()
+                    .AddToGroup(mouseHandler, keyboardHandler);
+            }
+        }
+
+        public void RemoveFromCurrentGroup(IMouseHandler mouseHandler, IKeyboardHandler keyboardHandler)
+        {
+            if (keyboardHandler == null)
+                throw new ArgumentNullException(nameof(keyboardHandler));
+
+            if (mouseHandler == null)
+                throw new ArgumentNullException(nameof(mouseHandler));
+
+            if (_inputHandlerGroups.Any())
+            {
+                _mouseInput.Unsubscribe(mouseHandler);
+                _keyboardInput.Unsubscribe(keyboardHandler);
+
+                _inputHandlerGroups
+                    .Peek()
+                    .RemoveFromGroup(mouseHandler, keyboardHandler);
+            }
+        }
+
+        public void RevertInputUpToAndIncluding(IMouseHandler mouseHandler, IKeyboardHandler keyboardHandler)
+        {
+            if (keyboardHandler == null)
+                throw new ArgumentNullException(nameof(keyboardHandler));
+
+            if (mouseHandler == null)
+                throw new ArgumentNullException(nameof(mouseHandler));
+
+            while (_inputHandlerGroups.Any())
+            {
+                var inputHandlerGroup = _inputHandlerGroups.Pop();
+
+                inputHandlerGroup.UnsubscribeGroup(_mouseInput, _keyboardInput);
+
+                if (inputHandlerGroup.ContainsHandlers(keyboardHandler, mouseHandler))
+                    break;
+            }
+
+            if (_inputHandlerGroups.Any())
+            {
+                var inputHandlerGroup = _inputHandlerGroups.Peek();
+                inputHandlerGroup.SubscribeGroup(_mouseInput, _keyboardInput);
+            }
         }
     }
 }

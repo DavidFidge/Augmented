@@ -20,19 +20,43 @@ namespace Augmented.UserInterface.Views
         IRequestHandler<CloseInGameOptionsRequest>
     {
         private readonly InGameOptionsView _inGameOptionsView;
+        private readonly GameSpeedView _gameSpeedView;
+
+        private Label _timeLabel;
 
         public GameView(
             GameViewModel gameViewModel,
-            InGameOptionsView inGameOptionsView
+            InGameOptionsView inGameOptionsView,
+            GameSpeedView gameSpeedView
         )
             : base(gameViewModel)
         {
             _inGameOptionsView = inGameOptionsView;
+            _gameSpeedView = gameSpeedView;
+            _components.Add(_gameSpeedView);
         }
 
         protected override void InitializeInternal()
         {
             SetupInGameOptions();
+            SetupGameSpeedView();
+        }
+
+        private void SetupGameSpeedView()
+        {
+            _gameSpeedView.Initialize();
+
+            var timePanel = new Panel(
+                new Vector2(300f, 110f),
+                PanelSkin.Simple,
+                Anchor.TopRight)
+                .NoPadding();
+
+            timePanel.Opacity = 50;
+
+            _gameSpeedView.RootPanel.AddAsChildOf(timePanel);
+
+            RootPanel.AddChild(timePanel);
         }
 
         private void SetupInGameOptions()
@@ -41,17 +65,17 @@ namespace Augmented.UserInterface.Views
                 "-",
                 ButtonSkin.Default,
                 Anchor.TopLeft,
-                new Vector2(50, 50)
-            ).OnClick<OpenInGameOptionsRequest>(Mediator);
-
-            menuButton.Padding = new Vector2(0, 0);
+                new Vector2(50, 50))
+                .SendOnClick<OpenInGameOptionsRequest>(Mediator)
+                .NoPadding();
 
             RootPanel.AddChild(menuButton);
 
             _inGameOptionsView.Initialize();
 
-            RootPanel.AddNestedRoot(_inGameOptionsView.RootPanel);
+            RootPanel.AddChild(_inGameOptionsView.RootPanel);
         }
+
 
         public Task<Unit> Handle(OpenInGameOptionsRequest request, CancellationToken cancellationToken)
         {

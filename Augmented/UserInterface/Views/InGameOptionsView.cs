@@ -36,11 +36,11 @@ namespace Augmented.UserInterface.Views
             _inGameOptionsMenuPanel.AddChild(line);
 
             new Button("Exit Game")
-                .OnClick<CloseInGameOptionsRequest, ExitCurrentGameRequest>(Mediator)
+                .SendOnClick<CloseInGameOptionsRequest, ExitCurrentGameRequest>(Mediator)
                 .AddTo(_inGameOptionsMenuPanel);
 
             new Button("Back to Game")
-                .OnClick<CloseInGameOptionsRequest>(Mediator)
+                .SendOnClick<CloseInGameOptionsRequest>(Mediator)
                 .AddTo(_inGameOptionsMenuPanel);
         }
     }

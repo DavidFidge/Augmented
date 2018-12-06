@@ -1,6 +1,7 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 
+using Augmented.Interfaces;
 using Augmented.Messages;
 using DavidFidge.MonoGame.Core.UserInterface;
 using MediatR;
@@ -30,7 +31,14 @@ namespace Augmented.UserInterface.Screens
             _titleScreen.Initialize();
             _gameScreen.Initialize();
 
+            // Quickstart to ease debugging
+            // StartNewGame();
             ShowScreen(_titleScreen);
+        }
+
+        public void Draw()
+        {
+            _activeScreen.Draw();
         }
 
         private void ShowScreen(Screen screen)
@@ -42,19 +50,29 @@ namespace Augmented.UserInterface.Screens
             _activeScreen = screen;
         }
 
+        public void Update()
+        {
+            _activeScreen.Update();
+        }
+        
         public Task<Unit> Handle(NewGameRequest request, CancellationToken cancellationToken)
         {
-            _gameScreen.Show();
-            _gameScreen.StartNewGame();
+            StartNewGame();
 
             return Unit.Task;
+        }
+
+        private void StartNewGame()
+        {
+            ShowScreen(_gameScreen);
+            _gameScreen.StartNewGame();
         }
 
         public Task<Unit> Handle(ExitCurrentGameRequest request, CancellationToken cancellationToken)
         {
             _gameScreen.EndGame();
 
-            _titleScreen.Show();
+            ShowScreen(_titleScreen);
             return Unit.Task;
         }
     }

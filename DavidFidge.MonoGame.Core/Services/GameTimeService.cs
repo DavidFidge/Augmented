@@ -1,15 +1,21 @@
 ﻿using System;
 
-using DavidFidge.MonoGame.Core.Interfaces;
+using DavidFidge.MonoGame.Core.Components;
+using DavidFidge.MonoGame.Core.Interfaces.Components;
+using DavidFidge.MonoGame.Core.Interfaces.Services;
+using DavidFidge.MonoGame.Core.Messages;
 
 using Microsoft.Xna.Framework;
 
 namespace DavidFidge.MonoGame.Core.Services
 {
-    public class GameTimeService : IGameTimeService
+    public class GameTimeService : BaseComponent, IGameTimeService
     {
         private TimeSpan _lastElapsedRealTime;
         private readonly IStopwatchProvider _realTimeStopwatch;
+        private readonly int[] _gameSpeedIncrements = { 25, 50, 100, 200, 400, 800 };
+        private int _gameSpeedIncrementIndex;
+        private int _startingGameSpeedIncrementIndex = 2;
 
         public GameTimeService(IStopwatchProvider stopwatchProvider)
         {
@@ -17,14 +23,26 @@ namespace DavidFidge.MonoGame.Core.Services
             _lastElapsedRealTime = new TimeSpan(0);
 
             GameTime = new CustomGameTime();
+            InitialiseCommon();
+        }
+
+        private void InitialiseCommon()
+        {
             GameTime.ElapsedGameTime = new TimeSpan(0);
             GameTime.ElapsedRealTime = new TimeSpan(0);
             GameTime.TotalGameTime = new TimeSpan(0);
             GameTime.TotalRealTime = new TimeSpan(0);
             GameTime.IsRunningSlowly = false;
-            GameSpeedPercent = 100;
+            _gameSpeedIncrementIndex = _startingGameSpeedIncrementIndex;
+            GameSpeedPercent = _gameSpeedIncrements[_gameSpeedIncrementIndex];
             IsPaused = false;
-            _realTimeStopwatch.Start();
+        }
+
+        private void Initialise()
+        {
+            OriginalGameTime = null;
+            InitialiseCommon();
+            _lastElapsedRealTime = new TimeSpan(0);
         }
 
         public CustomGameTime GameTime { get; private set; }
@@ -33,6 +51,8 @@ namespace DavidFidge.MonoGame.Core.Services
         public int GameSpeedPercent { get; private set; }
         public bool IsPaused { get; private set; }
 
+        private bool _isRunning;
+
         public void Reset()
         {
             Initialise();
@@ -40,21 +60,22 @@ namespace DavidFidge.MonoGame.Core.Services
             _realTimeStopwatch.Restart();
         }
 
-        private void Initialise()
+        public void Start()
         {
-            OriginalGameTime = null;
-            GameTime.ElapsedGameTime = new TimeSpan(0);
-            GameTime.ElapsedRealTime = new TimeSpan(0);
-            GameTime.TotalGameTime = new TimeSpan(0);
-            GameTime.TotalRealTime = new TimeSpan(0);
-            GameTime.IsRunningSlowly = false;
-            GameSpeedPercent = 100;
-            IsPaused = false;
-            _lastElapsedRealTime = new TimeSpan(0);
+            _isRunning = true;
+            Reset();
+        }
+
+        public void Stop()
+        {
+            _isRunning = false;
         }
 
         public void Update(GameTime gameTime)
         {
+            if (!_isRunning)
+                return;
+
             OriginalGameTime = gameTime;
 
             var elapsedRealTime = _realTimeStopwatch.Elapsed;
@@ -66,11 +87,16 @@ namespace DavidFidge.MonoGame.Core.Services
             if (IsPaused)
             {
                 GameTime.ElapsedGameTime = new TimeSpan(0);
-                return;
+            }
+            else
+            {
+                GameTime.ElapsedGameTime = TimeSpan.FromTicks(GameTime.ElapsedRealTime.Ticks * GameSpeedPercent / 100);
+                GameTime.TotalGameTime = GameTime.TotalGameTime.Add(GameTime.ElapsedGameTime);
             }
 
-            GameTime.ElapsedGameTime = TimeSpan.FromTicks(GameTime.ElapsedRealTime.Ticks * GameSpeedPercent / 100);
-            GameTime.TotalGameTime = GameTime.TotalGameTime.Add(GameTime.ElapsedGameTime);
+            var gameTimeUpdateNotification = new GameTimeUpdateNotification(GameTime);
+
+            Mediator.Publish(gameTimeUpdateNotification);
         }
 
         public void PauseGame()
@@ -86,16 +112,24 @@ namespace DavidFidge.MonoGame.Core.Services
         public void IncreaseGameSpeed()
         {
             if (IsPaused)
+            {
                 ResumeGame();
+                return;
+            }
 
-            else if (GameSpeedPercent < 400)
-                GameSpeedPercent += 25;
+            if (_gameSpeedIncrementIndex < _gameSpeedIncrements.Length - 1)
+                _gameSpeedIncrementIndex++;
+
+            GameSpeedPercent = _gameSpeedIncrements[_gameSpeedIncrementIndex] ;
         }
 
         public void DecreaseGameSpeed()
         {
-            if (GameSpeedPercent > 25)
-                GameSpeedPercent -= 25;
+            if (_gameSpeedIncrementIndex > 0)
+            {
+                _gameSpeedIncrementIndex--;
+                GameSpeedPercent = _gameSpeedIncrements[_gameSpeedIncrementIndex];
+            }
             else
                 PauseGame();
         }
