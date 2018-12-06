@@ -39,5 +39,11 @@ namespace DavidFidge.MonoGame.Core.UserInterface
             label.Scale = 1.2f;
             return label;
         }
+
+        public static Label DefaultFontSize(this Label label)
+        {
+            label.Scale = 1.2f;
+            return label;
+        }
     }
 }

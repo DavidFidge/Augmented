@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using Augmented.Messages;
 
 using DavidFidge.MonoGame.Core.Graphics.Camera;
@@ -16,6 +17,9 @@ namespace Augmented.UserInterface.Input
         {
             if (keyInFocus == Keys.Escape)
                 Mediator.Send(new OpenInGameOptionsRequest());
+
+            if (keyInFocus == Keys.F12)
+                Environment.Exit(0);
 
             SetCameraContinousMovement(keysDown);
         }

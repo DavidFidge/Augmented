@@ -31,6 +31,8 @@ namespace Augmented.UserInterface.Screens
             _titleScreen.Initialize();
             _gameScreen.Initialize();
 
+            // Quickstart to ease debugging
+            // StartNewGame();
             ShowScreen(_titleScreen);
         }
 
@@ -55,10 +57,15 @@ namespace Augmented.UserInterface.Screens
         
         public Task<Unit> Handle(NewGameRequest request, CancellationToken cancellationToken)
         {
-            ShowScreen(_gameScreen);
-            _gameScreen.StartNewGame();
+            StartNewGame();
 
             return Unit.Task;
+        }
+
+        private void StartNewGame()
+        {
+            ShowScreen(_gameScreen);
+            _gameScreen.StartNewGame();
         }
 
         public Task<Unit> Handle(ExitCurrentGameRequest request, CancellationToken cancellationToken)

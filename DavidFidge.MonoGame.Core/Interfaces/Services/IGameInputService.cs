@@ -7,7 +7,9 @@ namespace DavidFidge.MonoGame.Core.Interfaces.Services
     {
         void Poll();
         void Reset();
-        void ChangeInput(IKeyboardHandler keyboardHandler, IMouseHandler mouseHandler);
-        void RevertInput();
+        void ChangeInput(IMouseHandler mouseHandler, IKeyboardHandler keyboardHandler);
+        void AddToCurrentGroup(IMouseHandler mouseHandler, IKeyboardHandler keyboardHandler);
+        void RevertInputUpToAndIncluding(IMouseHandler mouseHandler, IKeyboardHandler keyboardHandler);
+        void RemoveFromCurrentGroup(IMouseHandler mouseHandler, IKeyboardHandler keyboardHandler);
     }
 }

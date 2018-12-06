@@ -2,6 +2,7 @@
 
 using DavidFidge.MonoGame.Core.Interfaces.Components;
 using DavidFidge.MonoGame.Core.Interfaces.Services;
+using DavidFidge.MonoGame.Core.Messages;
 using DavidFidge.MonoGame.Core.Services;
 using DavidFidge.TestInfrastructure;
 
@@ -24,7 +25,9 @@ namespace DavidFidge.MonoGame.Core.Tests.Services
             base.Setup();
 
             _fakeStopwatchProvider = new FakeStopwatchProvider();
-            _gameTimeService = new GameTimeService(_fakeStopwatchProvider);
+            _gameTimeService = SetupBaseComponent(new GameTimeService(_fakeStopwatchProvider));
+
+            _gameTimeService.Start();
         }
 
         [TestMethod]
@@ -46,6 +49,61 @@ namespace DavidFidge.MonoGame.Core.Tests.Services
             Assert.AreEqual(TimeSpan.Zero, _gameTimeService.GameTime.TotalGameTime);
             Assert.AreEqual(TimeSpan.Zero, _gameTimeService.GameTime.ElapsedRealTime);
             Assert.AreEqual(TimeSpan.Zero, _gameTimeService.GameTime.TotalRealTime);
+            Assert.IsFalse(_gameTimeService.IsPaused);
+        }
+
+        [TestMethod]
+        public void Increase_Game_Speed_Then_Reset_Then_Update_With_One_Second_Elapsed_Should_Increment_By_One_Second()
+        {
+            // Arrange
+            _gameTimeService.IncreaseGameSpeed();
+            _gameTimeService.Reset();
+            _fakeStopwatchProvider.Elapsed = TimeSpan.FromSeconds(1);
+
+            // Act
+            _gameTimeService.Update(new GameTime());
+
+            // Assert
+            Assert.AreEqual(TimeSpan.FromSeconds(1), _gameTimeService.GameTime.ElapsedGameTime);
+            Assert.AreEqual(TimeSpan.FromSeconds(1), _gameTimeService.GameTime.TotalGameTime);
+            Assert.AreEqual(TimeSpan.FromSeconds(1), _gameTimeService.GameTime.ElapsedRealTime);
+            Assert.AreEqual(TimeSpan.FromSeconds(1), _gameTimeService.GameTime.TotalRealTime);
+        }
+
+        [TestMethod]
+        public void Reset_Should_Restart_Stopwatch()
+        {
+            // Arrange
+            _fakeStopwatchProvider = Substitute.For<FakeStopwatchProvider>();
+            _gameTimeService = SetupBaseComponent(new GameTimeService(_fakeStopwatchProvider));
+
+            // Act
+            _gameTimeService.Reset();
+
+            // Assert
+            _fakeStopwatchProvider.Received().Restart();
+        }
+
+        [TestMethod]
+        public void Start_Should_Reset_GameTime()
+        {
+            // Arrange
+            _fakeStopwatchProvider.Elapsed = TimeSpan.FromSeconds(1);
+
+            _gameTimeService.IncreaseGameSpeed();
+            _gameTimeService.PauseGame();
+            _gameTimeService.Update(new GameTime());
+
+            // Act
+            _gameTimeService.Start();
+
+            // Assert
+            Assert.AreEqual(TimeSpan.Zero, _fakeStopwatchProvider.Elapsed);
+            Assert.AreEqual(TimeSpan.Zero, _gameTimeService.GameTime.ElapsedGameTime);
+            Assert.AreEqual(TimeSpan.Zero, _gameTimeService.GameTime.TotalGameTime);
+            Assert.AreEqual(TimeSpan.Zero, _gameTimeService.GameTime.ElapsedRealTime);
+            Assert.AreEqual(TimeSpan.Zero, _gameTimeService.GameTime.TotalRealTime);
+            Assert.IsFalse(_gameTimeService.IsPaused);
         }
 
         [TestMethod]
@@ -111,7 +169,46 @@ namespace DavidFidge.MonoGame.Core.Tests.Services
         }
 
         [TestMethod]
-        public void Update_Should_Advance_GameTime_By_Elapsed_Amount_Given_2_DIfferent_Updates()
+        public void Update_Should_Do_Nothing_If_Stopped()
+        {
+            // Arrange
+            _gameTimeService.Stop();
+            _fakeStopwatchProvider.Elapsed = TimeSpan.FromSeconds(1);
+
+            // Act
+            _gameTimeService.Update(new GameTime());
+
+            // Assert
+            Assert.AreEqual(TimeSpan.FromSeconds(0), _gameTimeService.GameTime.ElapsedGameTime);
+            Assert.AreEqual(TimeSpan.FromSeconds(0), _gameTimeService.GameTime.TotalGameTime);
+            Assert.AreEqual(TimeSpan.FromSeconds(0), _gameTimeService.GameTime.ElapsedRealTime);
+            Assert.AreEqual(TimeSpan.FromSeconds(0), _gameTimeService.GameTime.TotalRealTime);
+
+            _gameTimeService
+                .Mediator
+                .DidNotReceive()
+                .Publish(Arg.Any<GameTimeUpdateNotification>()
+                );
+        }
+
+        [TestMethod]
+        public void Update_Should_Publish_GameTimeUpdateNotification()
+        {
+            // Arrange
+            _fakeStopwatchProvider.Elapsed = TimeSpan.FromSeconds(1);
+
+            // Act
+            _gameTimeService.Update(new GameTime());
+
+            // Assert
+            _gameTimeService
+                .Mediator
+                .Received()
+                .Publish(Arg.Is<GameTimeUpdateNotification>(m => m.GameTime == _gameTimeService.GameTime));
+        }
+
+        [TestMethod]
+        public void Update_Should_Advance_GameTime_By_Elapsed_Amount_Given_2_Different_Updates()
         {
             // Arrange
             _fakeStopwatchProvider.Elapsed = TimeSpan.FromSeconds(1);
@@ -174,11 +271,10 @@ namespace DavidFidge.MonoGame.Core.Tests.Services
         }
 
         [TestMethod]
-        [DataRow(1, 1250)]
-        [DataRow(2, 1500)]
-        [DataRow(11, 3750)]
-        [DataRow(12, 4000)]
-        [DataRow(13, 4000)]  //// Limited to 4x real time by default
+        [DataRow(1, 2000)]
+        [DataRow(2, 4000)]
+        [DataRow(3, 8000)]
+        [DataRow(4, 8000)]
         public void IncreaseGameSpeed_Should_Advance_GameTime_At_Faster_Rate_Than_RealTime(
             int numberOfTimes,
             double expectedMilliseconds)
@@ -200,9 +296,8 @@ namespace DavidFidge.MonoGame.Core.Tests.Services
         }
 
         [TestMethod]
-        [DataRow(1, 750)]
-        [DataRow(2, 500)]
-        [DataRow(3, 250)]
+        [DataRow(1, 500)]
+        [DataRow(2, 250)]
         public void DecreaseGameSpeed_Should_Advance_GameTime_At_Slower_Rate_Than_RealTime(
             int numberOfTimes,
             double expectedMilliseconds)
@@ -223,7 +318,6 @@ namespace DavidFidge.MonoGame.Core.Tests.Services
             Assert.AreEqual(TimeSpan.FromSeconds(1), _gameTimeService.GameTime.TotalRealTime);
         }
 
-
         [TestMethod]
         public void DecreaseGameSpeed_Should_Pause_Game_At_Slowest_Rate()
         {
@@ -243,7 +337,6 @@ namespace DavidFidge.MonoGame.Core.Tests.Services
             Assert.AreEqual(TimeSpan.FromSeconds(1), _gameTimeService.GameTime.ElapsedRealTime);
             Assert.AreEqual(TimeSpan.FromSeconds(1), _gameTimeService.GameTime.TotalRealTime);
         }
-
 
         [TestMethod]
         public void IncreaseGameSpeed_Should_Resume_Game_At_Same_Speed_When_Paused()

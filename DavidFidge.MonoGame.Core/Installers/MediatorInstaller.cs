@@ -25,6 +25,8 @@ namespace DavidFidge.MonoGame.Core.Installers
                     .Concat(new[] { type })
                     .FirstOrDefault(t => t.IsGenericType && t.GetGenericTypeDefinition() == typeof(IEnumerable<>));
 
+                // If a not found exception is thrown here then check that the handler is registered
+                // with a Unit generic parameter
                 return enumerableType != null ? k.ResolveAll(enumerableType.GetGenericArguments()[0]) : k.Resolve(type);
             })));
         }

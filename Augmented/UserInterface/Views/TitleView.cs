@@ -47,25 +47,25 @@ namespace Augmented.UserInterface.Views
             _titleMenuPanel.AddChild(line);
 
             new Button("New Game")
-                .OnClick<NewGameRequest>(Mediator)
+                .SendOnClick<NewGameRequest>(Mediator)
                 .AddTo(_titleMenuPanel);
 
             SetupOptionsItem();
 
             new Button("Exit")
-                .OnClick<ExitGameRequest>(Mediator)
+                .SendOnClick<ExitGameRequest>(Mediator)
                 .AddTo(_titleMenuPanel);
         }
 
         private void SetupOptionsItem()
         {
             new Button("Options")
-                .OnClick<OptionsButtonClickedRequest>(Mediator)
+                .SendOnClick<OptionsButtonClickedRequest>(Mediator)
                 .AddTo(_titleMenuPanel);
 
             _optionsView.Initialize();
 
-            RootPanel.AddNestedRoot(_optionsView.RootPanel);
+            RootPanel.AddChild(_optionsView.RootPanel);
         }
 
         public Task<Unit> Handle(OptionsButtonClickedRequest request, CancellationToken cancellationToken)

@@ -106,7 +106,7 @@ namespace DavidFidge.MonoGame.Core.Tests.UserInterface
 
             gameInputService
                 .Received()
-                .ChangeInput(Arg.Is(keyboardHandler), Arg.Is(mouseHandler));
+                .ChangeInput(Arg.Is(mouseHandler), Arg.Is(keyboardHandler));
         }
 
         [TestMethod]
@@ -144,7 +144,138 @@ namespace DavidFidge.MonoGame.Core.Tests.UserInterface
 
             gameInputService
                 .Received()
-                .RevertInput();
+                .RevertInputUpToAndIncluding(Arg.Is(mouseHandler), Arg.Is(keyboardHandler));
+        }
+
+        [TestMethod]
+        public void Show_For_View_With_Component_Should_Also_Show_Component_Panel_And_Include_Component_Mouse_And_Keyboard_Handlers_()
+        {
+            // Arrange
+            var gameInputService = Substitute.For<IGameInputService>();
+
+            var keyboardHandlerComponent = Substitute.For<IKeyboardHandler>();
+            var mouseHandlerComponent = Substitute.For<IMouseHandler>();
+            var rootPanelComponent = Substitute.For<IRootPanel<Entity>>();
+
+            var testComponentView = new TestComponentView(new TestComponentViewModel())
+            {
+                KeyboardHandler = keyboardHandlerComponent,
+                MouseHandler = mouseHandlerComponent,
+                GameInputService = gameInputService,
+                RootPanel = rootPanelComponent
+            };
+
+            var keyboardHandler = Substitute.For<IKeyboardHandler>();
+            var mouseHandler = Substitute.For<IMouseHandler>();
+            var rootPanel = Substitute.For<IRootPanel<Entity>>();
+
+            var testView = new TestViewWithComponentView(new TestViewWithComponentViewModel(), testComponentView)
+            {
+                KeyboardHandler = keyboardHandler,
+                MouseHandler = mouseHandler,
+                GameInputService = gameInputService,
+                RootPanel = rootPanel
+            };
+
+            testComponentView.Initialize();
+            testView.Initialize();
+            rootPanel.ClearReceivedCalls();
+            rootPanelComponent.ClearReceivedCalls();
+
+            // Act
+            testView.Show();
+
+            // Assert
+            var setVisibleCall = rootPanel.ReceivedCalls().Single();
+            var rootPanelType = typeof(IRootPanel<Entity>);
+            var methodInfo = rootPanelType.GetMethod("set_Visible");
+
+            Assert.AreEqual(methodInfo, setVisibleCall.GetMethodInfo());
+            Assert.AreEqual(true, (bool)setVisibleCall.GetArguments().Single());
+
+            gameInputService
+                .Received()
+                .ChangeInput(Arg.Is(mouseHandler), Arg.Is(keyboardHandler));
+
+            var setVisibleCallComponent = rootPanelComponent.ReceivedCalls().Single();
+            var rootPanelTypeComponent = typeof(IRootPanel<Entity>);
+            var methodInfoComponent = rootPanelTypeComponent.GetMethod("set_Visible");
+
+            Assert.AreEqual(methodInfoComponent, setVisibleCallComponent.GetMethodInfo());
+            Assert.AreEqual(true, (bool)setVisibleCallComponent.GetArguments().Single());
+
+            gameInputService
+                .Received()
+                .ChangeInput(Arg.Is(mouseHandler), Arg.Is(keyboardHandler));
+
+            gameInputService
+                .Received()
+                .AddToCurrentGroup(Arg.Is(mouseHandlerComponent), Arg.Is(keyboardHandlerComponent));
+        }
+
+        [TestMethod]
+        public void Hide_For_View_With_Componet_Should_Also_Hide_Component_Panel_And_Revert_Input()
+        {
+            // Arrange
+            var gameInputService = Substitute.For<IGameInputService>();
+
+            var keyboardHandlerComponent = Substitute.For<IKeyboardHandler>();
+            var mouseHandlerComponent = Substitute.For<IMouseHandler>();
+            var rootPanelComponent = Substitute.For<IRootPanel<Entity>>();
+
+            var testComponentView = new TestComponentView(new TestComponentViewModel())
+            {
+                KeyboardHandler = keyboardHandlerComponent,
+                MouseHandler = mouseHandlerComponent,
+                GameInputService = gameInputService,
+                RootPanel = rootPanelComponent
+            };
+
+            var keyboardHandler = Substitute.For<IKeyboardHandler>();
+            var mouseHandler = Substitute.For<IMouseHandler>();
+            var rootPanel = Substitute.For<IRootPanel<Entity>>();
+
+            var testView = new TestViewWithComponentView(new TestViewWithComponentViewModel(), testComponentView)
+            {
+                KeyboardHandler = keyboardHandler,
+                MouseHandler = mouseHandler,
+                GameInputService = gameInputService,
+                RootPanel = rootPanel
+            };
+
+            testComponentView.Initialize();
+            testView.Initialize();
+
+            testView.Show();
+            gameInputService.ClearReceivedCalls();
+            rootPanel.ClearReceivedCalls();
+            rootPanelComponent.ClearReceivedCalls();
+
+            // Act
+            testView.Hide();
+
+            // Assert
+            var setVisibleCall = rootPanel.ReceivedCalls().Single();
+            var rootPanelType = typeof(IRootPanel<Entity>);
+            var methodInfo = rootPanelType.GetMethod("set_Visible");
+
+            Assert.AreEqual(methodInfo, setVisibleCall.GetMethodInfo());
+            Assert.AreEqual(false, (bool)setVisibleCall.GetArguments().Single());
+
+            var setVisibleCallComponent = rootPanelComponent.ReceivedCalls().Single();
+            var rootPanelTypeComponent = typeof(IRootPanel<Entity>);
+            var methodInfoComponent = rootPanelTypeComponent.GetMethod("set_Visible");
+
+            Assert.AreEqual(methodInfoComponent, setVisibleCallComponent.GetMethodInfo());
+            Assert.AreEqual(false, (bool)setVisibleCallComponent.GetArguments().Single());
+
+            gameInputService
+                .Received()
+                .RevertInputUpToAndIncluding(Arg.Is(mouseHandler), Arg.Is(keyboardHandler));
+
+            gameInputService
+                .Received()
+                .RemoveFromCurrentGroup(Arg.Is(mouseHandlerComponent), Arg.Is(keyboardHandlerComponent));
         }
 
         public class TestView : BaseView<TestViewModel, TestData>
@@ -180,6 +311,40 @@ namespace DavidFidge.MonoGame.Core.Tests.UserInterface
         }
 
         public class TestViewModel : BaseViewModel<TestData>
+        {
+        }
+
+        public class TestViewWithComponentView : BaseView<TestViewWithComponentViewModel, TestViewWithComponentData>
+        {
+            public TestViewWithComponentView(
+                TestViewWithComponentViewModel viewModel,
+                TestComponentView testComponentView) : base(viewModel)
+            {
+                _components.Add(testComponentView);
+            }
+        }
+
+        public class TestViewWithComponentViewModel : BaseViewModel<TestViewWithComponentData>
+        {
+        }
+
+        public class TestViewWithComponentData
+        {
+        }
+
+        public class TestComponentView : BaseView<TestComponentViewModel, TestComponentData>
+        {
+            public TestComponentView(TestComponentViewModel viewModel) : base(viewModel)
+            {
+                _viewType = ViewType.Component;
+            }
+        }
+
+        public class TestComponentViewModel : BaseViewModel<TestComponentData>
+        {
+        }
+
+        public class TestComponentData
         {
         }
     }

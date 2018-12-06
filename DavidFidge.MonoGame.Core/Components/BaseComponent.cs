@@ -1,6 +1,6 @@
-﻿using Castle.Core.Logging;
+﻿using MediatR;
 
-using MediatR;
+using Serilog;
 
 namespace DavidFidge.MonoGame.Core.Components
 {

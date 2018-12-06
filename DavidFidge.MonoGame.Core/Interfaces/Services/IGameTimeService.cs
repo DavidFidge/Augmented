@@ -12,8 +12,13 @@ namespace DavidFidge.MonoGame.Core.Interfaces.Services
         void PauseGame();
         void ResumeGame();
         void IncreaseGameSpeed();
+        void DecreaseGameSpeed();
 
         GameTime OriginalGameTime { get; }
         CustomGameTime GameTime { get; }
+        bool IsPaused { get; }
+        int GameSpeedPercent { get; }
+        void Start();
+        void Stop();
     }
 }
