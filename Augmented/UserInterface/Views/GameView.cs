@@ -22,8 +22,6 @@ namespace Augmented.UserInterface.Views
         private readonly InGameOptionsView _inGameOptionsView;
         private readonly GameSpeedView _gameSpeedView;
 
-        private Label _timeLabel;
-
         public GameView(
             GameViewModel gameViewModel,
             InGameOptionsView inGameOptionsView,

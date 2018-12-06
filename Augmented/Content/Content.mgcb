@@ -9,8 +9,9 @@
 /compress:False
 
 #-------------------------------- References --------------------------------#
+# if there are build issues, ensure the reference to geonbit DataTypes.dll is pointing to the correct place
 
-/reference:..\..\packages\GeonBit.UI.3.2.0\lib\geonbitui\DataTypes.dll
+/reference:..\..\packages\GeonBit.UI.3.3.0\lib\geonbitui\DataTypes.dll
 
 #---------------------------------- Content ---------------------------------#
 
