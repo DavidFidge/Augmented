@@ -5,25 +5,25 @@ using Microsoft.Xna.Framework;
 
 namespace Augmented.Graphics
 {
-    public class TestQuad : IWorldTransformable
+    public class TestTexturedQuad : IWorldTransformable
     {
-        private readonly MaterialQuadTemplate _materialQuadTemplate;
+        private readonly TexturedQuadTemplate _texturedQuadTemplate;
         public IWorldTransform WorldTransform { get; private set; }
 
-        public TestQuad(MaterialQuadTemplate materialQuadTemplate) 
+        public TestTexturedQuad(TexturedQuadTemplate texturedQuadTemplate) 
         {
-            _materialQuadTemplate = materialQuadTemplate;
+            _texturedQuadTemplate = texturedQuadTemplate;
             WorldTransform = new SimpleWorldTransform();
         }
 
         public void LoadContent()
         {
-            _materialQuadTemplate.LoadContent(100f, 100f, Color.Red);
+            _texturedQuadTemplate.LoadContent(100f, 100f, Constants.GrassTexture);
         }
 
         public void Draw(Matrix projection, Matrix view)
         {
-            _materialQuadTemplate.Draw(WorldTransform.World, view, projection);
+            _texturedQuadTemplate.Draw(WorldTransform.World, view, projection);
         }
     }
 }

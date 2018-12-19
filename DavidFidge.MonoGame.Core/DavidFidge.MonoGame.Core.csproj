@@ -94,13 +94,13 @@
     <Compile Include="Graphics\BaseQuadTemplate.cs" />
     <Compile Include="Graphics\Camera\CameraMovement.cs" />
     <Compile Include="Graphics\Camera\CameraResetOptions.cs" />
+    <Compile Include="Graphics\Extensions\VertexExtensions.cs" />
     <Compile Include="Graphics\MaterialQuadTemplate.cs" />
     <Compile Include="Graphics\SimpleWorldTransform.cs" />
     <Compile Include="Graphics\TexturedQuadTemplate.cs" />
     <Compile Include="Installers\MediatorInstaller.cs" />
     <Compile Include="Installers\CoreInstaller.cs" />
     <Compile Include="Interfaces\Graphics\ICamera.cs" />
-    <Compile Include="Interfaces\Graphics\ITextureDictionary.cs" />
     <Compile Include="Interfaces\Graphics\ITransform.cs" />
     <Compile Include="Interfaces\Graphics\IWorldTransform.cs" />
     <Compile Include="Interfaces\Graphics\IWorldTransformable.cs" />

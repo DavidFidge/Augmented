@@ -25,6 +25,8 @@ namespace DavidFidge.MonoGame.Core.Services
                     ? PresentInterval.Default
                     : PresentInterval.Immediate;
             }
+
+            args.GraphicsDeviceInformation.GraphicsProfile = GraphicsProfile.HiDef;
         }
 
         public List<DisplayMode> GetSupportedDisplayModes()

@@ -1,5 +1,6 @@
 ﻿using Augmented.Graphics;
 using Augmented.Graphics.Camera;
+using Augmented.Graphics.TerrainSpace;
 using Augmented.Interfaces;
 using Augmented.Messages;
 using Augmented.UserInterface.Data;
@@ -61,10 +62,16 @@ namespace Augmented.Installers
                     .Forward<IRequestHandler<Pan3DViewRequest, Unit>>()
                     .Forward<IRequestHandler<Zoom3DViewRequest, Unit>>(),
 
+                Component.For<IHeightMapStore>()
+                    .ImplementedBy<HeightMapGenerator>(),
+
+                Component.For<Terrain>()
+                    .LifeStyle.Transient,
+
                 Component.For<TestQuad>()
                     .LifeStyle.Transient,
 
-                Component.For<MaterialQuadTemplate>()
+                Component.For<TestTexturedQuad>()
                     .LifeStyle.Transient,
 
                 Component.For<IGameCamera>()

@@ -50,7 +50,32 @@ namespace Augmented.UserInterface.Input
             if (keysDown.Contains(Keys.S) || keysDown.Contains(Keys.Down))
                 cameraMovementFlags |= CameraMovement.PanDown;
 
-            Mediator.Send(new Pan3DViewRequest(cameraMovementFlags));
+            if (keysDown.Contains(Keys.Q))
+                cameraMovementFlags |= CameraMovement.RotateLeft;
+
+            if (keysDown.Contains(Keys.E))
+                cameraMovementFlags |= CameraMovement.RotateRight;
+
+            if (keysDown.Contains(Keys.PageUp) || keysDown.Contains(Keys.R))
+                cameraMovementFlags |= CameraMovement.RotateUp;
+
+            if (keysDown.Contains(Keys.PageDown) || keysDown.Contains(Keys.F))
+                cameraMovementFlags |= CameraMovement.RotateDown;
+
+            if (cameraMovementFlags != CameraMovement.None)
+                Mediator.Send(new Pan3DViewRequest(cameraMovementFlags));
+
+            if (keysDown.Contains(Keys.OemOpenBrackets) || keysDown.Contains(Keys.OemCloseBrackets))
+            {
+                var zoomMagnitude = 0;
+
+                if (keysDown.Contains(Keys.OemOpenBrackets))
+                    zoomMagnitude += 100;
+                else if (keysDown.Contains(Keys.OemCloseBrackets))
+                    zoomMagnitude -= 100;
+
+                Mediator.Send(new Zoom3DViewRequest(zoomMagnitude));
+            }
         }
     }
 }

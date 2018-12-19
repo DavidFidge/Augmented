@@ -41,8 +41,12 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Graphics\Camera\AugmentedGameWorld.cs" />
+    <Compile Include="Constants.cs" />
+    <Compile Include="Graphics\AugmentedGameWorld.cs" />
     <Compile Include="Graphics\Camera\GameView3D.cs" />
+    <Compile Include="Graphics\TerrainSpace\HeightMapGenerator.cs" />
+    <Compile Include="Graphics\TerrainSpace\Terrain.cs" />
+    <Compile Include="Graphics\TestTexturedQuad.cs" />
     <Compile Include="Interfaces\IAugmentedGameWorld.cs" />
     <Compile Include="Graphics\Camera\GameCamera.cs" />
     <Compile Include="Graphics\Camera\IGameCamera.cs" />
@@ -62,7 +66,6 @@
     <Compile Include="Messages\Options\CloseVideoOptionsRequest.cs" />
     <Compile Include="Messages\Options\SaveVideoOptionsRequest.cs" />
     <Compile Include="Messages\Options\OpenVideoOptionsRequest.cs" />
-    <Compile Include="Terrain\Terrain.cs" />
     <Compile Include="UserInterface\Data\GameSpeedData.cs" />
     <Compile Include="UserInterface\Data\GameData.cs" />
     <Compile Include="UserInterface\Data\InGameOptionsData.cs" />
@@ -734,7 +737,7 @@
     <Content Include="Content\GeonBit.UI\themes\lowres\textures\slider_fancy_md.xml" />
     <Content Include="Content\GeonBit.UI\themes\lowres\textures\white_texture.png" />
     <Content Include="Content\GeonBit.UI\themes\lowres\ThemeData.xml" />
-    <Content Include="Content\test.png" />
+    <Content Include="Content\Terrain\Grass.png" />
     <Content Include="Icon.ico" />
   </ItemGroup>
   <ItemGroup>

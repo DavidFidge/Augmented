@@ -113,6 +113,7 @@ namespace Augmented
         /// </summary>
         protected override void LoadContent()
         {
+            Content.Load<Texture2D>(Constants.GrassTexture);
             // use this.Content to load your game content here
         }
 
@@ -152,7 +153,9 @@ namespace Augmented
             _userInterface.Draw(_spriteBatch);
 
             GraphicsDevice.Clear(Color.Black);
-            // GraphicsDevice.RasterizerState = new RasterizerState { CullMode = CullMode.None, FillMode = FillMode.WireFrame };
+            GraphicsDevice.RasterizerState = new RasterizerState {
+                CullMode = CullMode.None
+            };
 
             _screenManager.Draw();
 

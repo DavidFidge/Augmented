@@ -13,35 +13,35 @@ namespace DavidFidge.MonoGame.Core.Graphics
         {
         }
 
-        public void Initialise(float width, float height, Color colour)
+        public void LoadContent(float width, float height, Color colour)
         {
-            Initialise(width, height);
+            LoadContent(width, height);
             _colour = colour;
             LoadBasicEffect();
         }
 
-        public void Initialise(Vector2 size, Color colour)
+        public void LoadContent(Vector2 size, Color colour)
         {
-            Initialise(size.X, size.Y, colour);
+            LoadContent(size.X, size.Y, colour);
         }
 
-        public void Initialise(
+        public void LoadContent(
             float width,
             float height,
             Color colour,
             Vector3 displacemet)
         {
-            Initialise(width, height, displacemet);
+            LoadContent(width, height, displacemet);
             _colour = colour;
             LoadBasicEffect();
         }
 
-        public void Initialise(
+        public void LoadContent(
             Vector2 size,
             Color colour,
             Vector3 displacement)
         {
-            Initialise(size.X, size.Y, colour, displacement);
+            LoadContent(size.X, size.Y, colour, displacement);
         }
 
         public void SetColour(Color colour)

@@ -1,5 +1,4 @@
 ﻿using DavidFidge.MonoGame.Core.Interfaces.Components;
-using DavidFidge.MonoGame.Core.Interfaces.Graphics;
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -8,26 +7,24 @@ namespace DavidFidge.MonoGame.Core.Graphics
 {
     public class TexturedQuadTemplate : BaseQuadTemplate
     {
-        private readonly ITextureDictionary _textureDictionary;
         private string _textureName;
 
-        public TexturedQuadTemplate(IGameProvider gameProvider, ITextureDictionary textureDictionary)
+        public TexturedQuadTemplate(IGameProvider gameProvider)
            : base(gameProvider)
         {
-            _textureDictionary = textureDictionary;
             _gameProvider = gameProvider;
         }
 
-        public void Initialise(string textureName, float width, float height)
+        public void LoadContent(float width, float height, string textureName)
         {
-            Initialise(width, height);
+            LoadContent(width, height);
             _textureName = textureName;
             LoadBasicEffect();
         }
 
-        public void Initialise(string textureName, Vector2 size)
+        public void LoadContent(Vector2 size, string textureName)
         {
-            Initialise(textureName, size.X, size.Y);
+            LoadContent(size.X, size.Y, textureName);
         }
 
         private void LoadBasicEffect()
@@ -35,13 +32,9 @@ namespace DavidFidge.MonoGame.Core.Graphics
             _basicEffect = new BasicEffect(_gameProvider.Game.GraphicsDevice)
             {
                 LightingEnabled = false,
-                TextureEnabled = true
+                TextureEnabled = true,
+                Texture = _gameProvider.Game.Content.Load<Texture2D>(_textureName)
             };
-        }
-
-        protected override void PrepareBasicEffectForDraw()
-        {
-            _basicEffect.Texture = _textureDictionary.GetTexture(_textureName);
         }
     }
 }
