@@ -105,6 +105,10 @@ namespace Augmented
             CustomGraphicsDeviceManager.IsFullScreen = isFullScreen;
             CustomGraphicsDeviceManager.IsVerticalSync = isVerticalSync;
             CustomGraphicsDeviceManager.ApplyChanges();
+
+            //GraphicsDevice.RasterizerState = new RasterizerState {
+            //    CullMode = CullMode.None
+            //};
         }
 
         /// <summary>
@@ -153,9 +157,6 @@ namespace Augmented
             _userInterface.Draw(_spriteBatch);
 
             GraphicsDevice.Clear(Color.Black);
-            GraphicsDevice.RasterizerState = new RasterizerState {
-                CullMode = CullMode.None
-            };
 
             _screenManager.Draw();
 

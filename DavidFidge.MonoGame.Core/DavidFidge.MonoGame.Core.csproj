@@ -94,6 +94,7 @@
     <Compile Include="Graphics\BaseQuadTemplate.cs" />
     <Compile Include="Graphics\Camera\CameraMovement.cs" />
     <Compile Include="Graphics\Camera\CameraResetOptions.cs" />
+    <Compile Include="Graphics\Extensions\PointExtensions.cs" />
     <Compile Include="Graphics\Extensions\VertexExtensions.cs" />
     <Compile Include="Graphics\MaterialQuadTemplate.cs" />
     <Compile Include="Graphics\SimpleWorldTransform.cs" />

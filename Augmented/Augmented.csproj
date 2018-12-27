@@ -44,13 +44,12 @@
     <Compile Include="Constants.cs" />
     <Compile Include="Graphics\AugmentedGameWorld.cs" />
     <Compile Include="Graphics\Camera\GameView3D.cs" />
+    <Compile Include="Graphics\TerrainSpace\IHeightMapStore.cs" />
     <Compile Include="Graphics\TerrainSpace\HeightMapGenerator.cs" />
     <Compile Include="Graphics\TerrainSpace\Terrain.cs" />
-    <Compile Include="Graphics\TestTexturedQuad.cs" />
     <Compile Include="Interfaces\IAugmentedGameWorld.cs" />
     <Compile Include="Graphics\Camera\GameCamera.cs" />
     <Compile Include="Graphics\Camera\IGameCamera.cs" />
-    <Compile Include="Graphics\TestQuad.cs" />
     <Compile Include="Installers\GameInstaller.cs" />
     <Compile Include="Messages\GameSpeed\ChangeGameSpeedRequest.cs" />
     <Compile Include="Messages\Game\NewGameRequest.cs" />

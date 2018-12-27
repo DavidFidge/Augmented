@@ -9,6 +9,19 @@ namespace DavidFidge.MonoGame.Core.Graphics
     {
         private Color _colour;
 
+        public Color Color
+        {
+            get => _colour;
+
+            set
+            {
+                _colour = value;
+
+                if (_basicEffect != null)
+                    _basicEffect.DiffuseColor = _colour.ToVector3();
+            }
+        }
+
         public MaterialQuadTemplate(IGameProvider gameProvider) : base(gameProvider)
         {
         }
@@ -29,9 +42,9 @@ namespace DavidFidge.MonoGame.Core.Graphics
             float width,
             float height,
             Color colour,
-            Vector3 displacemet)
+            Vector3 displacement)
         {
-            LoadContent(width, height, displacemet);
+            LoadContent(width, height, displacement);
             _colour = colour;
             LoadBasicEffect();
         }
@@ -42,17 +55,6 @@ namespace DavidFidge.MonoGame.Core.Graphics
             Vector3 displacement)
         {
             LoadContent(size.X, size.Y, colour, displacement);
-        }
-
-        public void SetColour(Color colour)
-        {
-            if (_basicEffect != null)
-                _basicEffect.DiffuseColor = colour.ToVector3();
-        }
-
-        public Color GetColour()
-        {
-            return _colour;
         }
 
         private void LoadBasicEffect()

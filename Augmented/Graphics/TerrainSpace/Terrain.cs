@@ -15,12 +15,19 @@ namespace Augmented.Graphics.TerrainSpace
         private IndexBuffer _terrainIndexBuffer;
         private VertexBuffer _terrainVertexBuffer;
         private BasicEffect _basicEffect;
+        private SamplerState _samplerState;
 
         public Terrain(IHeightMapStore heightMapStore, IGameProvider gameProvider)
         {
             _heightMapStore = heightMapStore;
             _gameProvider = gameProvider;
             WorldTransform = new SimpleWorldTransform();
+
+            _samplerState = new SamplerState
+            {
+                AddressU = TextureAddressMode.Wrap,
+                AddressV = TextureAddressMode.Wrap,
+            };
         }
 
         public IWorldTransform WorldTransform { get; }
@@ -39,7 +46,7 @@ namespace Augmented.Graphics.TerrainSpace
                 {
                     var position = new Vector3(x, y, heightMap[x, y]);
                     var normal = new Vector3(0, 0, 1f);
-                    var texture = new Vector2(x /10f, y / 10f);
+                    var texture = new Vector2(x / (width / 10f), y / (height / 10f));
 
                     terrainVertices[i++] = new VertexPositionNormalTexture(position, normal, texture);
                 }
@@ -119,6 +126,8 @@ namespace Augmented.Graphics.TerrainSpace
 
             graphicsDevice.Indices = _terrainIndexBuffer;
             graphicsDevice.SetVertexBuffer(_terrainVertexBuffer);
+            var oldSamplerState = graphicsDevice.SamplerStates[0];
+            graphicsDevice.SamplerStates[0] = _samplerState;
 
             if (_basicEffect != null)
             {
@@ -138,6 +147,8 @@ namespace Augmented.Graphics.TerrainSpace
                     );
                 }
             }
+
+            graphicsDevice.SamplerStates[0] = oldSamplerState;
         }
 
         private void LoadBasicEffect()
@@ -148,12 +159,12 @@ namespace Augmented.Graphics.TerrainSpace
             _basicEffect.TextureEnabled = true;
             _basicEffect.EnableDefaultLighting();
             _basicEffect.LightingEnabled = true;
-            //    _basicEffect.DirectionalLight0.Direction = new Vector3(1, 1, -1);
-            //    _basicEffect.DirectionalLight0.Enabled = true;
-            //    _basicEffect.AmbientLightColor = new Vector3(0.3f, 0.3f, 0.3f);
-            //    _basicEffect.DirectionalLight1.Enabled = false;
-            //    _basicEffect.DirectionalLight2.Enabled = false;
-            //    _basicEffect.SpecularColor = Vector3.Zero;
+            _basicEffect.DirectionalLight0.Direction = new Vector3(1, 1, 0);
+            _basicEffect.DirectionalLight0.Enabled = true;
+            _basicEffect.AmbientLightColor = new Vector3(0.3f, 0.3f, 0.3f);
+            _basicEffect.DirectionalLight1.Enabled = false;
+            _basicEffect.DirectionalLight2.Enabled = false;
+            _basicEffect.SpecularColor = Vector3.Zero;
         }
     }
 }

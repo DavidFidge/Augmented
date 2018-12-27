@@ -41,10 +41,12 @@ namespace Augmented.Installers
             container.Register(
 
                 Component.For<IKeyboardHandler>()
-                    .ImplementedBy<NullKeyboardHandler>(),
+                    .ImplementedBy<NullKeyboardHandler>()
+                    .IsDefault(),
 
                 Component.For<IMouseHandler>()
-                    .ImplementedBy<NullMouseHandler>(),
+                    .ImplementedBy<NullMouseHandler>()
+                    .IsDefault(),
 
                 Component.For<IGame>()
                     .Forward<IRequestHandler<ExitGameRequest, Unit>>()
@@ -66,12 +68,6 @@ namespace Augmented.Installers
                     .ImplementedBy<HeightMapGenerator>(),
 
                 Component.For<Terrain>()
-                    .LifeStyle.Transient,
-
-                Component.For<TestQuad>()
-                    .LifeStyle.Transient,
-
-                Component.For<TestTexturedQuad>()
                     .LifeStyle.Transient,
 
                 Component.For<IGameCamera>()

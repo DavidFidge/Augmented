@@ -31,7 +31,6 @@ namespace DavidFidge.MonoGame.Core.Graphics
         {
             _basicEffect = new BasicEffect(_gameProvider.Game.GraphicsDevice)
             {
-                LightingEnabled = false,
                 TextureEnabled = true,
                 Texture = _gameProvider.Game.Content.Load<Texture2D>(_textureName)
             };
