@@ -43,7 +43,7 @@ namespace DavidFidge.MonoGame.Core.UserInterface
         {
             _viewModel.Initialize();
 
-            RootPanel.Initialize();
+            RootPanel.Initialize(GetType().Name);
 
             InitializeInternal();
         }

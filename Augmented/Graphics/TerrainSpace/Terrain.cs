@@ -158,7 +158,6 @@ namespace Augmented.Graphics.TerrainSpace
             _basicEffect.Texture = _gameProvider.Game.Content.Load<Texture2D>(Constants.GrassTexture);
             _basicEffect.TextureEnabled = true;
             _basicEffect.EnableDefaultLighting();
-            _basicEffect.LightingEnabled = true;
             _basicEffect.DirectionalLight0.Direction = new Vector3(1, 1, 0);
             _basicEffect.DirectionalLight0.Enabled = true;
             _basicEffect.AmbientLightColor = new Vector3(0.3f, 0.3f, 0.3f);

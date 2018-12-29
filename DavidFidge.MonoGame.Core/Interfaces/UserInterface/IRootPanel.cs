@@ -5,7 +5,8 @@ namespace DavidFidge.MonoGame.Core.Interfaces
     public interface IRootPanel<T>
     {
         bool Visible { get; set; }
-        void Initialize();
+        bool IsMouseInRootPanelEmptySpace { get; }
+        void Initialize(string panelIdentifier);
         void AddChild(T child);
         void AddChild(IRootPanel<T> child);
         void AddRootPanelToGraph(T root);

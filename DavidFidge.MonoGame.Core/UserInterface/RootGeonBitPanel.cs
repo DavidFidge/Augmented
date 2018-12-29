@@ -15,11 +15,16 @@ namespace DavidFidge.MonoGame.Core.UserInterface
             set => _panel.Visible = value;
         }
 
-        public void Initialize()
+        public bool IsMouseInRootPanelEmptySpace => _panel != null && _panel.State == EntityState.Default;
+        
+        public void Initialize(string panelIdentifier)
         {
+
             _panel = new Panel(new Vector2(-1, -1), PanelSkin.None)
                 .NoPadding()
                 .Hidden();
+
+            _panel.Identifier = panelIdentifier;
         }
 
         public void AddChild(Entity child)

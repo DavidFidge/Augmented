@@ -69,7 +69,7 @@ namespace DavidFidge.MonoGame.Core.Tests.UserInterface
 
             // Assert
             Assert.IsTrue(testView.IsInitializeInternalCalled);
-            rootPanel.Received().Initialize();
+            rootPanel.Received().Initialize(Arg.Is("TestView"));
             Assert.IsNotNull(testViewModel.Data);
         }
 
