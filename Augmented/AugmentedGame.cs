@@ -118,7 +118,6 @@ namespace Augmented
         protected override void LoadContent()
         {
             Content.Load<Texture2D>(Constants.GrassTexture);
-            // use this.Content to load your game content here
         }
 
         /// <summary>
@@ -154,9 +153,15 @@ namespace Augmented
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
+            GraphicsDevice.Clear(Color.Black);
+
             _userInterface.Draw(_spriteBatch);
 
-            GraphicsDevice.Clear(Color.Black);
+            // Reset graphics device properties after SpriteBatch drawing
+            // https://blogs.msdn.microsoft.com/shawnhar/2010/06/18/spritebatch-and-renderstates-in-xna-game-studio-4-0/
+            GraphicsDevice.BlendState = BlendState.Opaque;
+            GraphicsDevice.DepthStencilState = DepthStencilState.Default;
+            GraphicsDevice.SamplerStates[0] = SamplerState.LinearWrap;
 
             _screenManager.Draw();
 
