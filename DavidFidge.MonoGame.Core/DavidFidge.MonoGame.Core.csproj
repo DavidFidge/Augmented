@@ -96,6 +96,8 @@
     <Compile Include="Graphics\Camera\CameraResetOptions.cs" />
     <Compile Include="Graphics\Extensions\PointExtensions.cs" />
     <Compile Include="Graphics\Extensions\VertexExtensions.cs" />
+    <Compile Include="Graphics\HeightMapGenerator.cs" />
+    <Compile Include="Interfaces\Graphics\IHeightMapGenerator.cs" />
     <Compile Include="Graphics\MaterialQuadTemplate.cs" />
     <Compile Include="Graphics\SimpleWorldTransform.cs" />
     <Compile Include="Graphics\TexturedQuadTemplate.cs" />

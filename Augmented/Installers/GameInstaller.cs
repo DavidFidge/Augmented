@@ -16,6 +16,7 @@ using Castle.Windsor;
 using DavidFidge.MonoGame.Core.Graphics;
 using DavidFidge.MonoGame.Core.Installers;
 using DavidFidge.MonoGame.Core.Interfaces.Components;
+using DavidFidge.MonoGame.Core.Interfaces.Graphics;
 using DavidFidge.MonoGame.Core.Messages;
 
 using InputHandlers.Keyboard;
@@ -64,7 +65,7 @@ namespace Augmented.Installers
                     .Forward<IRequestHandler<Pan3DViewRequest, Unit>>()
                     .Forward<IRequestHandler<Zoom3DViewRequest, Unit>>(),
 
-                Component.For<IHeightMapStore>()
+                Component.For<IHeightMapGenerator>()
                     .ImplementedBy<HeightMapGenerator>(),
 
                 Component.For<Terrain>()
