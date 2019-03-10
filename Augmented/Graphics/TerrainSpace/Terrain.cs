@@ -120,7 +120,7 @@ namespace Augmented.Graphics.TerrainSpace
 
             _terrainIndexBuffer.SetData(terrainIndexes);
 
-            LoadBasicEffect();
+            _basicEffect = _gameProvider.Game.EffectCollection.BuildTextureEffect(Constants.GrassTexture);
         }
 
         public void Draw(Matrix view, Matrix projection)
@@ -152,21 +152,6 @@ namespace Augmented.Graphics.TerrainSpace
             }
 
             graphicsDevice.SamplerStates[0] = oldSamplerState;
-        }
-
-        private void LoadBasicEffect()
-        {
-            _basicEffect = new BasicEffect(_gameProvider.Game.GraphicsDevice);
-
-            _basicEffect.Texture = _gameProvider.Game.Content.Load<Texture2D>(Constants.GrassTexture);
-            _basicEffect.TextureEnabled = true;
-            _basicEffect.EnableDefaultLighting();
-            _basicEffect.DirectionalLight0.Direction = new Vector3(1, 1, 0);
-            _basicEffect.DirectionalLight0.Enabled = true;
-            _basicEffect.AmbientLightColor = new Vector3(0.3f, 0.3f, 0.3f);
-            _basicEffect.DirectionalLight1.Enabled = false;
-            _basicEffect.DirectionalLight2.Enabled = false;
-            _basicEffect.SpecularColor = Vector3.Zero;
         }
     }
 }

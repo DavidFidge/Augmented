@@ -5,6 +5,9 @@ using System.Threading.Tasks;
 using Augmented.Interfaces;
 using Augmented.UserInterface.Data;
 
+using Castle.MicroKernel.Registration;
+
+using DavidFidge.MonoGame.Core.Graphics;
 using DavidFidge.MonoGame.Core.Interfaces.Components;
 using DavidFidge.MonoGame.Core.Interfaces.Services;
 using DavidFidge.MonoGame.Core.Interfaces.UserInterface;
@@ -32,6 +35,8 @@ namespace Augmented
         private bool _isExiting;
 
         public CustomGraphicsDeviceManager CustomGraphicsDeviceManager { get; }
+        public EffectCollection EffectCollection
+        { get; }
         private SpriteBatch _spriteBatch;
 
         public AugmentedGame(
@@ -57,6 +62,8 @@ namespace Augmented
             Content.RootDirectory = "Content";
 
             _screenManager = screenManager;
+
+            EffectCollection = new EffectCollection(_gameProvider);
         }
 
         /// <summary>
@@ -67,6 +74,8 @@ namespace Augmented
         /// </summary>
         protected override void Initialize()
         {
+            EffectCollection.Initialize();
+
             _userInterface.Initialize(Content);
 
             _spriteBatch = new SpriteBatch(GraphicsDevice);

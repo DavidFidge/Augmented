@@ -91,16 +91,24 @@
   <ItemGroup>
     <Compile Include="Components\BaseComponent.cs" />
     <Compile Include="Graphics\Camera\BaseCamera.cs" />
-    <Compile Include="Graphics\BaseQuadTemplate.cs" />
+    <Compile Include="Graphics\Cylinder\CylinderGenerator.cs" />
+    <Compile Include="Graphics\Cylinder\Cylinder.cs" />
+    <Compile Include="Graphics\Extensions\BasicEffectExtensions.cs" />
+    <Compile Include="Graphics\Models\BaseModelTemplate.cs" />
+    <Compile Include="Graphics\Quads\BaseQuadTemplate.cs" />
     <Compile Include="Graphics\Camera\CameraMovement.cs" />
     <Compile Include="Graphics\Camera\CameraResetOptions.cs" />
     <Compile Include="Graphics\Extensions\PointExtensions.cs" />
     <Compile Include="Graphics\Extensions\VertexExtensions.cs" />
-    <Compile Include="Graphics\HeightMapGenerator.cs" />
+    <Compile Include="Graphics\IDrawable.cs" />
+    <Compile Include="Graphics\EffectCollection.cs" />
+    <Compile Include="Graphics\Terrain\HeightMapGenerator.cs" />
+    <Compile Include="Graphics\Trees\Tree.cs" />
+    <Compile Include="Graphics\Trees\Trunk.cs" />
     <Compile Include="Interfaces\Graphics\IHeightMapGenerator.cs" />
-    <Compile Include="Graphics\MaterialQuadTemplate.cs" />
+    <Compile Include="Graphics\Quads\MaterialQuadTemplate.cs" />
     <Compile Include="Graphics\SimpleWorldTransform.cs" />
-    <Compile Include="Graphics\TexturedQuadTemplate.cs" />
+    <Compile Include="Graphics\Quads\TexturedQuadTemplate.cs" />
     <Compile Include="Installers\MediatorInstaller.cs" />
     <Compile Include="Installers\CoreInstaller.cs" />
     <Compile Include="Interfaces\Graphics\ICamera.cs" />
@@ -152,7 +160,9 @@
     <Compile Include="UserInterface\BaseView.cs" />
     <Compile Include="UserInterface\ViewType.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Graphics\Effects\" />
+  </ItemGroup>
   <ItemGroup>
     <None Include="app.config">
       <SubType>Designer</SubType>

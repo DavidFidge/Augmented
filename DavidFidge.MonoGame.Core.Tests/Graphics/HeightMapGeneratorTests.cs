@@ -1,6 +1,7 @@
 ﻿using System;
 
 using DavidFidge.MonoGame.Core.Graphics;
+using DavidFidge.MonoGame.Core.Graphics.Terrain;
 using DavidFidge.TestInfrastructure;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;

@@ -1,5 +1,6 @@
 ﻿using System;
 
+using DavidFidge.MonoGame.Core.Graphics;
 using DavidFidge.MonoGame.Core.Messages;
 using DavidFidge.MonoGame.Core.Services;
 
@@ -24,5 +25,6 @@ namespace DavidFidge.MonoGame.Core.Interfaces.Components
         GameWindow Window { get; }
         CustomGraphicsDeviceManager CustomGraphicsDeviceManager { get; }
         void Run();
+        EffectCollection EffectCollection { get; }
     }
 }
