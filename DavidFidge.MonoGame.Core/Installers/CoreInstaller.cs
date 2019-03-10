@@ -4,6 +4,7 @@ using Castle.MicroKernel.SubSystems.Configuration;
 using Castle.Windsor;
 
 using DavidFidge.MonoGame.Core.Components;
+using DavidFidge.MonoGame.Core.Graphics;
 using DavidFidge.MonoGame.Core.Interfaces;
 using DavidFidge.MonoGame.Core.Interfaces.Components;
 using DavidFidge.MonoGame.Core.Interfaces.Services;
@@ -67,7 +68,13 @@ namespace DavidFidge.MonoGame.Core.Installers
                     .ImplementedBy<GameProvider>(),
 
                 Component.For<IGameOptionsStore>()
-                    .ImplementedBy<GameOptionsStore>()
+                    .ImplementedBy<GameOptionsStore>(),
+
+                Component.For<MaterialQuadTemplate>()
+                    .LifeStyle.Transient,
+
+                Component.For<TexturedQuadTemplate>()
+                    .LifeStyle.Transient
             );
         }
     }

@@ -74,7 +74,6 @@ namespace Augmented.UserInterface.Views
             RootPanel.AddChild(_inGameOptionsView.RootPanel);
         }
 
-
         public Task<Unit> Handle(OpenInGameOptionsRequest request, CancellationToken cancellationToken)
         {
             _inGameOptionsView.Show();
@@ -88,5 +87,7 @@ namespace Augmented.UserInterface.Views
 
             return Unit.Task;
         }
+
+        public bool IsMouseIn3DView => RootPanel != null && RootPanel.IsMouseInRootPanelEmptySpace;
     }
 }

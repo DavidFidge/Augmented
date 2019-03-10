@@ -1,5 +1,6 @@
 ﻿using Augmented.Graphics;
 using Augmented.Graphics.Camera;
+using Augmented.Graphics.TerrainSpace;
 using Augmented.Interfaces;
 using Augmented.Messages;
 using Augmented.UserInterface.Data;
@@ -15,6 +16,7 @@ using Castle.Windsor;
 using DavidFidge.MonoGame.Core.Graphics;
 using DavidFidge.MonoGame.Core.Installers;
 using DavidFidge.MonoGame.Core.Interfaces.Components;
+using DavidFidge.MonoGame.Core.Interfaces.Graphics;
 using DavidFidge.MonoGame.Core.Messages;
 
 using InputHandlers.Keyboard;
@@ -40,10 +42,12 @@ namespace Augmented.Installers
             container.Register(
 
                 Component.For<IKeyboardHandler>()
-                    .ImplementedBy<NullKeyboardHandler>(),
+                    .ImplementedBy<NullKeyboardHandler>()
+                    .IsDefault(),
 
                 Component.For<IMouseHandler>()
-                    .ImplementedBy<NullMouseHandler>(),
+                    .ImplementedBy<NullMouseHandler>()
+                    .IsDefault(),
 
                 Component.For<IGame>()
                     .Forward<IRequestHandler<ExitGameRequest, Unit>>()
@@ -61,10 +65,10 @@ namespace Augmented.Installers
                     .Forward<IRequestHandler<Pan3DViewRequest, Unit>>()
                     .Forward<IRequestHandler<Zoom3DViewRequest, Unit>>(),
 
-                Component.For<TestQuad>()
-                    .LifeStyle.Transient,
+                Component.For<IHeightMapGenerator>()
+                    .ImplementedBy<HeightMapGenerator>(),
 
-                Component.For<MaterialQuadTemplate>()
+                Component.For<Terrain>()
                     .LifeStyle.Transient,
 
                 Component.For<IGameCamera>()

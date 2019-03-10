@@ -51,29 +51,25 @@ namespace DavidFidge.MonoGame.Core.Graphics
             _gameProvider = gameProvider;
         }
 
-        protected void Initialise(float width, float height)
+        protected void LoadContent(float width, float height)
         {
-            InitialiseInternal(width, height, Vector3.Zero);
+            LoadContentInternal(width, height, Vector3.Zero);
         }
 
-        protected void Initialise(float width, float height, Vector3 displacement)
+        protected void LoadContent(float width, float height, Vector3 displacement)
         {
-            InitialiseInternal(width, height, displacement);
+            LoadContentInternal(width, height, displacement);
         }
 
         protected virtual void PrepareBasicEffectForDraw()
         {
         }
 
-        private void InitialiseInternal(float width, float height, Vector3 displacement)
+        private void LoadContentInternal(float width, float height, Vector3 displacement)
         {
             _dimensions.X = width;
             _dimensions.Y = height;
-            LoadGeometry(displacement);
-        }
-
-        private void LoadGeometry(Vector3 displacement)
-        {
+            
             // Halve the width and height - this is used so that points are placed in a fashion that the object will be centred on world origin
             var halfWidth = _dimensions.X / 2.0f;
             var halfHeight = _dimensions.Y / 2.0f;
@@ -103,9 +99,11 @@ namespace DavidFidge.MonoGame.Core.Graphics
             _quadVertices[2] = new VertexPositionTexture(bottomLeft, textureBottomLeft);
             _quadVertices[3] = new VertexPositionTexture(bottomRight, textureBottomRight);
 
-            VertexBuffer = new VertexBuffer(_gameProvider.Game.GraphicsDevice, typeof(VertexPositionTexture),
+            VertexBuffer = new VertexBuffer(
+                _gameProvider.Game.GraphicsDevice,
+                VertexPositionTexture.VertexDeclaration,
                 _quadVertices.Length,
-                BufferUsage.None
+                BufferUsage.WriteOnly
                 );
 
             VertexBuffer.SetData(_quadVertices);
@@ -116,7 +114,7 @@ namespace DavidFidge.MonoGame.Core.Graphics
                 _gameProvider.Game.GraphicsDevice,
                 IndexElementSize.ThirtyTwoBits,
                 sizeof(int) * _quadIndices.Length,
-                BufferUsage.None
+                BufferUsage.WriteOnly
                 );
 
             IndexBuffer.SetData(_quadIndices);

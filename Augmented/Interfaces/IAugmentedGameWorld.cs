@@ -5,6 +5,6 @@ namespace Augmented.Interfaces
     public interface IAugmentedGameWorld
     {
         void Draw(Matrix projection, Matrix view);
-        void Initialise();
+        void LoadContent();
     }
 }
