@@ -6,7 +6,7 @@ using DavidFidge.MonoGame.Core.Interfaces.Graphics;
 
 using Microsoft.Xna.Framework;
 
-namespace DavidFidge.MonoGame.Core.Graphics
+namespace DavidFidge.MonoGame.Core.Graphics.Terrain
 {
     public class HeightMapGenerator : IHeightMapGenerator
     {

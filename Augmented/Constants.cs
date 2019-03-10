@@ -7,5 +7,6 @@ namespace Augmented
     public static class Constants
     {
         public static readonly string GrassTexture = @"Terrain\Grass";
+        public static readonly string WoodTexture = @"Terrain\Wood";
     }
 }

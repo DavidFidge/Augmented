@@ -1,5 +1,6 @@
 ﻿using Augmented.Graphics;
 using Augmented.Graphics.Camera;
+using Augmented.Graphics.Models;
 using Augmented.Graphics.TerrainSpace;
 using Augmented.Interfaces;
 using Augmented.Messages;
@@ -13,7 +14,9 @@ using Castle.MicroKernel.Registration;
 using Castle.MicroKernel.SubSystems.Configuration;
 using Castle.Windsor;
 
-using DavidFidge.MonoGame.Core.Graphics;
+using DavidFidge.MonoGame.Core.Graphics.Cylinder;
+using DavidFidge.MonoGame.Core.Graphics.Terrain;
+using DavidFidge.MonoGame.Core.Graphics.Trees;
 using DavidFidge.MonoGame.Core.Installers;
 using DavidFidge.MonoGame.Core.Interfaces.Components;
 using DavidFidge.MonoGame.Core.Interfaces.Graphics;
@@ -69,6 +72,15 @@ namespace Augmented.Installers
                     .ImplementedBy<HeightMapGenerator>(),
 
                 Component.For<Terrain>()
+                    .LifeStyle.Transient,
+
+                Component.For<AugmentedModel>()
+                    .LifeStyle.Transient,
+
+                Component.For<Cylinder>()
+                    .LifeStyle.Transient,
+
+                Component.For<Tree>()
                     .LifeStyle.Transient,
 
                 Component.For<IGameCamera>()
