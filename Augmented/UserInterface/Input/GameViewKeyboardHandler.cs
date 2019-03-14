@@ -21,12 +21,12 @@ namespace Augmented.UserInterface.Input
             if (keyInFocus == Keys.F12)
                 Environment.Exit(0);
 
-            SetCameraContinousMovement(keysDown);
+            SetCameraContinuousMovement(keysDown);
         }
 
         public override void HandleKeyboardKeyLost(Keys[] keysDown, KeyboardModifier keyboardModifier)
         {
-            SetCameraContinousMovement(keysDown);
+            SetCameraContinuousMovement(keysDown);
         }
 
         public override void HandleKeyboardKeysReleased()
@@ -34,7 +34,7 @@ namespace Augmented.UserInterface.Input
             Mediator.Send(new Pan3DViewRequest(CameraMovement.None));
         }
 
-        private void SetCameraContinousMovement(Keys[] keysDown)
+        private void SetCameraContinuousMovement(Keys[] keysDown)
         {
             var cameraMovementFlags = CameraMovement.None;
 

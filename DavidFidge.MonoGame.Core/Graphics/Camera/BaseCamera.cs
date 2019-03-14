@@ -71,13 +71,12 @@ namespace DavidFidge.MonoGame.Core.Graphics.Camera
 
         protected void SetViewMatrix()
         {
-            var lookAtMatrix = Matrix.CreateLookAt(
+            var cameraLookAt = Matrix.CreateLookAt(
                 _cameraPosition,
                 _cameraLookAt,
-                Vector3.Up
-            );
+                Vector3.Up);
 
-            View = _viewRotation * lookAtMatrix;
+            View = cameraLookAt * _viewRotation;
         }
 
         public void ChangeTranslationRelative(Vector3 translationDelta)
@@ -100,9 +99,6 @@ namespace DavidFidge.MonoGame.Core.Graphics.Camera
 
         public void ChangeRotationRelative(float x, float y, float z)
         {
-            _cameraLookAt.X += x;
-            _cameraLookAt.Y += y;
-            _cameraLookAt.Z += z;
         }
 
         public void ChangeRotation(float x, float y, float z)

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
-using DavidFidge.MonoGame.Core.Graphics.Extensions;
+
 using Microsoft.Xna.Framework;
 
 namespace Augmented.Graphics.TerrainSpace
@@ -52,7 +52,6 @@ namespace Augmented.Graphics.TerrainSpace
 
             if (relativeSize.Y > 1.0f || relativeSize.Y < 0f)
                 throw new ArgumentException("y must be between 0-1 inclusive", nameof(relativeSize));
-
 
             var actualCentreX = (int)(relativeCentre.X * _width - 1);
             var actualCentreY = (int)(relativeCentre.Y * _length - 1);

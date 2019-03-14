@@ -62,7 +62,9 @@ namespace Augmented.Installers
 
                 Component.For<GameView3D>()
                     .Forward<IRequestHandler<Pan3DViewRequest, Unit>>()
-                    .Forward<IRequestHandler<Zoom3DViewRequest, Unit>>(),
+                    .Forward<IRequestHandler<Zoom3DViewRequest, Unit>>()
+                    .Forward<IRequestHandler<Rotate3DViewRequest, Unit>>()
+                    .DependsOn(Dependency.OnComponent<IGameCamera, FreeGameCamera>()),
 
                 Component.For<IHeightMapStore>()
                     .ImplementedBy<HeightMapGenerator>(),
@@ -71,7 +73,11 @@ namespace Augmented.Installers
                     .LifeStyle.Transient,
 
                 Component.For<IGameCamera>()
-                    .ImplementedBy<GameCamera>()
+                    .ImplementedBy<FreeGameCamera>()
+                    .LifeStyle.Transient,
+
+                Component.For<IGameCamera>()
+                    .ImplementedBy<StrategyGameCamera>()
                     .LifeStyle.Transient,
 
                 Component.For<IAugmentedGameWorld>()
