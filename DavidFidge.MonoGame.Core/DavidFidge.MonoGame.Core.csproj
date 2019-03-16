@@ -757,5 +757,11 @@
     <Content Include="Content\GeonBit.UI\themes\lowres\textures\white_texture.png" />
     <Content Include="Content\GeonBit.UI\themes\lowres\ThemeData.xml" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DavidFidge.MonoGame.Core.ContentPipeline\DavidFidge.MonoGame.Core.ContentPipeline.csproj">
+      <Project>{60ca6ef2-68c4-4c31-bd28-308b48aaa94f}</Project>
+      <Name>DavidFidge.MonoGame.Core.ContentPipeline</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

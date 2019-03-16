@@ -11,6 +11,7 @@
 #-------------------------------- References --------------------------------#
 
 /reference:..\..\packages\GeonBit.UI.3.3.0\lib\geonbitui\DataTypes.dll
+/reference:..\..\DavidFidge.MonoGame.Core.ContentPipeline\bin\Debug\DavidFidge.MonoGame.Core.ContentPipeline.dll
 
 #---------------------------------- Content ---------------------------------#
 
@@ -4795,7 +4796,7 @@
 
 #begin Models/Augmented.fbx
 /importer:FbxImporter
-/processor:ModelProcessor
+/processor:ModelCustomProcessor
 /processorParam:ColorKeyColor=0,0,0,0
 /processorParam:ColorKeyEnabled=True
 /processorParam:DefaultEffect=BasicEffect
@@ -4807,7 +4808,7 @@
 /processorParam:RotationX=0
 /processorParam:RotationY=0
 /processorParam:RotationZ=0
-/processorParam:Scale=1
+/processorParam:Scale=0.1
 /processorParam:SwapWindingOrder=False
 /processorParam:TextureFormat=Compressed
 /build:Models/Augmented.fbx
