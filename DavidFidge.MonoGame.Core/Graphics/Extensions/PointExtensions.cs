@@ -1,17 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Security.Cryptography;
-
-using DavidFidge.MonoGame.Core.Interfaces.Components;
 
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 
 namespace DavidFidge.MonoGame.Core.Graphics.Extensions
 {
     public static class PointExtensions
     {
-        public static List<Point> SurroundingPoints(this Point centrePoint, int? xMin, int? xMax, int? yMin, int? yMax)
+        public static List<Point> SurroundingPoints(this Point centrePoint, int? xMin = null, int? xMax = null, int? yMin = null, int? yMax = null)
         {
             var pointList = new List<Point>();
 
@@ -31,6 +27,11 @@ namespace DavidFidge.MonoGame.Core.Graphics.Extensions
             }
 
             return pointList;
+        }
+
+        public static Vector2 ToVector(this Point point)
+        {
+            return new Vector2(point.X, point.Y);
         }
     }
 }

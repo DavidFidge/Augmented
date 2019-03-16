@@ -10,16 +10,16 @@ namespace Augmented.Graphics.TerrainSpace
 {
     public class Terrain : IWorldTransformable
     {
-        private readonly IHeightMapStore _heightMapStore;
+        private readonly IHeightMapGenerator _heightMapGenerator;
         private readonly IGameProvider _gameProvider;
         private IndexBuffer _terrainIndexBuffer;
         private VertexBuffer _terrainVertexBuffer;
         private BasicEffect _basicEffect;
         private SamplerState _samplerState;
 
-        public Terrain(IHeightMapStore heightMapStore, IGameProvider gameProvider)
+        public Terrain(IHeightMapGenerator heightMapGenerator, IGameProvider gameProvider)
         {
-            _heightMapStore = heightMapStore;
+            _heightMapGenerator = heightMapGenerator;
             _gameProvider = gameProvider;
             WorldTransform = new SimpleWorldTransform();
 
@@ -93,7 +93,10 @@ namespace Augmented.Graphics.TerrainSpace
 
         public void LoadContent()
         {
-            var heightMap = _heightMapStore.GetHeightMap();
+            var heightMap = _heightMapGenerator.CreateHeightMap(101, 101)
+                .Hill(new Vector2(0.5f, 0.5f), new Vector2(0.4f, 0.2f), 20)
+                .HeightMap;
+
             var terrainVertices = CreateTerrainVertices(heightMap);
             var terrainIndexes = CreateTerrainIndexes(heightMap);
 
@@ -117,7 +120,7 @@ namespace Augmented.Graphics.TerrainSpace
 
             _terrainIndexBuffer.SetData(terrainIndexes);
 
-            LoadBasicEffect();
+            _basicEffect = _gameProvider.Game.EffectCollection.BuildTextureEffect(Constants.GrassTexture);
         }
 
         public void Draw(Matrix view, Matrix projection)
@@ -149,21 +152,6 @@ namespace Augmented.Graphics.TerrainSpace
             }
 
             graphicsDevice.SamplerStates[0] = oldSamplerState;
-        }
-
-        private void LoadBasicEffect()
-        {
-            _basicEffect = new BasicEffect(_gameProvider.Game.GraphicsDevice);
-
-            _basicEffect.Texture = _gameProvider.Game.Content.Load<Texture2D>(Constants.GrassTexture);
-            _basicEffect.TextureEnabled = true;
-            _basicEffect.EnableDefaultLighting();
-            _basicEffect.DirectionalLight0.Direction = new Vector3(1, 1, 0);
-            _basicEffect.DirectionalLight0.Enabled = true;
-            _basicEffect.AmbientLightColor = new Vector3(0.3f, 0.3f, 0.3f);
-            _basicEffect.DirectionalLight1.Enabled = false;
-            _basicEffect.DirectionalLight2.Enabled = false;
-            _basicEffect.SpecularColor = Vector3.Zero;
         }
     }
 }

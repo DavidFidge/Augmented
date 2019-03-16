@@ -45,8 +45,7 @@
     <Compile Include="Graphics\AugmentedGameWorld.cs" />
     <Compile Include="Graphics\Camera\StrategyGameCamera.cs" />
     <Compile Include="Graphics\Camera\GameView3D.cs" />
-    <Compile Include="Graphics\TerrainSpace\IHeightMapStore.cs" />
-    <Compile Include="Graphics\TerrainSpace\HeightMapGenerator.cs" />
+    <Compile Include="Graphics\Models\AugmentedModel.cs" />
     <Compile Include="Graphics\TerrainSpace\Terrain.cs" />
     <Compile Include="Interfaces\IAugmentedGameWorld.cs" />
     <Compile Include="Graphics\Camera\FreeGameCamera.cs" />
@@ -739,6 +738,7 @@
     <Content Include="Content\GeonBit.UI\themes\lowres\textures\white_texture.png" />
     <Content Include="Content\GeonBit.UI\themes\lowres\ThemeData.xml" />
     <Content Include="Content\Terrain\Grass.png" />
+    <Content Include="Content\Terrain\Wood.png" />
     <Content Include="Icon.ico" />
   </ItemGroup>
   <ItemGroup>
@@ -756,11 +756,16 @@
     <None Include="Content\GeonBit.UI\themes\lowres\fonts\Bold.spritefont" />
     <None Include="Content\GeonBit.UI\themes\lowres\fonts\Italic.spritefont" />
     <None Include="Content\GeonBit.UI\themes\lowres\fonts\Regular.spritefont" />
+    <Content Include="Content\Models\Augmented.fbx" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\DavidFidge.MonoGame.Core.ContentPipeline\DavidFidge.MonoGame.Core.ContentPipeline.csproj">
+      <Project>{60ca6ef2-68c4-4c31-bd28-308b48aaa94f}</Project>
+      <Name>DavidFidge.MonoGame.Core.ContentPipeline</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DavidFidge.MonoGame.Core\DavidFidge.MonoGame.Core.csproj">
       <Project>{1571c1a1-a891-482e-b878-d512219de057}</Project>
       <Name>DavidFidge.MonoGame.Core</Name>

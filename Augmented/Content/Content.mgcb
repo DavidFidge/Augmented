@@ -9,9 +9,9 @@
 /compress:False
 
 #-------------------------------- References --------------------------------#
-# if there are build issues, ensure the reference to geonbit DataTypes.dll is pointing to the correct place
 
 /reference:..\..\packages\GeonBit.UI.3.3.0\lib\geonbitui\DataTypes.dll
+/reference:..\..\DavidFidge.MonoGame.Core.ContentPipeline\bin\Debug\DavidFidge.MonoGame.Core.ContentPipeline.dll
 
 #---------------------------------- Content ---------------------------------#
 
@@ -4793,4 +4793,35 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Terrain/Grass.png
+
+#begin Models/Augmented.fbx
+/importer:FbxImporter
+/processor:ModelCustomProcessor
+/processorParam:ColorKeyColor=0,0,0,0
+/processorParam:ColorKeyEnabled=True
+/processorParam:DefaultEffect=BasicEffect
+/processorParam:GenerateMipmaps=True
+/processorParam:GenerateTangentFrames=False
+/processorParam:PremultiplyTextureAlpha=True
+/processorParam:PremultiplyVertexColors=True
+/processorParam:ResizeTexturesToPowerOfTwo=False
+/processorParam:RotationX=0
+/processorParam:RotationY=0
+/processorParam:RotationZ=0
+/processorParam:Scale=0.1
+/processorParam:SwapWindingOrder=False
+/processorParam:TextureFormat=Compressed
+/build:Models/Augmented.fbx
+
+#begin Terrain/Wood.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Terrain/Wood.png
 

@@ -40,7 +40,7 @@ namespace Augmented.Graphics.Camera
 
         public void Draw()
         {
-            _augmentedGameWorld.Draw(Camera.Projection, Camera.View);
+            _augmentedGameWorld.Draw(Camera.View, Camera.Projection);
         }
 
         public Task<Unit> Handle(Zoom3DViewRequest request, CancellationToken cancellationToken)

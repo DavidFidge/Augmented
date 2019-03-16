@@ -1,11 +1,12 @@
 ﻿using DavidFidge.MonoGame.Core.Interfaces.Components;
+using DavidFidge.MonoGame.Core.Interfaces.Graphics;
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace DavidFidge.MonoGame.Core.Graphics
+namespace DavidFidge.MonoGame.Core.Graphics.Quads
 {
-    public abstract class BaseQuadTemplate
+    public abstract class BaseQuadTemplate : IDrawable
     {
         private int[] _quadIndices;
         private VertexPositionTexture[] _quadVertices;
@@ -17,7 +18,14 @@ namespace DavidFidge.MonoGame.Core.Graphics
         public VertexBuffer VertexBuffer { get; private set; }
         public IndexBuffer IndexBuffer { get; private set; }
 
-        public void Draw(Matrix world, Matrix view, Matrix projection)
+        public IWorldTransform WorldTransform { get; }
+
+        protected BaseQuadTemplate()
+        {
+            WorldTransform = new SimpleWorldTransform();
+        }
+
+        public void Draw(Matrix view, Matrix projection)
         {
             var graphicsDevice = _gameProvider.Game.GraphicsDevice;
 
@@ -26,7 +34,7 @@ namespace DavidFidge.MonoGame.Core.Graphics
 
             if (_basicEffect != null)
             {
-                _basicEffect.World = world;
+                _basicEffect.World = WorldTransform.World;
                 _basicEffect.View = view;
                 _basicEffect.Projection = projection;
 
