@@ -65,7 +65,7 @@ namespace Augmented.Installers
                 Component.For<GameScreen>(),
 
                 Component.For<GameView3D>()
-                    .Forward<IRequestHandler<Pan3DViewRequest, Unit>>()
+                    .Forward<IRequestHandler<Move3DViewRequest, Unit>>()
                     .Forward<IRequestHandler<Zoom3DViewRequest, Unit>>()
                     .Forward<IRequestHandler<Rotate3DViewRequest, Unit>>()
                     .DependsOn(Dependency.OnComponent<IGameCamera, FreeGameCamera>()),

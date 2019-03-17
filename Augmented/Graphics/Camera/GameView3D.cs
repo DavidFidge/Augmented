@@ -12,7 +12,7 @@ namespace Augmented.Graphics.Camera
 {
     public class GameView3D :
         IRequestHandler<Zoom3DViewRequest>,
-        IRequestHandler<Pan3DViewRequest>,
+        IRequestHandler<Move3DViewRequest>,
         IRequestHandler<Rotate3DViewRequest>
     {
         private readonly IAugmentedGameWorld _augmentedGameWorld;
@@ -49,7 +49,7 @@ namespace Augmented.Graphics.Camera
             return Unit.Task;
         }
 
-        public Task<Unit> Handle(Pan3DViewRequest request, CancellationToken cancellationToken)
+        public Task<Unit> Handle(Move3DViewRequest request, CancellationToken cancellationToken)
         {
             Camera.GameUpdateContinuousMovement = request.CameraMovementFlags;
             return Unit.Task;

@@ -32,7 +32,7 @@ namespace Augmented.UserInterface.Input
                 var xDisplacement = (mouseState.X - _halvedWindowX) / 1000f;
                 var yDisplacement = (mouseState.Y - _halvedWindowY) / 1000f;
 
-                Mediator.Send(new Rotate3DViewRequest(yDisplacement, xDisplacement));
+                Mediator.Send(new Rotate3DViewRequest(-xDisplacement, -yDisplacement));
             }
 
             Mouse.SetPosition(_halvedWindowX, _halvedWindowY);

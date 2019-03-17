@@ -4,11 +4,11 @@ using MediatR;
 
 namespace Augmented.Messages
 {
-    public class Pan3DViewRequest : IRequest
+    public class Move3DViewRequest : IRequest
     {
         public CameraMovement CameraMovementFlags { get; }
 
-        public Pan3DViewRequest(CameraMovement cameraMovementFlags)
+        public Move3DViewRequest(CameraMovement cameraMovementFlags)
         {
             CameraMovementFlags = cameraMovementFlags;
         }

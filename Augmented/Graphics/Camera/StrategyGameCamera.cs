@@ -15,37 +15,47 @@ namespace Augmented.Graphics.Camera
         protected float _zoomSpeed = 0.1f;
         private float _rotateX;
         private float _rotateZ;
+        protected Vector3 _cameraLookAt;
+        private Matrix _cameraRotation;
 
         public CameraMovement GameUpdateContinuousMovement { get; set; }
 
         public StrategyGameCamera(IGameProvider gameProvider) : base(gameProvider)
         {
-            _viewRotation = Matrix.Identity;
+            _cameraRotation = Matrix.Identity;
+            SetViewMatrix();
+        }
+
+        public override void Reset()
+        {
+            ResetCameraToGameMap(CameraResetOptions.AbsoluteZ);
 
             _cameraLookAt = new Vector3(0.0f, 0.0f, 0.0f);
             SetViewMatrix();
         }
 
-        public override void Reset(float z, CameraResetOptions cameraResetOptions)
+        private void ResetCameraToGameMap(CameraResetOptions cameraResetOptions)
         {
-            var percent = (_viewportHeight / _viewportWidth);
+            var z = 100f;
 
+            // Viewport ratio affects how much of the map is shown on the screen.
+            // Assume viewport ratio is 1:1 and a map on the screen takes up the entire screen space
+            // at Z = 100.  If this ratio is not 1:1 then you will get blank space on the sides
+            // or the top/bottom.  You can perform no adjustments, adjust the Z so it zooms in or out
+            // for the width of a map or adjust the Z so it zooms in our out for the height of a map.
             switch (cameraResetOptions)
             {
-                // internally perspective is applied on width, so need to adjust for width perspectiving here
                 case CameraResetOptions.AbsoluteZ:
                     _cameraPosition = new Vector3(0.0f, 0.0f, z);
                     break;
                 case CameraResetOptions.WidthOfObjectAtZero:
-                    _cameraPosition = new Vector3(0.0f, 0.0f, z * percent / (float)(Math.Tan(MathHelper.ToRadians(_fieldOfView / 2.0f))));
+                    var percent = _viewportHeight / _viewportWidth;
+                    _cameraPosition = new Vector3(0.0f, 0.0f, z * percent / (float) (Math.Tan(MathHelper.ToRadians(_fieldOfView / 2.0f))));
                     break;
                 case CameraResetOptions.HeightOfObjectAtZero:
-                    _cameraPosition = new Vector3(0.0f, 0.0f, z / (float)(Math.Tan(MathHelper.ToRadians(_fieldOfView / 2.0f))));
+                    _cameraPosition = new Vector3(0.0f, 0.0f, z / (float) (Math.Tan(MathHelper.ToRadians(_fieldOfView / 2.0f))));
                     break;
             }
-
-            _cameraLookAt = new Vector3(0.0f, 0.0f, 0.0f);
-            SetViewMatrix();
         }
 
         public override void Update()
@@ -101,7 +111,17 @@ namespace Augmented.Graphics.Camera
             _cameraLookAt.X = _cameraPosition.X;
             _cameraLookAt.Y = _cameraPosition.Y;
 
-            _viewRotation = Matrix.CreateRotationX(_rotateX) * Matrix.CreateRotationY(_rotateZ) * Matrix.Identity;
+            _cameraRotation = Matrix.CreateRotationX(_rotateX) * Matrix.CreateRotationY(_rotateZ) * Matrix.Identity;
+        }
+
+        protected override void SetViewMatrix()
+        {
+            var cameraLookAt = Matrix.CreateLookAt(
+                _cameraPosition,
+                _cameraLookAt,
+                Vector3.Up);
+
+            View = cameraLookAt * _cameraRotation;
         }
 
         public void Zoom(int magnitude)

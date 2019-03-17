@@ -9,43 +9,21 @@ namespace Augmented.Graphics.Camera
 {
     public class FreeGameCamera : BaseCamera, IGameCamera
     {
-        protected float _zoomMin = float.MinValue;
-        protected float _zoomMax = float.MaxValue;
         protected float _moveSpeed = 1f;
         protected float _zoomSpeed = 0.1f;
-        private float _upDownRotation;
-        private float _leftRightRotation;
         private Quaternion _cameraRotation;
 
         public CameraMovement GameUpdateContinuousMovement { get; set; }
 
         public FreeGameCamera(IGameProvider gameProvider) : base(gameProvider)
         {
-            _cameraRotation = Quaternion.Identity;
-
-            _cameraLookAt = new Vector3(0.0f, 0.0f, 0.0f);
-            SetViewMatrix();
+            Reset();
         }
 
-        public override void Reset(float z, CameraResetOptions cameraResetOptions)
+        public override void Reset()
         {
-            var percent = (_viewportHeight / _viewportWidth);
-
-            switch (cameraResetOptions)
-            {
-                // internally perspective is applied on width, so need to adjust for width perspectiving here
-                case CameraResetOptions.AbsoluteZ:
-                    _cameraPosition = new Vector3(0.0f, 0.0f, z);
-                    break;
-                case CameraResetOptions.WidthOfObjectAtZero:
-                    _cameraPosition = new Vector3(0.0f, 0.0f, z * percent / (float)(Math.Tan(MathHelper.ToRadians(_fieldOfView / 2.0f))));
-                    break;
-                case CameraResetOptions.HeightOfObjectAtZero:
-                    _cameraPosition = new Vector3(0.0f, 0.0f, z / (float)(Math.Tan(MathHelper.ToRadians(_fieldOfView / 2.0f))));
-                    break;
-            }
-
-            _cameraLookAt = new Vector3(0.0f, 0.0f, 0.0f);
+            _cameraPosition = new Vector3(0f, 0f, 100f);
+            _cameraRotation = Quaternion.Identity;
             SetViewMatrix();
         }
 
@@ -58,6 +36,8 @@ namespace Augmented.Graphics.Camera
         public void Move(CameraMovement cameraMovement, float magnitude)
         {
             var movementVector = new Vector3();
+            var upDownRotation = 0f;
+            var leftRightRotation = 0f;
 
             if (cameraMovement.HasFlag(CameraMovement.PanLeft))
                 movementVector.X -= magnitude;
@@ -78,88 +58,35 @@ namespace Augmented.Graphics.Camera
                 movementVector.Z += magnitude;
 
             if (cameraMovement.HasFlag(CameraMovement.RotateUp))
-                _upDownRotation -= magnitude;
+                upDownRotation -= magnitude;
 
             if (cameraMovement.HasFlag(CameraMovement.RotateDown))
-                _upDownRotation += magnitude;
+                upDownRotation += magnitude;
 
             if (cameraMovement.HasFlag(CameraMovement.RotateLeft))
-                _leftRightRotation += magnitude;
+                leftRightRotation += magnitude;
 
             if (cameraMovement.HasFlag(CameraMovement.RotateRight))
-                _leftRightRotation -= magnitude;
+                leftRightRotation -= magnitude;
 
-            // pan camera by adding scroll vectors
-            ChangeTranslationRelative(movementVector);
 
-            if (_cameraPosition.Z < _zoomMin)
-                _cameraPosition.Z = _zoomMin;
-
-            if (_cameraPosition.Z > _zoomMax)
-                _cameraPosition.Z = _zoomMax;
-
-            // set look at position, this changes to whatever the camera x and y is (not doing this will make camera rotate)
-            _cameraLookAt.X = _cameraPosition.X;
-            _cameraLookAt.Y = _cameraPosition.Y;
-
-            var additionalRotation = Quaternion.CreateFromAxisAngle(Vector3.Up, _upDownRotation) *
-                                     Quaternion.CreateFromAxisAngle(Vector3.Right, _leftRightRotation);
+            var additionalRotation = Quaternion.CreateFromAxisAngle(Vector3.Up, upDownRotation) * Quaternion.CreateFromAxisAngle(Vector3.Right, leftRightRotation);
 
             _cameraRotation = _cameraRotation * additionalRotation;
 
+            var rotatedVector = Vector3.Transform(movementVector, _cameraRotation);
+
+            ChangeTranslationRelative(rotatedVector);
         }
 
-        //public void Move2(CameraMovement cameraMovement, float magnitude)
-        //{
-        //    var movementVector = new Vector3();
+        protected override void SetViewMatrix()
+        {
+            var cameraRotatedTarget = Vector3.Transform(Vector3.Forward, _cameraRotation);
+            var cameraFinalTarget = _cameraPosition + cameraRotatedTarget;
+            var cameraRotatedUpVector = Vector3.Transform(Vector3.Up, _cameraRotation);
 
-        //    if (cameraMovement.HasFlag(CameraMovement.PanLeft))
-        //        movementVector.X -= magnitude;
-
-        //    if (cameraMovement.HasFlag(CameraMovement.PanRight))
-        //        movementVector.X += magnitude;
-
-        //    if (cameraMovement.HasFlag(CameraMovement.PanUp))
-        //        movementVector.Y += magnitude;
-
-        //    if (cameraMovement.HasFlag(CameraMovement.PanDown))
-        //        movementVector.Y -= magnitude;
-
-        //    if (cameraMovement.HasFlag(CameraMovement.Forward))
-        //        movementVector.Z -= magnitude;
-
-        //    if (cameraMovement.HasFlag(CameraMovement.Backward))
-        //        movementVector.Z += magnitude;
-
-        //    if (cameraMovement.HasFlag(CameraMovement.RotateUp))
-        //        _rotateX -= magnitude;
-
-        //    if (cameraMovement.HasFlag(CameraMovement.RotateDown))
-        //        _rotateX += magnitude;
-
-        //    if (cameraMovement.HasFlag(CameraMovement.RotateLeft))
-        //        _rotateZ += magnitude;
-
-        //    if (cameraMovement.HasFlag(CameraMovement.RotateRight))
-        //        _rotateZ -= magnitude;
-
-        //     pan camera by adding scroll vectors
-        //    movementVector = (Matrix.CreateTranslation(movementVector) * _viewRotation).Translation;
-
-        //    ChangeTranslationRelative(movementVector);
-
-        //    if (_cameraPosition.Z < _zoomMin)
-        //        _cameraPosition.Z = _zoomMin;
-
-        //    if (_cameraPosition.Z > _zoomMax)
-        //        _cameraPosition.Z = _zoomMax;
-
-        //     set look at position, this changes to whatever the camera x and y is (not doing this will make camera rotate)
-        //    _cameraLookAt.X = _cameraPosition.X;
-        //    _cameraLookAt.Y = _cameraPosition.Y;
-
-        //    _viewRotation = Matrix.CreateRotationZ(_rotateX) * Matrix.CreateRotationY(_rotateZ) * Matrix.Identity;
-        //}
+            View = Matrix.CreateLookAt(_cameraPosition, cameraFinalTarget, cameraRotatedUpVector);
+        }
 
         public void Zoom(int magnitude)
         {
