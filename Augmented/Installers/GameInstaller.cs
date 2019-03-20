@@ -6,6 +6,7 @@ using Augmented.Interfaces;
 using Augmented.Messages;
 using Augmented.UserInterface.Data;
 using Augmented.UserInterface.Input;
+using Augmented.UserInterface.Input.CameraMovementSpace;
 using Augmented.UserInterface.Screens;
 using Augmented.UserInterface.ViewModels;
 using Augmented.UserInterface.Views;
@@ -14,6 +15,7 @@ using Castle.MicroKernel.Registration;
 using Castle.MicroKernel.SubSystems.Configuration;
 using Castle.Windsor;
 
+using DavidFidge.MonoGame.Core.Graphics.Camera;
 using DavidFidge.MonoGame.Core.Graphics.Cylinder;
 using DavidFidge.MonoGame.Core.Graphics.Terrain;
 using DavidFidge.MonoGame.Core.Graphics.Trees;
@@ -68,7 +70,8 @@ namespace Augmented.Installers
                     .Forward<IRequestHandler<Move3DViewRequest, Unit>>()
                     .Forward<IRequestHandler<Zoom3DViewRequest, Unit>>()
                     .Forward<IRequestHandler<Rotate3DViewRequest, Unit>>()
-                    .DependsOn(Dependency.OnComponent<IGameCamera, FreeGameCamera>()),
+                    .DependsOn(Dependency.OnComponent<IGameCamera, FreeGameCamera>()
+                ),
 
                 Component.For<IHeightMapGenerator>()
                     .ImplementedBy<HeightMapGenerator>(),
@@ -157,12 +160,20 @@ namespace Augmented.Installers
                     .DependsOn(Dependency.OnComponent<IMouseHandler, GameViewMouseHandler>()),
 
                 Component.For<IKeyboardHandler>()
-                    .ImplementedBy<GameViewKeyboardHandler>(),
+                    .ImplementedBy<GameViewKeyboardHandler>()
+                    .DependsOn(Dependency.OnComponent<ICameraMovement, FreeCameraMovement>()
+                ),
 
                 Component.For<IMouseHandler>()
                     .ImplementedBy<GameViewMouseHandler>(),
 
-                Component.For<GameViewModel>()
+                Component.For<GameViewModel>(),
+
+                Component.For<ICameraMovement>()
+                    .ImplementedBy<StrategyCameraMovement>(),
+
+                Component.For<ICameraMovement>()
+                    .ImplementedBy<FreeCameraMovement>()
             );
         }
 

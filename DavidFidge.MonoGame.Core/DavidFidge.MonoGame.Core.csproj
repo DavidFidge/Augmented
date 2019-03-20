@@ -91,6 +91,9 @@
   <ItemGroup>
     <Compile Include="Components\BaseComponent.cs" />
     <Compile Include="Graphics\Camera\BaseCamera.cs" />
+    <Compile Include="Graphics\Camera\FreeGameCamera.cs" />
+    <Compile Include="Graphics\Camera\IGameCamera.cs" />
+    <Compile Include="Graphics\Camera\StrategyGameCamera.cs" />
     <Compile Include="Graphics\Cylinder\CylinderGenerator.cs" />
     <Compile Include="Graphics\Cylinder\Cylinder.cs" />
     <Compile Include="Graphics\Extensions\BasicEffectExtensions.cs" />

@@ -29,10 +29,10 @@ namespace Augmented.UserInterface.Input
             }
             else
             {
-                var xDisplacement = (mouseState.X - _halvedWindowX) / 1000f;
-                var yDisplacement = (mouseState.Y - _halvedWindowY) / 1000f;
+                var xDisplacement = mouseState.X - _halvedWindowX;
+                var yDisplacement = mouseState.Y - _halvedWindowY;
 
-                Mediator.Send(new Rotate3DViewRequest(-xDisplacement, -yDisplacement));
+                Mediator.Send(new Rotate3DViewRequest(-xDisplacement / 100f, -yDisplacement / 100f));
             }
 
             Mouse.SetPosition(_halvedWindowX, _halvedWindowY);

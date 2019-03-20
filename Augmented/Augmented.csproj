@@ -43,13 +43,10 @@
   <ItemGroup>
     <Compile Include="Constants.cs" />
     <Compile Include="Graphics\AugmentedGameWorld.cs" />
-    <Compile Include="Graphics\Camera\StrategyGameCamera.cs" />
     <Compile Include="Graphics\Camera\GameView3D.cs" />
     <Compile Include="Graphics\Models\AugmentedModel.cs" />
     <Compile Include="Graphics\TerrainSpace\Terrain.cs" />
     <Compile Include="Interfaces\IAugmentedGameWorld.cs" />
-    <Compile Include="Graphics\Camera\FreeGameCamera.cs" />
-    <Compile Include="Graphics\Camera\IGameCamera.cs" />
     <Compile Include="Installers\GameInstaller.cs" />
     <Compile Include="Messages\GameSpeed\ChangeGameSpeedRequest.cs" />
     <Compile Include="Messages\Game\NewGameRequest.cs" />
@@ -72,6 +69,9 @@
     <Compile Include="UserInterface\Data\VideoOptionsData.cs" />
     <Compile Include="UserInterface\Data\OptionsData.cs" />
     <Compile Include="UserInterface\Data\TitleData.cs" />
+    <Compile Include="UserInterface\Input\CameraMovement\FreeCameraMovement.cs" />
+    <Compile Include="UserInterface\Input\CameraMovement\ICameraMovement.cs" />
+    <Compile Include="UserInterface\Input\CameraMovement\StrategyCameraMovement.cs" />
     <Compile Include="UserInterface\Input\NullKeyboardHandler.cs" />
     <Compile Include="UserInterface\Input\NullMouseHandler.cs" />
     <Compile Include="UserInterface\Input\GameViewMouseHandler.cs" />
