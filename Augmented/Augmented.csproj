@@ -47,14 +47,13 @@
     <Compile Include="Graphics\Models\AugmentedModel.cs" />
     <Compile Include="Graphics\TerrainSpace\Terrain.cs" />
     <Compile Include="Interfaces\IAugmentedGameWorld.cs" />
-    <Compile Include="Graphics\Camera\GameCamera.cs" />
-    <Compile Include="Graphics\Camera\IGameCamera.cs" />
     <Compile Include="Installers\GameInstaller.cs" />
     <Compile Include="Messages\GameSpeed\ChangeGameSpeedRequest.cs" />
     <Compile Include="Messages\Game\NewGameRequest.cs" />
     <Compile Include="Messages\InGameOptions\CloseInGameOptionsRequest.cs" />
     <Compile Include="Messages\InGameOptions\ExitCurrentGameRequest.cs" />
-    <Compile Include="Messages\InGameOptions\Pan3DViewRequest.cs" />
+    <Compile Include="Messages\InGameOptions\Rotate3DViewRequest.cs" />
+    <Compile Include="Messages\InGameOptions\Move3DViewRequest.cs" />
     <Compile Include="Messages\InGameOptions\Zoom3DViewRequest.cs" />
     <Compile Include="Messages\InGameOptions\OpenInGameOptionsRequest.cs" />
     <Compile Include="Messages\Title\OptionsButtonClickedRequest.cs" />
@@ -70,6 +69,9 @@
     <Compile Include="UserInterface\Data\VideoOptionsData.cs" />
     <Compile Include="UserInterface\Data\OptionsData.cs" />
     <Compile Include="UserInterface\Data\TitleData.cs" />
+    <Compile Include="UserInterface\Input\CameraMovement\FreeCameraMovement.cs" />
+    <Compile Include="UserInterface\Input\CameraMovement\ICameraMovement.cs" />
+    <Compile Include="UserInterface\Input\CameraMovement\StrategyCameraMovement.cs" />
     <Compile Include="UserInterface\Input\NullKeyboardHandler.cs" />
     <Compile Include="UserInterface\Input\NullMouseHandler.cs" />
     <Compile Include="UserInterface\Input\GameViewMouseHandler.cs" />
