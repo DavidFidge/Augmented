@@ -56,6 +56,7 @@ namespace DavidFidge.MonoGame.Core.Graphics
 
             basicEffect.DiffuseColor = colour.ToVector3();
             basicEffect.Alpha = colour.A / 255.0f;
+            basicEffect.LightingEnabled = false;
 
             return basicEffect;
         }

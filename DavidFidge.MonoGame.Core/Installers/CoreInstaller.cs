@@ -4,6 +4,7 @@ using Castle.MicroKernel.SubSystems.Configuration;
 using Castle.Windsor;
 
 using DavidFidge.MonoGame.Core.Components;
+using DavidFidge.MonoGame.Core.Configuration;
 using DavidFidge.MonoGame.Core.Graphics;
 using DavidFidge.MonoGame.Core.Graphics.Quads;
 using DavidFidge.MonoGame.Core.Interfaces;
@@ -75,7 +76,13 @@ namespace DavidFidge.MonoGame.Core.Installers
                     .LifeStyle.Transient,
 
                 Component.For<TexturedQuadTemplate>()
-                    .LifeStyle.Transient
+                    .LifeStyle.Transient,
+
+                Component.For<IConfigurationSettings>()
+                    .ImplementedBy<ConfigurationSettings>(),
+
+                Component.For<IGraphicsSettings>()
+                    .UsingFactoryMethod(k => BaseConfigurationSectionHandler.Load<GraphicsSettings>())
             );
         }
     }
