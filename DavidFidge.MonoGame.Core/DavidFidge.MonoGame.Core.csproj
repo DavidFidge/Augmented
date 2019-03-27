@@ -39,6 +39,9 @@
     <Reference Include="DataTypes, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\GeonBit.UI.3.3.0\lib\geonbitui\DataTypes.dll</HintPath>
     </Reference>
+    <Reference Include="ExtendedXmlSerializer, Version=2.1.17.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ExtendedXmlSerializer.2.1.17\lib\net45\ExtendedXmlSerializer.dll</HintPath>
+    </Reference>
     <Reference Include="GeonBit.UI, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\GeonBit.UI.3.3.0\lib\geonbitui\GeonBit.UI.dll</HintPath>
     </Reference>
@@ -76,9 +79,15 @@
       <HintPath>..\packages\Serilog.Sinks.Seq.4.0.0\lib\net45\Serilog.Sinks.Seq.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Collections.Immutable, Version=1.2.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Collections.Immutable.1.4.0\lib\netstandard2.0\System.Collections.Immutable.dll</HintPath>
+    </Reference>
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Interactive, Version=3.0.1000.0, Culture=neutral, PublicKeyToken=94bc3704cddfc263, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Interactive.3.1.1\lib\net45\System.Interactive.dll</HintPath>
+    </Reference>
     <Reference Include="System.Runtime.Remoting" />
     <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
@@ -90,6 +99,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Components\BaseComponent.cs" />
+    <Compile Include="Configuration\BaseConfigurationSectionHandler.cs" />
     <Compile Include="Graphics\Camera\BaseCamera.cs" />
     <Compile Include="Graphics\Camera\FreeGameCamera.cs" />
     <Compile Include="Graphics\Camera\IGameCamera.cs" />
@@ -108,6 +118,8 @@
     <Compile Include="Graphics\Terrain\HeightMapGenerator.cs" />
     <Compile Include="Graphics\Trees\Tree.cs" />
     <Compile Include="Graphics\Trees\Trunk.cs" />
+    <Compile Include="Configuration\ConfigurationSettings.cs" />
+    <Compile Include="Configuration\GraphicsSettings.cs" />
     <Compile Include="Interfaces\Graphics\IHeightMapGenerator.cs" />
     <Compile Include="Graphics\Quads\MaterialQuadTemplate.cs" />
     <Compile Include="Graphics\SimpleWorldTransform.cs" />
@@ -119,10 +131,12 @@
     <Compile Include="Interfaces\Graphics\IWorldTransform.cs" />
     <Compile Include="Interfaces\Graphics\IWorldTransformable.cs" />
     <Compile Include="Interfaces\Components\IGame.cs" />
+    <Compile Include="Interfaces\Configuration\IConfiguratonSettings.cs" />
     <Compile Include="Interfaces\Services\IGameInputService.cs" />
     <Compile Include="Interfaces\Services\IGameTimeService.cs" />
     <Compile Include="Interfaces\Components\IMemento.cs" />
     <Compile Include="Interfaces\Components\ISaveable.cs" />
+    <Compile Include="Interfaces\Configuration\IGraphicsSettings.cs" />
     <Compile Include="Interfaces\Services\ISaveGameService.cs" />
     <Compile Include="Interfaces\Services\IGameOptionsStore.cs" />
     <Compile Include="Interfaces\Services\ISaveGameStore.cs" />
