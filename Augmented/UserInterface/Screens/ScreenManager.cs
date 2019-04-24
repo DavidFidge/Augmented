@@ -30,15 +30,11 @@ namespace Augmented.UserInterface.Screens
         {
             _titleScreen.Initialize();
             _gameScreen.Initialize();
-
-            // Quickstart to ease debugging
-            // StartNewGame();
-            ShowScreen(_titleScreen);
         }
 
         public void Draw()
         {
-            _activeScreen.Draw();
+            _activeScreen?.Draw();
         }
 
         private void ShowScreen(Screen screen)
@@ -52,17 +48,24 @@ namespace Augmented.UserInterface.Screens
 
         public void Update()
         {
+            if (_activeScreen == null)
+            {
+                // Quickstart to ease debugging
+                NewGame();
+                // ShowScreen(_titleScreen);
+            }
+
             _activeScreen.Update();
         }
         
         public Task<Unit> Handle(NewGameRequest request, CancellationToken cancellationToken)
         {
-            StartNewGame();
+            NewGame();
 
             return Unit.Task;
         }
 
-        private void StartNewGame()
+        private void NewGame()
         {
             ShowScreen(_gameScreen);
             _gameScreen.StartNewGame();

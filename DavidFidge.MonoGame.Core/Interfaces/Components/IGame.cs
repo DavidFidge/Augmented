@@ -26,5 +26,6 @@ namespace DavidFidge.MonoGame.Core.Interfaces.Components
         CustomGraphicsDeviceManager CustomGraphicsDeviceManager { get; }
         void Run();
         EffectCollection EffectCollection { get; }
+        ICoreContent CoreContent { get; }
     }
 }

@@ -1,4 +1,6 @@
-﻿using Augmented.Graphics;
+﻿using System.Web.UI.WebControls;
+
+using Augmented.Graphics;
 using Augmented.Graphics.Camera;
 using Augmented.Graphics.Models;
 using Augmented.Graphics.TerrainSpace;
@@ -15,6 +17,7 @@ using Castle.MicroKernel.Registration;
 using Castle.MicroKernel.SubSystems.Configuration;
 using Castle.Windsor;
 
+using DavidFidge.MonoGame.Core.Graphics;
 using DavidFidge.MonoGame.Core.Graphics.Camera;
 using DavidFidge.MonoGame.Core.Graphics.Cylinder;
 using DavidFidge.MonoGame.Core.Graphics.Terrain;
@@ -28,6 +31,8 @@ using InputHandlers.Keyboard;
 using InputHandlers.Mouse;
 
 using MediatR;
+
+using Unit = MediatR.Unit;
 
 namespace Augmented.Installers
 {
@@ -45,6 +50,10 @@ namespace Augmented.Installers
             RegisterGameSpeedView(container, store);
 
             container.Register(
+
+                Component.For<IContentStrings>()
+                    .ImplementedBy<ContentStrings>()
+                    .Forward<ICoreContent>(),
 
                 Component.For<IKeyboardHandler>()
                     .ImplementedBy<NullKeyboardHandler>()
@@ -98,7 +107,6 @@ namespace Augmented.Installers
 
                 Component.For<IAugmentedGameWorld>()
                     .ImplementedBy<AugmentedGameWorld>()
-                    .LifeStyle.Transient
             );
         }
 

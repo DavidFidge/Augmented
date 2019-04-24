@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content.Pipeline;
 using Microsoft.Xna.Framework.Content.Pipeline.Graphics;
 using Microsoft.Xna.Framework.Content.Pipeline.Processors;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace DavidFidge.MonoGame.Core.ContentPipeline
 {
@@ -15,7 +16,7 @@ namespace DavidFidge.MonoGame.Core.ContentPipeline
 
         protected override MaterialContent ConvertMaterial(MaterialContent material, ContentProcessorContext context)
         {
-            //this function is called multiple times for each material in the model.  The parameter only needs to be added the first time
+            // This function is called multiple times for each material in the model.  The parameter only needs to be added the first time
             if (string.IsNullOrEmpty(CustomEffectFilename))
             {
                 return context.Convert<MaterialContent, MaterialContent>(material, "MaterialProcessor");
@@ -35,17 +36,18 @@ namespace DavidFidge.MonoGame.Core.ContentPipeline
             vertices = AddVerticesToList(nodeInput, vertices);
 
             var boundingBox = BoundingBox.CreateFromPoints(vertices);
+            var boundingSphere = BoundingSphere.CreateFromPoints(vertices);
 
-            var tagObject = new TagObject(boundingBox);
+            var tagObject = new TagObject(boundingBox, boundingSphere);
 
             model.Tag = tagObject;
 
             return model;
         }
 
-        private List<Vector3> AddVerticesToList(NodeContent noteContent, List<Vector3> vertices)
+        private List<Vector3> AddVerticesToList(NodeContent nodeContent, List<Vector3> vertices)
         {
-            if (noteContent is MeshContent meshContent)
+            if (nodeContent is MeshContent meshContent)
             {
                 var absTransform = meshContent.AbsoluteTransform;
 
@@ -59,7 +61,7 @@ namespace DavidFidge.MonoGame.Core.ContentPipeline
                 }
             }
 
-            foreach (var child in noteContent.Children)
+            foreach (var child in nodeContent.Children)
                 vertices = AddVerticesToList(child, vertices);
 
             return vertices;

@@ -14,7 +14,7 @@ namespace DavidFidge.MonoGame.Core.Graphics.Cylinder
         private readonly IGameProvider _gameProvider;
         private VertexBuffer _vertexBuffer;
         private IndexBuffer _indexBuffer;
-        private BasicEffect _basicEffect;
+        private Effect _effect;
         private int _primitiveCount;
 
         public IWorldTransform WorldTransform { get; }
@@ -55,13 +55,13 @@ namespace DavidFidge.MonoGame.Core.Graphics.Cylinder
             _indexBuffer = new IndexBuffer(
                 _gameProvider.Game.GraphicsDevice,
                 IndexElementSize.ThirtyTwoBits,
-                sizeof(int) * indexes.Length,
+                indexes.Length,
                 BufferUsage.WriteOnly
             );
 
             _indexBuffer.SetData(indexes);
 
-            _basicEffect = _gameProvider.Game.EffectCollection.BuildMaterialEffect(Color.Blue);
+            _effect = _gameProvider.Game.EffectCollection.BuildMaterialEffect(Color.Blue);
         }
 
         public void Draw(Matrix view, Matrix projection)
@@ -71,23 +71,25 @@ namespace DavidFidge.MonoGame.Core.Graphics.Cylinder
             graphicsDevice.Indices = _indexBuffer;
             graphicsDevice.SetVertexBuffer(_vertexBuffer);
 
-            if (_basicEffect != null)
+            if (_effect == null)
+                return;
+            
+            _effect.SetWorldViewProjection(
+                WorldTransform.World,
+                view,
+                projection
+            );
+
+            foreach (var pass in _effect.CurrentTechnique.Passes)
             {
-                _basicEffect.World = WorldTransform.World;
-                _basicEffect.View = view;
-                _basicEffect.Projection = projection;
+                pass.Apply();
 
-                foreach (var pass in _basicEffect.CurrentTechnique.Passes)
-                {
-                    pass.Apply();
-
-                    graphicsDevice.DrawIndexedPrimitives(
-                        PrimitiveType.TriangleStrip,
-                        0,
-                        0,
-                        _primitiveCount
-                    );
-                }
+                graphicsDevice.DrawIndexedPrimitives(
+                    PrimitiveType.TriangleStrip,
+                    0,
+                    0,
+                    _primitiveCount
+                );
             }
         }
     }

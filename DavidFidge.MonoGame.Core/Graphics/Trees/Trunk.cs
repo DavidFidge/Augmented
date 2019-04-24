@@ -7,9 +7,8 @@ namespace DavidFidge.MonoGame.Core.Graphics.Trees
 {
     public class Trunk
     {
-        private VertexPositionNormalTexture[] Vertices;
         private readonly IGameProvider _gameProvider;
-        private string _textureName;
+        private readonly string _textureName;
 
         public int TrunkCircumferenceVertexCount { get; set; }
         public int TrunkHeightVertexCount { get; set; }

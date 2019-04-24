@@ -106,7 +106,9 @@
     <Compile Include="Graphics\Camera\StrategyGameCamera.cs" />
     <Compile Include="Graphics\Cylinder\CylinderGenerator.cs" />
     <Compile Include="Graphics\Cylinder\Cylinder.cs" />
+    <Compile Include="Graphics\Extensions\EffectExtensions.cs" />
     <Compile Include="Graphics\Extensions\BasicEffectExtensions.cs" />
+    <Compile Include="Graphics\ICoreContent.cs" />
     <Compile Include="Graphics\Models\BaseModelTemplate.cs" />
     <Compile Include="Graphics\Quads\BaseQuadTemplate.cs" />
     <Compile Include="Graphics\Camera\CameraMovement.cs" />

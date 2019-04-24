@@ -8,9 +8,9 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace DavidFidge.MonoGame.Core.Graphics
 {
-    public class EffectCollection : Dictionary<string, BasicEffect>
+    public class EffectCollection : Dictionary<string, Effect>
     {
-        private IGameProvider _gameProvider;
+        private readonly IGameProvider _gameProvider;
 
         public BasicEffect MasterEffectTemplate { get; set; }
         public BasicEffect TextureEffectTemplate { get; set; }
@@ -46,6 +46,20 @@ namespace DavidFidge.MonoGame.Core.Graphics
             basicEffect.CopyTextureFrom(TextureEffectTemplate);
 
             basicEffect.Texture = _gameProvider.Game.Content.Load<Texture2D>(texture);
+
+            return basicEffect;
+        }
+
+        public BasicEffect BuildMaterialTextureEffect(string texture)
+        {
+            var basicEffect = (BasicEffect)MasterEffectTemplate.Clone();
+
+            basicEffect.CopyTextureFrom(TextureEffectTemplate);
+
+            basicEffect.Texture = _gameProvider.Game.Content.Load<Texture2D>(texture);
+
+            basicEffect.DiffuseColor = Color.White.ToVector3();
+            basicEffect.LightingEnabled = false;
 
             return basicEffect;
         }

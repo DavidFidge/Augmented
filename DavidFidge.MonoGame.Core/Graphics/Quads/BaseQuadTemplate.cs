@@ -1,4 +1,5 @@
-﻿using DavidFidge.MonoGame.Core.Interfaces.Components;
+﻿using DavidFidge.MonoGame.Core.Graphics.Extensions;
+using DavidFidge.MonoGame.Core.Interfaces.Components;
 using DavidFidge.MonoGame.Core.Interfaces.Graphics;
 
 using Microsoft.Xna.Framework;
@@ -13,17 +14,14 @@ namespace DavidFidge.MonoGame.Core.Graphics.Quads
         private Vector2 _dimensions;
 
         protected IGameProvider _gameProvider;
-        protected BasicEffect _basicEffect;
+        public Effect Effect { get; set; }
 
         public VertexBuffer VertexBuffer { get; private set; }
         public IndexBuffer IndexBuffer { get; private set; }
 
         public IWorldTransform WorldTransform { get; }
 
-        protected BaseQuadTemplate()
-        {
-            WorldTransform = new SimpleWorldTransform();
-        }
+        public bool AlphaEnabled { get; set; }
 
         public void Draw(Matrix view, Matrix projection)
         {
@@ -32,31 +30,73 @@ namespace DavidFidge.MonoGame.Core.Graphics.Quads
             graphicsDevice.Indices = IndexBuffer;
             graphicsDevice.SetVertexBuffer(VertexBuffer);
 
-            if (_basicEffect != null)
+            if (Effect == null)
+                return;
+
+            Effect.SetWorldViewProjection(
+                WorldTransform.World,
+                view,
+                projection
+            );
+
+            if (AlphaEnabled)
             {
-                _basicEffect.World = WorldTransform.World;
-                _basicEffect.View = view;
-                _basicEffect.Projection = projection;
+                graphicsDevice.BlendState = BlendState.AlphaBlend;
 
-                PrepareBasicEffectForDraw();
+                Effect.Parameters["AlphaEnabled"].SetValue(true);
 
-                foreach(var pass in _basicEffect.CurrentTechnique.Passes)
-                {
-                    pass.Apply();
+                DrawOpaquePixels(graphicsDevice);
+                DrawTransparentPixels(graphicsDevice);
+            }
+            else
+            {
+                Effect.Parameters["AlphaEnabled"].SetValue(false);
+                DrawQuad(graphicsDevice);
+            }
 
-                    graphicsDevice.DrawIndexedPrimitives(
-                        PrimitiveType.TriangleList,
-                        0,
-                        0,
-                        2
-                    );
-                }
+            // Reset render states
+            graphicsDevice.BlendState = BlendState.Opaque;
+            graphicsDevice.DepthStencilState = DepthStencilState.Default;
+        }
+
+        private void DrawOpaquePixels(GraphicsDevice graphicsDevice)
+        {
+            graphicsDevice.DepthStencilState = DepthStencilState.Default;
+
+            Effect.Parameters["AlphaTestGreater"].SetValue(true);
+
+            DrawQuad(graphicsDevice);
+        }
+
+        private void DrawTransparentPixels(GraphicsDevice graphicsDevice)
+        {
+            graphicsDevice.DepthStencilState = DepthStencilState.DepthRead;
+
+            Effect.Parameters["AlphaTestGreater"].SetValue(false);
+
+            DrawQuad(graphicsDevice);
+        }
+
+        private void DrawQuad(GraphicsDevice graphicsDevice)
+        {
+            foreach (var pass in Effect.CurrentTechnique.Passes)
+            {
+                pass.Apply();
+
+                graphicsDevice.DrawIndexedPrimitives(
+                    PrimitiveType.TriangleList,
+                    0,
+                    0,
+                    2
+                );
             }
         }
 
         protected BaseQuadTemplate(IGameProvider gameProvider)
         {
+            AlphaEnabled = true;
             _gameProvider = gameProvider;
+            WorldTransform = new SimpleWorldTransform();
         }
 
         protected void LoadContent(float width, float height)
@@ -67,10 +107,6 @@ namespace DavidFidge.MonoGame.Core.Graphics.Quads
         protected void LoadContent(float width, float height, Vector3 displacement)
         {
             LoadContentInternal(width, height, displacement);
-        }
-
-        protected virtual void PrepareBasicEffectForDraw()
-        {
         }
 
         private void LoadContentInternal(float width, float height, Vector3 displacement)
@@ -121,7 +157,7 @@ namespace DavidFidge.MonoGame.Core.Graphics.Quads
             IndexBuffer = new IndexBuffer(
                 _gameProvider.Game.GraphicsDevice,
                 IndexElementSize.ThirtyTwoBits,
-                sizeof(int) * _quadIndices.Length,
+                _quadIndices.Length,
                 BufferUsage.WriteOnly
                 );
 

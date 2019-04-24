@@ -9,6 +9,7 @@ namespace DavidFidge.MonoGame.Core.ContentPipeline
         protected override void Write(ContentWriter contentWriter, TagObject tagObject)
         {
             contentWriter.WriteObject(tagObject.BoundingBox);
+            contentWriter.WriteObject(tagObject.BoundingSphere);
         }
 
         public override string GetRuntimeReader(TargetPlatform targetPlatform)

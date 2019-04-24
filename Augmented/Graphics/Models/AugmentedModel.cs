@@ -18,13 +18,14 @@ namespace Augmented.Graphics.Models
 
         public void LoadContent()
         {
-            LoadContent(@"Models\Augmented");
+            LoadContentInternal(@"Models\Augmented");
 
             var effects = _model.Meshes.SelectMany(m => m.Effects).ToList();
 
-            foreach (BasicEffect effect in effects)
+            foreach (Effect effect in effects)
             {
-                effect.CopyLightingFrom(_gameProvider.Game.EffectCollection.MasterEffectTemplate);
+                if (effect is BasicEffect basicEffect)
+                    basicEffect.CopyLightingFrom(_gameProvider.Game.EffectCollection.MasterEffectTemplate);
             }
         }
     }
