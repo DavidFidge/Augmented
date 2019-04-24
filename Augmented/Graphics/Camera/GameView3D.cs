@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Net.Http.Headers;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -29,7 +28,6 @@ namespace Augmented.Graphics.Camera
 
         public void Initialise()
         {
-            _augmentedGameWorld.LoadContent();
             Camera.Initialise();
         }
 

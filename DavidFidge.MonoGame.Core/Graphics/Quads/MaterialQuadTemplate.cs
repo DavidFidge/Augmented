@@ -1,6 +1,7 @@
 ﻿using DavidFidge.MonoGame.Core.Interfaces.Components;
 
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace DavidFidge.MonoGame.Core.Graphics.Quads
 {
@@ -16,8 +17,8 @@ namespace DavidFidge.MonoGame.Core.Graphics.Quads
             {
                 _colour = value;
 
-                if (_basicEffect != null)
-                    _basicEffect.DiffuseColor = _colour.ToVector3();
+                if (Effect is BasicEffect basicEffect)
+                    basicEffect.DiffuseColor = _colour.ToVector3();
             }
         }
 
@@ -44,7 +45,7 @@ namespace DavidFidge.MonoGame.Core.Graphics.Quads
         {
             LoadContent(width, height, displacement);
             _colour = colour;
-            _basicEffect = _gameProvider.Game.EffectCollection.BuildMaterialEffect(colour);
+            Effect = _gameProvider.Game.EffectCollection.BuildMaterialEffect(colour);
         }
 
         public void LoadContent(

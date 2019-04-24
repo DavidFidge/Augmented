@@ -12,15 +12,20 @@ namespace Augmented.Graphics.TerrainSpace
     {
         private readonly IHeightMapGenerator _heightMapGenerator;
         private readonly IGameProvider _gameProvider;
+        private readonly IContentStrings _contentStrings;
         private IndexBuffer _terrainIndexBuffer;
         private VertexBuffer _terrainVertexBuffer;
-        private BasicEffect _basicEffect;
+        private Effect _effect;
         private SamplerState _samplerState;
 
-        public Terrain(IHeightMapGenerator heightMapGenerator, IGameProvider gameProvider)
+        public Terrain(
+            IHeightMapGenerator heightMapGenerator,
+            IGameProvider gameProvider,
+            IContentStrings contentStrings)
         {
             _heightMapGenerator = heightMapGenerator;
             _gameProvider = gameProvider;
+            _contentStrings = contentStrings;
             WorldTransform = new SimpleWorldTransform();
 
             _samplerState = new SamplerState
@@ -114,13 +119,13 @@ namespace Augmented.Graphics.TerrainSpace
             _terrainIndexBuffer = new IndexBuffer(
                 _gameProvider.Game.GraphicsDevice,
                 IndexElementSize.ThirtyTwoBits,
-                sizeof(int) * terrainIndexes.Length,
+                terrainIndexes.Length,
                 BufferUsage.WriteOnly
             );
 
             _terrainIndexBuffer.SetData(terrainIndexes);
 
-            _basicEffect = _gameProvider.Game.EffectCollection.BuildTextureEffect(Constants.GrassTexture);
+            _effect = _gameProvider.Game.EffectCollection.BuildTextureEffect(_contentStrings.GrassTexture);
         }
 
         public void Draw(Matrix view, Matrix projection)
@@ -132,13 +137,15 @@ namespace Augmented.Graphics.TerrainSpace
             var oldSamplerState = graphicsDevice.SamplerStates[0];
             graphicsDevice.SamplerStates[0] = _samplerState;
 
-            if (_basicEffect != null)
+            if (_effect != null)
             {
-                _basicEffect.World = WorldTransform.World;
-                _basicEffect.View = view;
-                _basicEffect.Projection = projection;
+                _effect.SetWorldViewProjection(
+                    WorldTransform.World,
+                    view,
+                    projection
+                );
 
-                foreach (var pass in _basicEffect.CurrentTechnique.Passes)
+                foreach (var pass in _effect.CurrentTechnique.Passes)
                 {
                     pass.Apply();
 

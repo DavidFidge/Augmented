@@ -2,6 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 
+using Augmented.Graphics;
 using Augmented.Interfaces;
 using Augmented.UserInterface.Data;
 
@@ -32,6 +33,10 @@ namespace Augmented
         private readonly IUserInterface _userInterface;
         private readonly IGameOptionsStore _gameOptionsStore;
         private readonly IScreenManager _screenManager;
+        private readonly IAugmentedGameWorld _augmentedGameWorld;
+        private readonly IContentStrings _contentStrings;
+        public ICoreContent CoreContent => _contentStrings;
+
         private bool _isExiting;
 
         public CustomGraphicsDeviceManager CustomGraphicsDeviceManager { get; }
@@ -46,7 +51,9 @@ namespace Augmented
             IGameInputService gameInputService,
             IUserInterface userInterface,
             IGameOptionsStore gameOptionsStore,
-            IScreenManager screenManager
+            IScreenManager screenManager,
+            IAugmentedGameWorld augmentedGameWorld,
+            IContentStrings contentStrings
             )
         {
             _logger = logger;
@@ -62,6 +69,8 @@ namespace Augmented
             Content.RootDirectory = "Content";
 
             _screenManager = screenManager;
+            _augmentedGameWorld = augmentedGameWorld;
+            _contentStrings = contentStrings;
 
             EffectCollection = new EffectCollection(_gameProvider);
         }
@@ -126,7 +135,12 @@ namespace Augmented
         /// </summary>
         protected override void LoadContent()
         {
-            Content.Load<Texture2D>(Constants.GrassTexture);
+            Content.Load<Texture2D>(_contentStrings.WoodTexture);
+            Content.Load<Texture2D>(_contentStrings.GrassTexture);
+            Content.Load<Texture2D>(_contentStrings.SelectionTexture);
+            EffectCollection.Add(_contentStrings.SelectionEffect, Content.Load<Effect>(_contentStrings.SelectionEffect));
+
+            _augmentedGameWorld.LoadContent();
         }
 
         /// <summary>
@@ -162,9 +176,8 @@ namespace Augmented
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.Black);
-
             _userInterface.Draw(_spriteBatch);
+            GraphicsDevice.Clear(Color.CornflowerBlue);
 
             // Reset graphics device properties after SpriteBatch drawing
             // https://blogs.msdn.microsoft.com/shawnhar/2010/06/18/spritebatch-and-renderstates-in-xna-game-studio-4-0/

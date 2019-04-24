@@ -48,7 +48,7 @@ namespace DavidFidge.MonoGame.Core.Graphics.Trees
 
             trunk.CreateTrunkEffect(trunkModelMeshPart);
 
-            LoadContent(model);
+            LoadContentInternal(model);
         }
     }
 }
