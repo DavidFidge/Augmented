@@ -1,6 +1,7 @@
 ﻿using System;
 
 using DavidFidge.MonoGame.Core.Graphics;
+using DavidFidge.MonoGame.Core.Tests.Services;
 using DavidFidge.TestInfrastructure;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -251,27 +252,25 @@ namespace DavidFidge.MonoGame.Core.Tests.Graphics
 
         public void AssertMatrixAreEquivalent(Matrix expected, Matrix actual)
         {
-            var acceptableFloatDelta = 0.0001f;
+            expected.M11.IsEquivalentTo(actual.M11);
+            expected.M12.IsEquivalentTo(actual.M12);
+            expected.M13.IsEquivalentTo(actual.M13);
+            expected.M14.IsEquivalentTo(actual.M14);
 
-            Assert.IsTrue(Math.Abs(expected.M11 - actual.M11) < acceptableFloatDelta);
-            Assert.IsTrue(Math.Abs(expected.M12 - actual.M12) < acceptableFloatDelta);
-            Assert.IsTrue(Math.Abs(expected.M13 - actual.M13) < acceptableFloatDelta);
-            Assert.IsTrue(Math.Abs(expected.M14 - actual.M14) < acceptableFloatDelta);
+            expected.M21.IsEquivalentTo(actual.M21);
+            expected.M22.IsEquivalentTo(actual.M22);
+            expected.M23.IsEquivalentTo(actual.M23);
+            expected.M24.IsEquivalentTo(actual.M24);
 
-            Assert.IsTrue(Math.Abs(expected.M21 - actual.M21) < acceptableFloatDelta);
-            Assert.IsTrue(Math.Abs(expected.M22 - actual.M22) < acceptableFloatDelta);
-            Assert.IsTrue(Math.Abs(expected.M23 - actual.M23) < acceptableFloatDelta);
-            Assert.IsTrue(Math.Abs(expected.M24 - actual.M24) < acceptableFloatDelta);
+            expected.M31.IsEquivalentTo(actual.M31);
+            expected.M32.IsEquivalentTo(actual.M32);
+            expected.M33.IsEquivalentTo(actual.M33);
+            expected.M34.IsEquivalentTo(actual.M34);
 
-            Assert.IsTrue(Math.Abs(expected.M31 - actual.M31) < acceptableFloatDelta);
-            Assert.IsTrue(Math.Abs(expected.M32 - actual.M32) < acceptableFloatDelta);
-            Assert.IsTrue(Math.Abs(expected.M33 - actual.M33) < acceptableFloatDelta);
-            Assert.IsTrue(Math.Abs(expected.M34 - actual.M34) < acceptableFloatDelta);
-
-            Assert.IsTrue(Math.Abs(expected.M41 - actual.M41) < acceptableFloatDelta);
-            Assert.IsTrue(Math.Abs(expected.M42 - actual.M42) < acceptableFloatDelta);
-            Assert.IsTrue(Math.Abs(expected.M43 - actual.M43) < acceptableFloatDelta);
-            Assert.IsTrue(Math.Abs(expected.M44 - actual.M44) < acceptableFloatDelta);
+            expected.M41.IsEquivalentTo(actual.M41);
+            expected.M42.IsEquivalentTo(actual.M42);
+            expected.M43.IsEquivalentTo(actual.M43);
+            expected.M44.IsEquivalentTo(actual.M44);
         }
     }
 }
