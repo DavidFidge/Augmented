@@ -34,7 +34,7 @@ namespace DavidFidge.MonoGame.Core.Tests.Graphics
         }
 
         [TestMethod]
-        public void Should_Create_Basic_Hill()
+        public void Hill_Should_Create_Basic_Hill()
         {
             // Act
             var result = _heightMapGenerator.CreateHeightMap(9, 9)
@@ -62,7 +62,7 @@ namespace DavidFidge.MonoGame.Core.Tests.Graphics
         }
 
         [TestMethod]
-        public void Should_Create_Hill_TopLeft()
+        public void Hill_Should_Create_Hill_TopLeft()
         {
             // Act
             var result = _heightMapGenerator.CreateHeightMap(5, 5)
@@ -86,7 +86,7 @@ namespace DavidFidge.MonoGame.Core.Tests.Graphics
         }
 
         [TestMethod]
-        public void Should_Create_Hill_TopRight()
+        public void Hill_Should_Create_Hill_TopRight()
         {
             // Act
             var result = _heightMapGenerator.CreateHeightMap(5, 5)
@@ -110,7 +110,7 @@ namespace DavidFidge.MonoGame.Core.Tests.Graphics
         }
 
         [TestMethod]
-        public void Should_Create_Hill_BottmLeft()
+        public void Hill_Should_Create_Hill_BottmLeft()
         {
             // Act
             var result = _heightMapGenerator.CreateHeightMap(5, 5)
@@ -134,7 +134,7 @@ namespace DavidFidge.MonoGame.Core.Tests.Graphics
         }
 
         [TestMethod]
-        public void Should_Create_Hill_BottomRight()
+        public void Hill_Should_Create_Hill_BottomRight()
         {
             // Act
             var result = _heightMapGenerator.CreateHeightMap(5, 5)
@@ -158,7 +158,7 @@ namespace DavidFidge.MonoGame.Core.Tests.Graphics
         }
 
         [TestMethod]
-        public void Should_Add_To_Existing_Hill_With_Additive_Option()
+        public void Hill_Should_Add_To_Existing_Hill_With_Additive_Option()
         {
             // Arrange
             var startingHeightMap = _heightMapGenerator.CreateHeightMap(5, 5)
@@ -191,7 +191,7 @@ namespace DavidFidge.MonoGame.Core.Tests.Graphics
         }
 
         [TestMethod]
-        public void Should_Replace_Existing_Height_Only_If_Result_Is_Higher_With_ReplaceIfHeigher_Option()
+        public void Hill_Should_Replace_Existing_Height_Only_If_Result_Is_Higher_With_ReplaceIfHeigher_Option()
         {
             // Arrange
             var startingHeightMap = _heightMapGenerator.CreateHeightMap(5, 5)
@@ -224,7 +224,7 @@ namespace DavidFidge.MonoGame.Core.Tests.Graphics
         }
 
         [TestMethod]
-        public void Should_Create_Valley_When_Negative_Height_Provided_And_Using_Replace_Option()
+        public void Hill_Should_Create_Valley_When_Negative_Height_Provided_And_Using_Replace_Option()
         {
             // Act
             var result = _heightMapGenerator.CreateHeightMap(5, 5)
@@ -249,7 +249,7 @@ namespace DavidFidge.MonoGame.Core.Tests.Graphics
         }
 
         [TestMethod]
-        public void Should_Replace_Existing_Height_Only_If_Result_Is_Lower_With_ReplaceIfLower_Option()
+        public void Hill_Should_Replace_Existing_Height_Only_If_Result_Is_Lower_With_ReplaceIfLower_Option()
         {
             // Arrange
             var startingHeightMap = _heightMapGenerator.CreateHeightMap(5, 5)
@@ -282,7 +282,7 @@ namespace DavidFidge.MonoGame.Core.Tests.Graphics
         }
 
         [TestMethod]
-        public void Should_Create_Ridge()
+        public void Ridge_Should_Create()
         {
             // Act
             var result = _heightMapGenerator.CreateHeightMap(5, 5)
@@ -307,7 +307,7 @@ namespace DavidFidge.MonoGame.Core.Tests.Graphics
         }
 
         [TestMethod]
-        public void Should_Create_Ridge_Using_ReplaceIfHeigher_Option()
+        public void Ridge_Should_Create_Ridge_Using_ReplaceIfHeigher_Option()
         {
             // Arrange
             var heightMap = _heightMapGenerator.CreateHeightMap(5, 5)
@@ -340,7 +340,7 @@ namespace DavidFidge.MonoGame.Core.Tests.Graphics
         }
 
         [TestMethod]
-        public void Should_Create_Valley_Using_Negative_Height()
+        public void Ridge_Should_Create_Valley_Using_Negative_Height()
         {
             // Arrange
             var heightMap = _heightMapGenerator.CreateHeightMap(5, 5)
