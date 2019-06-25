@@ -1,11 +1,13 @@
 ﻿using System;
 
-using DavidFidge.MonoGame.Core.Graphics;
 using DavidFidge.MonoGame.Core.Graphics.Terrain;
+using DavidFidge.MonoGame.Core.Interfaces.Components;
 using DavidFidge.TestInfrastructure;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Microsoft.Xna.Framework;
+
+using NSubstitute;
 
 namespace DavidFidge.MonoGame.Core.Tests.Graphics
 {
@@ -13,13 +15,16 @@ namespace DavidFidge.MonoGame.Core.Tests.Graphics
     public class HeightMapGeneratorTests : BaseTest
     {
         private HeightMapGenerator _heightMapGenerator;
+        private IRandom _random;
 
         [TestInitialize]
         public override void Setup()
         {
             base.Setup();
 
-            _heightMapGenerator = new HeightMapGenerator();
+            _random = Substitute.For<IRandom>();
+
+            _heightMapGenerator = new HeightMapGenerator(_random);
         }
 
         [TestMethod]
@@ -29,8 +34,8 @@ namespace DavidFidge.MonoGame.Core.Tests.Graphics
             var result = _heightMapGenerator.CreateHeightMap(10, 11);
 
             // Assert
-            Assert.AreEqual(10, result.HeightMap.GetLength(0));
-            Assert.AreEqual(11, result.HeightMap.GetLength(1));
+            Assert.AreEqual(10, result.HeightMap.GetLength(1));
+            Assert.AreEqual(11, result.HeightMap.GetLength(0));
         }
 
         [TestMethod]
@@ -49,12 +54,45 @@ namespace DavidFidge.MonoGame.Core.Tests.Graphics
             {
                 { 0, 0, 0, 0, 0, 0, 0, 0, 0 },
                 { 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-                { 0, 0, 0, 1, 1, 1, 0, 0, 0 },
+                { 0, 0, 1, 1, 1, 1, 1, 0, 0 },
                 { 0, 0, 1, 2, 2, 2, 1, 0, 0 },
                 { 0, 0, 1, 2, 3, 2, 1, 0, 0 },
                 { 0, 0, 1, 2, 2, 2, 1, 0, 0 },
-                { 0, 0, 0, 1, 1, 1, 0, 0, 0 },
+                { 0, 0, 1, 1, 1, 1, 1, 0, 0 },
                 { 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+                { 0, 0, 0, 0, 0, 0, 0, 0, 0 }
+            };
+
+            CollectionAssert.AreEquivalent(expectedMap, result);
+        }
+
+        [TestMethod]
+        public void Hill_Should_Create_Wide_Hill_When_Longer_Width_Provided()
+        {
+            // Act
+            var result = _heightMapGenerator.CreateHeightMap(9, 13)
+                .Hill(
+                    new Vector2(0.5f, 0.5f),
+                    new Vector2(0.5f, 0.9f),
+                    10)
+                .Export()
+                .HeightMap;
+
+            // Assert
+            var expectedMap = new int[13, 9]
+            {
+                { 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+                { 0, 0, 0, 1, 2, 1, 0, 0, 0 },
+                { 0, 0, 0, 2, 4, 2, 0, 0, 0 },
+                { 0, 0, 0, 3, 5, 3, 0, 0, 0 },
+                { 0, 0, 0, 4, 7, 4, 0, 0, 0 },
+                { 0, 0, 0, 5, 9, 5, 0, 0, 0 },
+                { 0, 0, 0, 5, 10, 5, 0, 0, 0 },
+                { 0, 0, 0, 5, 9, 5, 0, 0, 0 },
+                { 0, 0, 0, 4, 7, 4, 0, 0, 0 },
+                { 0, 0, 0, 3, 5, 3, 0, 0, 0 },
+                { 0, 0, 0, 2, 4, 1, 0, 0, 0 },
+                { 0, 0, 0, 1, 2, 2, 0, 0, 0 },
                 { 0, 0, 0, 0, 0, 0, 0, 0, 0 }
             };
 
@@ -77,7 +115,7 @@ namespace DavidFidge.MonoGame.Core.Tests.Graphics
             {
                 { 3, 2, 1, 0, 0 },
                 { 2, 2, 1, 0, 0 },
-                { 1, 1, 0, 0, 0 },
+                { 1, 1, 1, 0, 0 },
                 { 0, 0, 0, 0, 0 },
                 { 0, 0, 0, 0, 0 }
             };
@@ -101,7 +139,7 @@ namespace DavidFidge.MonoGame.Core.Tests.Graphics
             {
                 { 0, 0, 1, 2, 3 },
                 { 0, 0, 1, 2, 2 },
-                { 0, 0, 0, 1, 1 },
+                { 0, 0, 1, 1, 1 },
                 { 0, 0, 0, 0, 0 },
                 { 0, 0, 0, 0, 0 }
             };
@@ -110,7 +148,7 @@ namespace DavidFidge.MonoGame.Core.Tests.Graphics
         }
 
         [TestMethod]
-        public void Hill_Should_Create_Hill_BottmLeft()
+        public void Hill_Should_Create_Hill_BottomLeft()
         {
             // Act
             var result = _heightMapGenerator.CreateHeightMap(5, 5)
@@ -125,7 +163,7 @@ namespace DavidFidge.MonoGame.Core.Tests.Graphics
             {
                 { 0, 0, 0, 0, 0 },
                 { 0, 0, 0, 0, 0 },
-                { 1, 1, 0, 0, 0 },
+                { 1, 1, 1, 0, 0 },
                 { 2, 2, 1, 0, 0 },
                 { 3, 2, 1, 0, 0 }
             };
@@ -149,7 +187,7 @@ namespace DavidFidge.MonoGame.Core.Tests.Graphics
             {
                 { 0, 0, 0, 0, 0 },
                 { 0, 0, 0, 0, 0 },
-                { 0, 0, 0, 1, 1 },
+                { 0, 0, 1, 1, 1 },
                 { 0, 0, 1, 2, 2 },
                 { 0, 0, 1, 2, 3 }
             };
@@ -166,7 +204,7 @@ namespace DavidFidge.MonoGame.Core.Tests.Graphics
                     new Vector2(0f, 0f),
                     new Vector2(1f, 1f),
                     3,
-                    HeightMapGenerator.HillOptions.Addditive);
+                    HeightMapGenerator.HillOptions.Additive);
 
             // Act
             var result = startingHeightMap
@@ -174,7 +212,7 @@ namespace DavidFidge.MonoGame.Core.Tests.Graphics
                     new Vector2(0.25f, 0.25f),
                     new Vector2(1f, 1f),
                     3,
-                    HeightMapGenerator.HillOptions.Addditive)
+                    HeightMapGenerator.HillOptions.Additive)
                 .HeightMap;
 
             // Assert
@@ -182,8 +220,8 @@ namespace DavidFidge.MonoGame.Core.Tests.Graphics
             {
                 { 5, 4, 3, 1, 0 },
                 { 4, 5, 3, 1, 0 },
-                { 3, 3, 2, 1, 0 },
-                { 1, 1, 1, 0, 0 },
+                { 3, 3, 3, 1, 0 },
+                { 1, 1, 1, 1, 0 },
                 { 0, 0, 0, 0, 0 }
             };
 
@@ -216,7 +254,7 @@ namespace DavidFidge.MonoGame.Core.Tests.Graphics
                 { 3, 2, 2, 1, 0 },
                 { 2, 3, 2, 1, 0 },
                 { 2, 2, 2, 1, 0 },
-                { 1, 1, 1, 0, 0 },
+                { 1, 1, 1, 1, 0 },
                 { 0, 0, 0, 0, 0 }
             };
 
@@ -240,7 +278,7 @@ namespace DavidFidge.MonoGame.Core.Tests.Graphics
             {
                 { -3, -2, -1, 0, 0 },
                 { -2, -2, -1, 0, 0 },
-                { -1, -1, 0, 0, 0 },
+                { -1, -1, -1, 0, 0 },
                 { 0, 0, 0, 0, 0 },
                 { 0, 0, 0, 0, 0 }
             };
@@ -274,7 +312,7 @@ namespace DavidFidge.MonoGame.Core.Tests.Graphics
                 { -3, -2, -2, -1, 0 },
                 { -2, -3, -2, -1, 0 },
                 { -2, -2, -2, -1, 0 },
-                { -1, -1, -1, 0, 0 },
+                { -1, -1, -1, -1, 0 },
                 { 0, 0, 0, 0, 0 }
             };
 
@@ -296,11 +334,11 @@ namespace DavidFidge.MonoGame.Core.Tests.Graphics
             // Assert
             var expectedMap = new int[5, 5]
             {
-                { 3, 2, 2, 1, 0 },
+                { 3, 2, 2, 1, 1 },
                 { 2, 3, 2, 2, 1 },
                 { 2, 2, 3, 2, 2 },
                 { 1, 2, 2, 3, 2 },
-                { 0, 1, 2, 2, 3 }
+                { 1, 1, 2, 2, 3 }
             };
 
             CollectionAssert.AreEquivalent(expectedMap, result);
@@ -329,7 +367,7 @@ namespace DavidFidge.MonoGame.Core.Tests.Graphics
             // Assert
             var expectedMap = new int[5, 5]
             {
-                { 3, 2, 2, 1, 0 },
+                { 3, 2, 2, 1, 1 },
                 { 2, 3, 2, 2, 1 },
                 { 2, 2, 3, 2, 2 },
                 { 2, 2, 2, 3, 2 },
@@ -362,7 +400,7 @@ namespace DavidFidge.MonoGame.Core.Tests.Graphics
             // Assert
             var expectedMap = new int[5, 5]
             {
-                { -3, -2, -2, -1, 0 },
+                { -3, -2, -2, -1, -1 },
                 { -2, -3, -2, -2, -1 },
                 { -2, -2, -3, -2, -2 },
                 { -2, -2, -2, -3, -2 },

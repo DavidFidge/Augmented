@@ -98,6 +98,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Components\Random.cs" />
     <Compile Include="Components\BaseComponent.cs" />
     <Compile Include="Configuration\BaseConfigurationSectionHandler.cs" />
     <Compile Include="Graphics\Camera\BaseCamera.cs" />
@@ -118,6 +119,7 @@
     <Compile Include="Graphics\IDrawable.cs" />
     <Compile Include="Graphics\EffectCollection.cs" />
     <Compile Include="Graphics\Terrain\HeightMapGenerator.cs" />
+    <Compile Include="Interfaces\Components\IRandom.cs" />
     <Compile Include="Graphics\Trees\Tree.cs" />
     <Compile Include="Graphics\Trees\Trunk.cs" />
     <Compile Include="Configuration\ConfigurationSettings.cs" />

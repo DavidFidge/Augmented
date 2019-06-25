@@ -37,7 +37,7 @@ namespace Augmented.Graphics.TerrainSpace
 
         public IWorldTransform WorldTransform { get; }
         
-        public VertexPositionNormalTexture[] CreateTerrainVertices(int[,] heightMap)
+        public VertexPositionNormalTexture[] CreateTerrainVertices(int[,] heightMap, Vector3 scale)
         {
             var width = heightMap.GetLength(0);
             var height = heightMap.GetLength(1);
@@ -49,7 +49,7 @@ namespace Augmented.Graphics.TerrainSpace
             {
                 for (var x = 0; x < width; x++)
                 {
-                    var position = new Vector3(x, y, heightMap[x, y]);
+                    var position = new Vector3(x * scale.X, y * scale.Y, heightMap[x, y] * scale.Z);
                     var normal = new Vector3(0, 0, 1f);
                     var texture = new Vector2(x / (width / 10f), y / (height / 10f));
 
@@ -98,11 +98,11 @@ namespace Augmented.Graphics.TerrainSpace
 
         public void LoadContent()
         {
-            var heightMap = _heightMapGenerator.CreateHeightMap(101, 101)
-                .Hill(new Vector2(0.5f, 0.5f), new Vector2(0.4f, 0.2f), 20)
+            var heightMap = _heightMapGenerator.CreateHeightMap(1000, 1000)
+                .WithHills(0.95f, 1000)
                 .HeightMap;
 
-            var terrainVertices = CreateTerrainVertices(heightMap);
+            var terrainVertices = CreateTerrainVertices(heightMap, new Vector3(0.1f, 0.1f, 0.01f));
             var terrainIndexes = CreateTerrainIndexes(heightMap);
 
             terrainVertices.GenerateNormalsForTriangleStrip(terrainIndexes);

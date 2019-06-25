@@ -43,6 +43,9 @@ namespace DavidFidge.MonoGame.Core.Installers
                 Component.For<IGameTimeService>()
                     .ImplementedBy<GameTimeService>(),
 
+                Component.For<IRandom>()
+                    .ImplementedBy<Random>(),
+
                 Component.For<ISaveGameService>()
                     .ImplementedBy<SaveGameService>()
                     .LifeStyle.Transient,

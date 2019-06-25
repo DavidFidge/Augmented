@@ -1,7 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Reflection;
+using System.Text;
 
 using DavidFidge.MonoGame.Core.Graphics.Extensions;
+using DavidFidge.MonoGame.Core.Interfaces.Components;
 using DavidFidge.MonoGame.Core.Interfaces.Graphics;
 
 using Microsoft.Xna.Framework;
@@ -10,34 +15,120 @@ namespace DavidFidge.MonoGame.Core.Graphics.Terrain
 {
     public class HeightMapGenerator : IHeightMapGenerator
     {
+        private readonly IRandom _random;
         private int _length;
         private int _width;
 
         public int[,] HeightMap { get; private set; }
-        
+
+        public int Area => _length * _width;
+
+        public HeightMapGenerator(IRandom random)
+        {
+            _random = random;
+        }
+
+        public HeightMapGenerator Export()
+        {
+            var filePath = Path.Combine(
+                Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+                "Augmented",
+                $"HeightMap{DateTime.Now:yyyyMMddHHmmssfff}.csv");
+
+            using (var file = new StreamWriter(filePath))
+            {
+                var stringBuilder = new StringBuilder(HeightMap.Length * 20);
+
+                for (var y = 0; y < HeightMap.GetLength(0); y++)
+                {
+                    for (var x = 0; x < HeightMap.GetLength(1); x++)
+                    {
+                        stringBuilder.Append(HeightMap[y, x].ToString());
+
+                        if (x != HeightMap.GetLength(1) - 1)
+                            stringBuilder.Append(",");
+                    }
+
+                    file.WriteLine(stringBuilder.ToString());
+
+                    stringBuilder.Clear();
+                }
+            }
+
+            return this;
+        }
+
         public HeightMapGenerator CreateHeightMap(int width, int length)
         {
             _width = width;
             _length = length;
 
-            HeightMap = new int[_width, _length];
-
+            HeightMap = new int[_length, _width];
             return this;
+        }
+
+        public HeightMapGenerator Randomise()
+        {
+            return Randomise(_width, _length);
         }
 
         public HeightMapGenerator Randomise(int patchX, int patchY)
         {
-            var random = new Random();
-
-            for (int x = 0; x < _width - 1; x++)
+            for (var y = 0; y < patchY - 1; y++)
             {
-                for (int y = 0; y < _length - 1; y++)
+                for (var x = 0; x < patchX - 1; x++)
                 {
-                    HeightMap[x, y] = random.Next(0, 2);
+
+                    HeightMap[y, x] = _random.Next(0, 2);
                 }
             }
 
             return this;
+        }
+
+        public HeightMapGenerator WithHills(float hillFrequency, int maxHillHeight)
+        {
+
+            if (hillFrequency == 0f || hillFrequency > 1f)
+                throw new ArgumentException($"{nameof(hillFrequency)} must be > 0 or <= 1", nameof(hillFrequency));
+
+            if (maxHillHeight == 0)
+                throw new ArgumentException($"{nameof(maxHillHeight)} must be at least 1", nameof(maxHillHeight));
+
+            while (ZeroAreaPercent(HeightMap) / Area <= hillFrequency )
+            {
+                var zeroHeights = HeightMap
+                    .Cast<int>()
+                    .Select((h, i) => new { Index = i, Height = h })
+                    .Where(h => h.Height == 0)
+                    .Select(h => h.Index)
+                    .ToArray();
+
+                var nextPoint = zeroHeights[_random.Next(0, zeroHeights.Length)];
+
+                var hillSizeVector = new Vector2(
+                    _random.Next(10, 100) / 100f,
+                    _random.Next(10, 100) / 100f
+                    );
+
+                Hill(
+                    new Point(
+                        nextPoint / _length,
+                        nextPoint % _length
+                    ),
+                    hillSizeVector,
+                    _random.Next(1, maxHillHeight)
+                );
+            }
+
+            return this;
+        }
+
+        private float ZeroAreaPercent(int [,] heightMap)
+        {
+            return heightMap
+                .Cast<int>()
+                .Count(i => i != 0);
         }
 
         public enum HillOptions
@@ -46,7 +137,7 @@ namespace DavidFidge.MonoGame.Core.Graphics.Terrain
             Replace,
             ReplaceIfHeigher,
             ReplaceIfLower,
-            Addditive
+            Additive
         }
 
         public HeightMapGenerator Hill(
@@ -90,9 +181,9 @@ namespace DavidFidge.MonoGame.Core.Graphics.Terrain
             var yMinBoundingSquare = Math.Max(centre.Y - hillEllipseRadius.Y, 0);
             var yMaxBoundingSquare = Math.Min(centre.Y + hillEllipseRadius.Y, _length - 1);
 
-            for (var x = xMinBoundingSquare; x <= xMaxBoundingSquare; x++)
+            for (var y = yMinBoundingSquare; y <= yMaxBoundingSquare; y++)
             {
-                for (var y = yMinBoundingSquare; y <= yMaxBoundingSquare; y++)
+                for (var x = xMinBoundingSquare; x <= xMaxBoundingSquare; x++)
                 {
                     var candidatePoint = new Point(x, y);
 
@@ -105,11 +196,19 @@ namespace DavidFidge.MonoGame.Core.Graphics.Terrain
 
                     var angle = Math.Atan2(candidatePointRelativeToOrigin.Y, candidatePointRelativeToOrigin.X);
 
-                    var ellipsePointAtAngleOfCandidatePoint = new Point(
-                        (int) Math.Round(hillEllipseRadius.X * Math.Cos(angle), MidpointRounding.AwayFromZero),
-                        (int) Math.Round(hillEllipseRadius.Y * Math.Sin(angle), MidpointRounding.AwayFromZero));
+                    var ellipseX = (hillEllipseRadius.X * hillEllipseRadius.Y) / 
+                        Math.Sqrt(Math.Pow(hillEllipseRadius.Y, 2) + Math.Pow(hillEllipseRadius.X, 2) * Math.Pow(Math.Tan(angle), 2));
 
-                    var ellipseLength = ellipsePointAtAngleOfCandidatePoint.ToVector2().Length();
+                    if (angle < -Math.PI / 2 || angle > Math.PI / 2)
+                        ellipseX = -ellipseX;
+
+                    var ellipseY = (hillEllipseRadius.X * hillEllipseRadius.Y) /
+                                   Math.Sqrt(Math.Pow(hillEllipseRadius.X, 2) + Math.Pow(hillEllipseRadius.Y, 2) / Math.Pow(Math.Tan(angle), 2));
+
+                    if (angle < -Math.PI / 2 || angle > Math.PI / 2)
+                        ellipseY = -ellipseY;
+
+                    var ellipseLength = new Vector2((float)ellipseX, (float)ellipseY).Length();
                     var pointLength = candidatePointRelativeToOrigin.ToVector2().Length();
 
                     // if the point is further out than the point that lies on the ellipse then ignore this point
@@ -136,19 +235,19 @@ namespace DavidFidge.MonoGame.Core.Graphics.Terrain
         {
             if (hillOptions == HillOptions.None || hillOptions == HillOptions.Replace)
             {
-                HeightMap[x, y] = pointHeight;
+                HeightMap[y, x] = pointHeight;
             }
-            else if (hillOptions == HillOptions.ReplaceIfHeigher && HeightMap[x, y] < pointHeight)
+            else if (hillOptions == HillOptions.ReplaceIfHeigher && HeightMap[y, x] < pointHeight)
             {
-                HeightMap[x, y] = pointHeight;
+                HeightMap[y, x] = pointHeight;
             }
-            else if (hillOptions == HillOptions.ReplaceIfLower && HeightMap[x, y] > pointHeight)
+            else if (hillOptions == HillOptions.ReplaceIfLower && HeightMap[y, x] > pointHeight)
             {
-                HeightMap[x, y] = pointHeight;
+                HeightMap[y, x] = pointHeight;
             }
-            else if (hillOptions == HillOptions.Addditive)
+            else if (hillOptions == HillOptions.Additive)
             {
-                HeightMap[x, y] += pointHeight;
+                HeightMap[y, x] += pointHeight;
             }
         }
 
