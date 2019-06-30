@@ -1,5 +1,6 @@
 ﻿using DavidFidge.MonoGame.Core.Graphics;
 using DavidFidge.MonoGame.Core.Graphics.Extensions;
+using DavidFidge.MonoGame.Core.Graphics.Terrain;
 using DavidFidge.MonoGame.Core.Interfaces.Components;
 using DavidFidge.MonoGame.Core.Interfaces.Graphics;
 
@@ -37,10 +38,11 @@ namespace Augmented.Graphics.TerrainSpace
 
         public IWorldTransform WorldTransform { get; }
         
-        public VertexPositionNormalTexture[] CreateTerrainVertices(int[,] heightMap, Vector3 scale)
+        public VertexPositionNormalTexture[] CreateTerrainVertices(HeightMap heightMap, Vector3 scale)
         {
-            var width = heightMap.GetLength(0);
-            var height = heightMap.GetLength(1);
+            var width = heightMap.Width;
+            var height = heightMap.Length;
+
             var terrainVertices = new VertexPositionNormalTexture[width * height];
 
             var i = 0;
@@ -49,7 +51,7 @@ namespace Augmented.Graphics.TerrainSpace
             {
                 for (var x = 0; x < width; x++)
                 {
-                    var position = new Vector3(x * scale.X, y * scale.Y, heightMap[x, y] * scale.Z);
+                    var position = new Vector3(x * scale.X, y * scale.Y, heightMap[y, x] * scale.Z);
                     var normal = new Vector3(0, 0, 1f);
                     var texture = new Vector2(x / (width / 10f), y / (height / 10f));
 
@@ -60,10 +62,10 @@ namespace Augmented.Graphics.TerrainSpace
             return terrainVertices;
         }
 
-        public int[] CreateTerrainIndexes(int[,] heightMap)
+        public int[] CreateTerrainIndexes(HeightMap heightMap)
         {
-            var width = heightMap.GetLength(0);
-            var height = heightMap.GetLength(1);
+            var width = heightMap.Width;
+            var height = heightMap.Length;
             var terrainIndexes = new int[width * 2 * (height - 1)];
 
             var i = 0;
@@ -99,8 +101,8 @@ namespace Augmented.Graphics.TerrainSpace
         public void LoadContent()
         {
             var heightMap = _heightMapGenerator.CreateHeightMap(1000, 1000)
-                .WithHills(0.95f, 1000)
-                .HeightMap;
+                .WithHills(0.9f, 3000)
+                .HeightMap();
 
             var terrainVertices = CreateTerrainVertices(heightMap, new Vector3(0.1f, 0.1f, 0.01f));
             var terrainIndexes = CreateTerrainIndexes(heightMap);

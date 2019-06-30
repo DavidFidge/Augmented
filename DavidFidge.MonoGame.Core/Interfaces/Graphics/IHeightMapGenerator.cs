@@ -1,5 +1,4 @@
-﻿using DavidFidge.MonoGame.Core.Graphics;
-using DavidFidge.MonoGame.Core.Graphics.Terrain;
+﻿using DavidFidge.MonoGame.Core.Graphics.Terrain;
 
 using Microsoft.Xna.Framework;
 
@@ -24,7 +23,5 @@ namespace DavidFidge.MonoGame.Core.Interfaces.Graphics
         );
 
         HeightMapGenerator CreateHeightMap(int width, int length);
-
-        int[,] HeightMap { get; }
     }
 }

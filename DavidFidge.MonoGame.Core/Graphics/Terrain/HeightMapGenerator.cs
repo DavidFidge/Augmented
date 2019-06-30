@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Reflection;
-using System.Text;
 
 using DavidFidge.MonoGame.Core.Graphics.Extensions;
 using DavidFidge.MonoGame.Core.Interfaces.Components;
@@ -16,60 +13,27 @@ namespace DavidFidge.MonoGame.Core.Graphics.Terrain
     public class HeightMapGenerator : IHeightMapGenerator
     {
         private readonly IRandom _random;
-        private int _length;
-        private int _width;
-
-        public int[,] HeightMap { get; private set; }
-
-        public int Area => _length * _width;
+        private HeightMap _heightMap;
 
         public HeightMapGenerator(IRandom random)
         {
             _random = random;
         }
 
-        public HeightMapGenerator Export()
+        public HeightMap HeightMap()
         {
-            var filePath = Path.Combine(
-                Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
-                "Augmented",
-                $"HeightMap{DateTime.Now:yyyyMMddHHmmssfff}.csv");
-
-            using (var file = new StreamWriter(filePath))
-            {
-                var stringBuilder = new StringBuilder(HeightMap.Length * 20);
-
-                for (var y = 0; y < HeightMap.GetLength(0); y++)
-                {
-                    for (var x = 0; x < HeightMap.GetLength(1); x++)
-                    {
-                        stringBuilder.Append(HeightMap[y, x].ToString());
-
-                        if (x != HeightMap.GetLength(1) - 1)
-                            stringBuilder.Append(",");
-                    }
-
-                    file.WriteLine(stringBuilder.ToString());
-
-                    stringBuilder.Clear();
-                }
-            }
-
-            return this;
+            return _heightMap;
         }
 
         public HeightMapGenerator CreateHeightMap(int width, int length)
         {
-            _width = width;
-            _length = length;
-
-            HeightMap = new int[_length, _width];
+            _heightMap = new HeightMap(width, length);
             return this;
         }
 
         public HeightMapGenerator Randomise()
         {
-            return Randomise(_width, _length);
+            return Randomise(_heightMap.Width, _heightMap.Length);
         }
 
         public HeightMapGenerator Randomise(int patchX, int patchY)
@@ -79,7 +43,7 @@ namespace DavidFidge.MonoGame.Core.Graphics.Terrain
                 for (var x = 0; x < patchX - 1; x++)
                 {
 
-                    HeightMap[y, x] = _random.Next(0, 2);
+                    _heightMap[y, x] = _random.Next(0, 2);
                 }
             }
 
@@ -95,10 +59,9 @@ namespace DavidFidge.MonoGame.Core.Graphics.Terrain
             if (maxHillHeight == 0)
                 throw new ArgumentException($"{nameof(maxHillHeight)} must be at least 1", nameof(maxHillHeight));
 
-            while (ZeroAreaPercent(HeightMap) / Area <= hillFrequency )
+            while (_heightMap.ZeroAreaPercent() <= hillFrequency )
             {
-                var zeroHeights = HeightMap
-                    .Cast<int>()
+                var zeroHeights = _heightMap
                     .Select((h, i) => new { Index = i, Height = h })
                     .Where(h => h.Height == 0)
                     .Select(h => h.Index)
@@ -113,8 +76,8 @@ namespace DavidFidge.MonoGame.Core.Graphics.Terrain
 
                 Hill(
                     new Point(
-                        nextPoint / _length,
-                        nextPoint % _length
+                        nextPoint % _heightMap.Length,
+                        nextPoint / _heightMap.Length
                     ),
                     hillSizeVector,
                     _random.Next(1, maxHillHeight)
@@ -169,17 +132,17 @@ namespace DavidFidge.MonoGame.Core.Graphics.Terrain
 
             var hillEllipseRadius = new Point
             (
-                (int) Math.Round(relativeSize.X * _width / 2f, MidpointRounding.AwayFromZero),
-                (int) Math.Round(relativeSize.Y * _length / 2f, MidpointRounding.AwayFromZero)
+                (int) Math.Round(relativeSize.X * _heightMap.Width / 2f, MidpointRounding.AwayFromZero),
+                (int) Math.Round(relativeSize.Y * _heightMap.Length / 2f, MidpointRounding.AwayFromZero)
             );
 
             // Get the rectangular region that contains all the points
             // that could be within the area of the ellipse
             var xMinBoundingSquare = Math.Max(centre.X - hillEllipseRadius.X, 0);
-            var xMaxBoundingSquare = Math.Min(centre.X + hillEllipseRadius.X, _width - 1);
+            var xMaxBoundingSquare = Math.Min(centre.X + hillEllipseRadius.X, _heightMap.Width - 1);
 
             var yMinBoundingSquare = Math.Max(centre.Y - hillEllipseRadius.Y, 0);
-            var yMaxBoundingSquare = Math.Min(centre.Y + hillEllipseRadius.Y, _length - 1);
+            var yMaxBoundingSquare = Math.Min(centre.Y + hillEllipseRadius.Y, _heightMap.Length - 1);
 
             for (var y = yMinBoundingSquare; y <= yMaxBoundingSquare; y++)
             {
@@ -235,19 +198,19 @@ namespace DavidFidge.MonoGame.Core.Graphics.Terrain
         {
             if (hillOptions == HillOptions.None || hillOptions == HillOptions.Replace)
             {
-                HeightMap[y, x] = pointHeight;
+                _heightMap[y, x] = pointHeight;
             }
-            else if (hillOptions == HillOptions.ReplaceIfHeigher && HeightMap[y, x] < pointHeight)
+            else if (hillOptions == HillOptions.ReplaceIfHeigher && _heightMap[y, x] < pointHeight)
             {
-                HeightMap[y, x] = pointHeight;
+                _heightMap[y, x] = pointHeight;
             }
-            else if (hillOptions == HillOptions.ReplaceIfLower && HeightMap[y, x] > pointHeight)
+            else if (hillOptions == HillOptions.ReplaceIfLower && _heightMap[y, x] > pointHeight)
             {
-                HeightMap[y, x] = pointHeight;
+                _heightMap[y, x] = pointHeight;
             }
             else if (hillOptions == HillOptions.Additive)
             {
-                HeightMap[y, x] += pointHeight;
+                _heightMap[y, x] += pointHeight;
             }
         }
 
@@ -260,8 +223,8 @@ namespace DavidFidge.MonoGame.Core.Graphics.Terrain
                 throw new ArgumentException("y must be between 0-1 inclusive", nameof(relativeVector));
 
 
-            var actualCentreX = (int)(relativeVector.X * (_width - 1));
-            var actualCentreY = (int)(relativeVector.Y * (_length - 1));
+            var actualCentreX = (int)(relativeVector.X * (_heightMap.Width - 1));
+            var actualCentreY = (int)(relativeVector.Y * (_heightMap.Length - 1));
 
             return new Point(actualCentreX, actualCentreY);
         }

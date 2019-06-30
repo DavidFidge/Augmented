@@ -118,6 +118,7 @@
     <Compile Include="Graphics\Extensions\VertexExtensions.cs" />
     <Compile Include="Graphics\IDrawable.cs" />
     <Compile Include="Graphics\EffectCollection.cs" />
+    <Compile Include="Graphics\Terrain\HeightMap.cs" />
     <Compile Include="Graphics\Terrain\HeightMapGenerator.cs" />
     <Compile Include="Interfaces\Components\IRandom.cs" />
     <Compile Include="Graphics\Trees\Tree.cs" />
