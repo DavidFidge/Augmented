@@ -145,6 +145,12 @@ namespace DavidFidge.MonoGame.Core.Graphics.Terrain
             return GetEnumerator();
         }
 
+        public object Clone()
+        {
+            return new HeightMap(Width, Length)
+                .FromArray(_heightMap.Cast<int>().ToArray());
+        }
+
         public enum PatchMethod
         {
             None,
@@ -152,12 +158,6 @@ namespace DavidFidge.MonoGame.Core.Graphics.Terrain
             ReplaceIfHigher,
             ReplaceIfLower,
             Additive
-        }
-
-        public object Clone()
-        {
-            return new HeightMap(Width, Length)
-                .FromArray(_heightMap.Cast<int>().ToArray());
         }
     }
 }
