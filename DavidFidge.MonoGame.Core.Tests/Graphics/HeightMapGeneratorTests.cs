@@ -204,7 +204,7 @@ namespace DavidFidge.MonoGame.Core.Tests.Graphics
                     new Vector2(0f, 0f),
                     new Vector2(1f, 1f),
                     3,
-                    HeightMapGenerator.HillOptions.Additive);
+                    HeightMap.PatchMethod.Additive);
 
             // Act
             var result = startingHeightMap
@@ -212,7 +212,7 @@ namespace DavidFidge.MonoGame.Core.Tests.Graphics
                     new Vector2(0.25f, 0.25f),
                     new Vector2(1f, 1f),
                     3,
-                    HeightMapGenerator.HillOptions.Additive)
+                    HeightMap.PatchMethod.Additive)
                 .HeightMap();
 
             // Assert
@@ -237,7 +237,7 @@ namespace DavidFidge.MonoGame.Core.Tests.Graphics
                     new Vector2(0f, 0f),
                     new Vector2(1f, 1f),
                     3,
-                    HeightMapGenerator.HillOptions.ReplaceIfHeigher);
+                    HeightMap.PatchMethod.ReplaceIfHigher);
 
             // Act
             var result = startingHeightMap
@@ -245,7 +245,7 @@ namespace DavidFidge.MonoGame.Core.Tests.Graphics
                     new Vector2(0.25f, 0.25f),
                     new Vector2(1f, 1f),
                     3,
-                    HeightMapGenerator.HillOptions.ReplaceIfHeigher)
+                    HeightMap.PatchMethod.ReplaceIfHigher)
                 .HeightMap();
 
             // Assert
@@ -270,7 +270,7 @@ namespace DavidFidge.MonoGame.Core.Tests.Graphics
                     new Vector2(0f, 0f),
                     new Vector2(1f, 1f),
                     -3,
-                    HeightMapGenerator.HillOptions.Replace)
+                    HeightMap.PatchMethod.Replace)
                 .HeightMap();
 
             // Assert
@@ -295,7 +295,7 @@ namespace DavidFidge.MonoGame.Core.Tests.Graphics
                     new Vector2(0f, 0f),
                     new Vector2(1f, 1f),
                     -3,
-                    HeightMapGenerator.HillOptions.ReplaceIfLower);
+                    HeightMap.PatchMethod.ReplaceIfLower);
 
             // Act
             var result = startingHeightMap
@@ -303,7 +303,7 @@ namespace DavidFidge.MonoGame.Core.Tests.Graphics
                     new Vector2(0.25f, 0.25f),
                     new Vector2(1f, 1f),
                     -3,
-                    HeightMapGenerator.HillOptions.ReplaceIfLower)
+                    HeightMap.PatchMethod.ReplaceIfLower)
                 .HeightMap();
 
             // Assert

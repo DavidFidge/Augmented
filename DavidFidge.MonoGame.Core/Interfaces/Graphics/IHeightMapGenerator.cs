@@ -12,7 +12,7 @@ namespace DavidFidge.MonoGame.Core.Interfaces.Graphics
             Vector2 relativeCentre,
             Vector2 relativeSize,
             int height,
-            HeightMapGenerator.HillOptions hillOptions = HeightMapGenerator.HillOptions.ReplaceIfHeigher
+            HeightMap.PatchMethod patchMethod = HeightMap.PatchMethod.ReplaceIfHigher
         );
 
         HeightMapGenerator Ridge(

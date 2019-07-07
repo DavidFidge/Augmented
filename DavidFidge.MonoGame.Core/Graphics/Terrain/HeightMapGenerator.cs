@@ -59,7 +59,7 @@ namespace DavidFidge.MonoGame.Core.Graphics.Terrain
             if (maxHillHeight == 0)
                 throw new ArgumentException($"{nameof(maxHillHeight)} must be at least 1", nameof(maxHillHeight));
 
-            while (_heightMap.ZeroAreaPercent() <= hillFrequency )
+            while (_heightMap.ZeroAreaPercent() > 1f - hillFrequency )
             {
                 var zeroHeights = _heightMap
                     .Select((h, i) => new { Index = i, Height = h })
@@ -94,32 +94,23 @@ namespace DavidFidge.MonoGame.Core.Graphics.Terrain
                 .Count(i => i != 0);
         }
 
-        public enum HillOptions
-        {
-            None,
-            Replace,
-            ReplaceIfHeigher,
-            ReplaceIfLower,
-            Additive
-        }
-
         public HeightMapGenerator Hill(
             Vector2 relativeCentre,
             Vector2 relativeSize,
             int height,
-            HillOptions hillOptions = HillOptions.ReplaceIfHeigher
+            HeightMap.PatchMethod patchMethod = Terrain.HeightMap.PatchMethod.ReplaceIfHigher
         )
         {
             var centre = GetActualPointFromRelativeVector(relativeCentre);
 
-            return Hill(centre, relativeSize, height, hillOptions);
+            return Hill(centre, relativeSize, height, patchMethod);
         }
 
         public HeightMapGenerator Hill(
             Point centre,
             Vector2 relativeSize,
             int height,
-            HillOptions hillOptions = HillOptions.ReplaceIfHeigher
+            HeightMap.PatchMethod patchMethod = Terrain.HeightMap.PatchMethod.ReplaceIfHigher
             )
         {
             if (relativeSize.X > 1.0f || relativeSize.X < 0f)
@@ -128,38 +119,35 @@ namespace DavidFidge.MonoGame.Core.Graphics.Terrain
             if (relativeSize.Y > 1.0f || relativeSize.Y < 0f)
                 throw new ArgumentException("y must be between 0-1 inclusive", nameof(relativeSize));
 
-            SetHeightForHillPoint(hillOptions, centre.X, centre.Y, height);
-
             var hillEllipseRadius = new Point
             (
                 (int) Math.Round(relativeSize.X * _heightMap.Width / 2f, MidpointRounding.AwayFromZero),
                 (int) Math.Round(relativeSize.Y * _heightMap.Length / 2f, MidpointRounding.AwayFromZero)
             );
 
-            // Get the rectangular region that contains all the points
-            // that could be within the area of the ellipse
-            var xMinBoundingSquare = Math.Max(centre.X - hillEllipseRadius.X, 0);
-            var xMaxBoundingSquare = Math.Min(centre.X + hillEllipseRadius.X, _heightMap.Width - 1);
+            var hillCentre = new Point(hillEllipseRadius.X + 1, hillEllipseRadius.Y + 1);
 
-            var yMinBoundingSquare = Math.Max(centre.Y - hillEllipseRadius.Y, 0);
-            var yMaxBoundingSquare = Math.Min(centre.Y + hillEllipseRadius.Y, _heightMap.Length - 1);
+            var heightMapPatch = new HeightMap(hillEllipseRadius.X * 2 + 1, hillEllipseRadius.Y * 2 + 1);
 
-            for (var y = yMinBoundingSquare; y <= yMaxBoundingSquare; y++)
+            heightMapPatch[hillCentre.Y, hillCentre.X] = height;
+
+            for (var y = 0; y < heightMapPatch.Length; y++)
             {
-                for (var x = xMinBoundingSquare; x <= xMaxBoundingSquare; x++)
+                for (var x = 0; x < heightMapPatch.Width; x++)
                 {
+
                     var candidatePoint = new Point(x, y);
 
-                    if (candidatePoint == centre)
+                    if (candidatePoint == hillCentre)
                         continue;
 
                     // See if the point is within the radius of ellipse
                     // Origin being point 0,0
-                    var candidatePointRelativeToOrigin = candidatePoint - centre;
+                    var candidatePointRelativeToOrigin = candidatePoint - hillCentre;
 
                     var angle = Math.Atan2(candidatePointRelativeToOrigin.Y, candidatePointRelativeToOrigin.X);
 
-                    var ellipseX = (hillEllipseRadius.X * hillEllipseRadius.Y) / 
+                    var ellipseX = (hillEllipseRadius.X * hillEllipseRadius.Y) /
                         Math.Sqrt(Math.Pow(hillEllipseRadius.Y, 2) + Math.Pow(hillEllipseRadius.X, 2) * Math.Pow(Math.Tan(angle), 2));
 
                     if (angle < -Math.PI / 2 || angle > Math.PI / 2)
@@ -171,7 +159,7 @@ namespace DavidFidge.MonoGame.Core.Graphics.Terrain
                     if (angle < -Math.PI / 2 || angle > Math.PI / 2)
                         ellipseY = -ellipseY;
 
-                    var ellipseLength = new Vector2((float)ellipseX, (float)ellipseY).Length();
+                    var ellipseLength = new Vector2((float) ellipseX, (float) ellipseY).Length();
                     var pointLength = candidatePointRelativeToOrigin.ToVector2().Length();
 
                     // if the point is further out than the point that lies on the ellipse then ignore this point
@@ -182,36 +170,18 @@ namespace DavidFidge.MonoGame.Core.Graphics.Terrain
                         continue;
 
                     // Use Math.Abs on height so that valley depths are consistent with hill heights
-                    var pointHeight = (int)Math.Ceiling((1 - ratio) * Math.Abs(height));
+                    var pointHeight = (int) Math.Ceiling((1 - ratio) * Math.Abs(height));
 
                     if (height < 0)
                         pointHeight = -pointHeight;
 
-                    SetHeightForHillPoint(hillOptions, x, y, pointHeight);
+                    heightMapPatch[y, x] = pointHeight;
                 }
             }
 
-            return this;
-        }
+            _heightMap.Patch(heightMapPatch, new Point(centre.X - hillCentre.X, centre.Y - hillCentre.Y), patchMethod);
 
-        private void SetHeightForHillPoint(HillOptions hillOptions, int x, int y, int pointHeight)
-        {
-            if (hillOptions == HillOptions.None || hillOptions == HillOptions.Replace)
-            {
-                _heightMap[y, x] = pointHeight;
-            }
-            else if (hillOptions == HillOptions.ReplaceIfHeigher && _heightMap[y, x] < pointHeight)
-            {
-                _heightMap[y, x] = pointHeight;
-            }
-            else if (hillOptions == HillOptions.ReplaceIfLower && _heightMap[y, x] > pointHeight)
-            {
-                _heightMap[y, x] = pointHeight;
-            }
-            else if (hillOptions == HillOptions.Additive)
-            {
-                _heightMap[y, x] += pointHeight;
-            }
+            return this;
         }
 
         private Point GetActualPointFromRelativeVector(Vector2 relativeVector)
@@ -236,10 +206,10 @@ namespace DavidFidge.MonoGame.Core.Graphics.Terrain
             int height
         )
         {
-            var hillOptions = HillOptions.ReplaceIfHeigher;
+            var hillOptions = Terrain.HeightMap.PatchMethod.ReplaceIfHigher;
 
             if (height < 0)
-                hillOptions = HillOptions.ReplaceIfLower;
+                hillOptions = Terrain.HeightMap.PatchMethod.ReplaceIfLower;
 
             var hillPoints = new List<Point>();
 
