@@ -15,12 +15,17 @@ namespace DavidFidge.MonoGame.Core.Graphics.Terrain
         public int Length { get; }
         public int Width { get; }
 
-        private readonly int[,] _heightMap;
+        private readonly int[] _heightMap;
 
-        public int this[int y, int x]
+        public int this[int x, int y]
         {
-            get => _heightMap[y, x];
-            set => _heightMap[y, x] = value;
+            get => _heightMap[GetIndex(x, y)];
+            set => _heightMap[GetIndex(x, y)] = value;
+        }
+
+        private int GetIndex(int x, int y)
+        {
+            return y * Width + x;
         }
 
         public int Area => Length * Width;
@@ -32,11 +37,11 @@ namespace DavidFidge.MonoGame.Core.Graphics.Terrain
 
             var i = 0;
 
-            for (var y = 0; y < _heightMap.GetLength(0); y++)
+            for (var y = 0; y < Length; y++)
             {
-                for (var x = 0; x < _heightMap.GetLength(1); x++)
+                for (var x = 0; x < Width; x++)
                 {
-                    _heightMap[y, x] = array[i++];
+                    _heightMap[i] = array[i++];
                 }
             }
 
@@ -48,7 +53,7 @@ namespace DavidFidge.MonoGame.Core.Graphics.Terrain
             Width = width;
             Length = length;
 
-            _heightMap = new int[Length, Width];
+            _heightMap = new int[Length * Width];
         }
 
         public void Export(string folder = null, string name = null)
@@ -76,13 +81,13 @@ namespace DavidFidge.MonoGame.Core.Graphics.Terrain
             {
                 var stringBuilder = new StringBuilder(_heightMap.Length * 20);
 
-                for (var y = 0; y < _heightMap.GetLength(0); y++)
+                for (var y = 0; y < Length; y++)
                 {
-                    for (var x = 0; x < _heightMap.GetLength(1); x++)
+                    for (var x = 0; x < Width; x++)
                     {
-                        stringBuilder.Append(_heightMap[y, x].ToString());
+                        stringBuilder.Append(_heightMap[GetIndex(x, y)].ToString());
 
-                        if (x != _heightMap.GetLength(1) - 1)
+                        if (x != Width - 1)
                             stringBuilder.Append(",");
                     }
 
@@ -108,23 +113,23 @@ namespace DavidFidge.MonoGame.Core.Graphics.Terrain
             {
                 for (var x = xMinBoundingSquare; x <= xMaxBoundingSquare; x++)
                 {
-                    var pointHeight = heightMap[y - topLeft.Y, x - topLeft.X];
+                    var pointHeight = heightMap[x - topLeft.X, y - topLeft.Y];
 
                     if (patchMethod == PatchMethod.None || patchMethod == PatchMethod.Replace)
                     {
-                        _heightMap[y, x] = pointHeight;
+                        _heightMap[GetIndex(x, y)] = pointHeight;
                     }
-                    else if (patchMethod == PatchMethod.ReplaceIfHigher && _heightMap[y, x] < pointHeight)
+                    else if (patchMethod == PatchMethod.ReplaceIfHigher && _heightMap[GetIndex(x, y)] < pointHeight)
                     {
-                        _heightMap[y, x] = pointHeight;
+                        _heightMap[GetIndex(x, y)] = pointHeight;
                     }
-                    else if (patchMethod == PatchMethod.ReplaceIfLower && _heightMap[y, x] > pointHeight)
+                    else if (patchMethod == PatchMethod.ReplaceIfLower && _heightMap[GetIndex(x, y)] > pointHeight)
                     {
-                        _heightMap[y, x] = pointHeight;
+                        _heightMap[GetIndex(x, y)] = pointHeight;
                     }
                     else if (patchMethod == PatchMethod.Additive)
                     {
-                        _heightMap[y, x] += pointHeight;
+                        _heightMap[GetIndex(x, y)] += pointHeight;
                     }
                 }
             }
@@ -132,7 +137,7 @@ namespace DavidFidge.MonoGame.Core.Graphics.Terrain
 
         public float ZeroAreaPercent()
         {
-            return (float)_heightMap.Cast<int>().Count(i => i == 0) / Area;
+            return (float)_heightMap.Count(i => i == 0) / Area;
         }
 
         public IEnumerator<int> GetEnumerator()
@@ -142,13 +147,13 @@ namespace DavidFidge.MonoGame.Core.Graphics.Terrain
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return GetEnumerator();
+            return _heightMap.GetEnumerator();
         }
 
         public object Clone()
         {
             return new HeightMap(Width, Length)
-                .FromArray(_heightMap.Cast<int>().ToArray());
+                .FromArray(_heightMap);
         }
 
         public enum PatchMethod

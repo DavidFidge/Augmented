@@ -43,7 +43,7 @@ namespace DavidFidge.MonoGame.Core.Graphics.Terrain
                 for (var x = 0; x < patchX - 1; x++)
                 {
 
-                    _heightMap[y, x] = _random.Next(0, 2);
+                    _heightMap[x, y] = _random.Next(0, 2);
                 }
             }
 
@@ -129,7 +129,7 @@ namespace DavidFidge.MonoGame.Core.Graphics.Terrain
 
             var heightMapPatch = new HeightMap(hillEllipseRadius.X * 2 + 1, hillEllipseRadius.Y * 2 + 1);
 
-            heightMapPatch[hillCentre.Y, hillCentre.X] = height;
+            heightMapPatch[hillCentre.X, hillCentre.Y] = height;
 
             for (var y = 0; y < heightMapPatch.Length; y++)
             {
@@ -175,7 +175,7 @@ namespace DavidFidge.MonoGame.Core.Graphics.Terrain
                     if (height < 0)
                         pointHeight = -pointHeight;
 
-                    heightMapPatch[y, x] = pointHeight;
+                    heightMapPatch[x, y] = pointHeight;
                 }
             }
 

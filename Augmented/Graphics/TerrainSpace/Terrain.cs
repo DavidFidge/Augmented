@@ -51,7 +51,7 @@ namespace Augmented.Graphics.TerrainSpace
             {
                 for (var x = 0; x < width; x++)
                 {
-                    var position = new Vector3(x * scale.X, y * scale.Y, heightMap[y, x] * scale.Z);
+                    var position = new Vector3(x * scale.X, y * scale.Y, heightMap[x, y] * scale.Z);
                     var normal = new Vector3(0, 0, 1f);
                     var texture = new Vector2(x / (width / 10f), y / (height / 10f));
 
