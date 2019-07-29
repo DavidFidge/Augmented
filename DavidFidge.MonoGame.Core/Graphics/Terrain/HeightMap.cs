@@ -56,6 +56,39 @@ namespace DavidFidge.MonoGame.Core.Graphics.Terrain
             _heightMap = new int[Length * Width];
         }
 
+        public static HeightMap Import(string filePath)
+        {
+            var stringList = new List<string>();
+
+            using (var streamReader = new StreamReader(filePath))
+            {
+                while (!streamReader.EndOfStream)
+                {
+                    stringList.Add(streamReader.ReadLine());
+                }
+            }
+
+            var length = stringList.Count;
+
+            if (length == 0)
+                throw new ArgumentException($"File {filePath} is empty", nameof(filePath));
+
+            var width = stringList[0].Split(',').Length;
+
+            var heightMap = new HeightMap(
+                    width,
+                    length)
+                .FromArray(
+                    stringList
+                        .SelectMany(s => s.Split(','))
+                        .Where(s => !String.IsNullOrEmpty(s))
+                        .Select(int.Parse)
+                        .ToArray()
+                );
+
+            return heightMap;
+        }
+
         public void Export(string folder = null, string name = null)
         {
             if (folder == null)
