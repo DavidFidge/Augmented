@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 using Microsoft.Xna.Framework;
 
@@ -32,6 +33,11 @@ namespace DavidFidge.MonoGame.Core.Graphics.Extensions
         public static Vector2 ToVector(this Point point)
         {
             return new Vector2(point.X, point.Y);
+        }
+
+        public static Point GetMidpoint(this IEnumerable<Point> points)
+        {
+            return new Point((int)points.Average(p => p.X), (int)points.Average(p => p.Y));
         }
     }
 }

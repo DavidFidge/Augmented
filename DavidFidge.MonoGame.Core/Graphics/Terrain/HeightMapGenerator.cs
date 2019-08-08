@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 
 using DavidFidge.MonoGame.Core.Graphics.Extensions;
 using DavidFidge.MonoGame.Core.Interfaces.Components;
@@ -29,11 +30,6 @@ namespace DavidFidge.MonoGame.Core.Graphics.Terrain
         {
             _heightMap = new HeightMap(width, length);
             return this;
-        }
-
-        public HeightMapGenerator Randomise()
-        {
-            return Randomise(_heightMap.Width, _heightMap.Length);
         }
 
         public HeightMapGenerator Randomise(int patchX, int patchY)
@@ -85,13 +81,6 @@ namespace DavidFidge.MonoGame.Core.Graphics.Terrain
             }
 
             return this;
-        }
-
-        private float ZeroAreaPercent(int [,] heightMap)
-        {
-            return heightMap
-                .Cast<int>()
-                .Count(i => i != 0);
         }
 
         public HeightMapGenerator Hill(
@@ -283,5 +272,111 @@ namespace DavidFidge.MonoGame.Core.Graphics.Terrain
 
             return shortestLengthStartToEndPoint.Value;
         }
+
+        public HeightMapGenerator GenerateDiamondSquare()
+        {
+            
+
+
+        }
+
+        public List<Point> GetSquares(List<Point> points)
+        {
+
+
+
+        }
+
+        public class DiamondSquare
+        {
+            private readonly IRandom _random;
+            public HeightMap HeightMap { get; private set; }
+            public List<Point> ProcessedPoints { get; set; }
+
+            public DiamondSquare(IRandom random)
+            {
+                _random = random;
+            }
+
+            public void Initialise(
+                int heightMapWidth,
+                int heightMapLength)
+            {
+                ProcessedPoints = new List<Point>();
+
+                if (heightMapWidth != heightMapLength)
+                    throw new Exception("Diamond square currently only supports square heightmaps with size equal to square root 2 + 1");
+
+                HeightMap = new HeightMap(heightMapWidth, heightMapLength);
+
+                var midPoint = HeightMap.Width / 2;
+
+                HeightMap[midPoint, midPoint] = 255;
+
+                ProcessedPoints.Add(new Point(midPoint, midPoint));
+                ProcessedPoints.Add(new Point(0, 0));
+                ProcessedPoints.Add(new Point(0, heightMapLength - 1));
+                ProcessedPoints.Add(new Point(heightMapWidth - 1, 0));
+                ProcessedPoints.Add(new Point(heightMapWidth - 1, heightMapLength - 1));
+
+                StepIndices = new List<int>();
+                StepIndices.AddRange(new []{ 1, 2, 3, 4});
+            }
+
+            public List<int> StepIndices { get; set; }
+
+            public void DiamondStep()
+            {
+                var diamondPoints = StepIndices
+                    .AsParallel()
+                    .GroupBy(s => s % 4, s => ProcessedPoints[s])
+                    .Select(s => new
+                    {
+                        Point = s.GetMidpoint(),
+                        Displacement = new Point(
+                            s.Max(squarePoint => squarePoint.X) - s.GetMidpoint().X,
+                            s.Max(squarePoint => squarePoint.Y) - s.GetMidpoint().Y
+                            ),
+                        HeightRanges = s
+                            .Select(squarePoint => HeightMap[squarePoint.X, squarePoint.Y])
+                            .ToList()
+                    })
+                    .ToList();
+
+                var unprocessedDiamondPoints = diamondPoints
+                    .Where(p => !ProcessedPoints.Contains(p.Point))
+                    .ToList();
+
+                StepIndices.Clear();
+
+                foreach (var point in unprocessedDiamondPoints)
+                {
+                    HeightMap[point.Point.X, point.Point.Y] = _random.Next(point.HeightRanges.Min(), point.HeightRanges.Max());
+
+                    ProcessedPoints.Add(point.Point);
+                    StepIndices.Add(ProcessedPoints.Count - 1);
+                }
+
+                foreach (var point in diamondPoints.Except(unprocessedDiamondPoints))
+                {
+                    StepIndices.Add(ProcessedPoints.IndexOf(point.Point));
+                }
+            }
+
+
+
+            public void SquareStep()
+            {
+
+
+            }
+
+            //private class PointHeightRange()
+            //{
+            //    public Point 
+            //}
+
+        }
+
     }
 }
