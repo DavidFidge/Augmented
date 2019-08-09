@@ -291,7 +291,7 @@ namespace DavidFidge.MonoGame.Core.Graphics.Terrain
         {
             private readonly IRandom _random;
             public HeightMap HeightMap { get; private set; }
-            public List<Point> ProcessedPoints { get; set; }
+            public List<Point> PointsToProcess { get; set; }
 
             public DiamondSquare(IRandom random)
             {
@@ -302,7 +302,7 @@ namespace DavidFidge.MonoGame.Core.Graphics.Terrain
                 int heightMapWidth,
                 int heightMapLength)
             {
-                ProcessedPoints = new List<Point>();
+                PointsToProcess = new List<Point>();
 
                 if (heightMapWidth != heightMapLength)
                     throw new Exception("Diamond square currently only supports square heightmaps with size equal to square root 2 + 1");
@@ -313,53 +313,45 @@ namespace DavidFidge.MonoGame.Core.Graphics.Terrain
 
                 HeightMap[midPoint, midPoint] = 255;
 
-                ProcessedPoints.Add(new Point(midPoint, midPoint));
-                ProcessedPoints.Add(new Point(0, 0));
-                ProcessedPoints.Add(new Point(0, heightMapLength - 1));
-                ProcessedPoints.Add(new Point(heightMapWidth - 1, 0));
-                ProcessedPoints.Add(new Point(heightMapWidth - 1, heightMapLength - 1));
-
-                StepIndices = new List<int>();
-                StepIndices.AddRange(new []{ 1, 2, 3, 4});
+                PointsToProcess.Add(new Point(midPoint, midPoint));
+                PointsToProcess.Add(new Point(0, 0));
+                PointsToProcess.Add(new Point(0, heightMapLength - 1));
+                PointsToProcess.Add(new Point(heightMapWidth - 1, 0));
+                PointsToProcess.Add(new Point(heightMapWidth - 1, heightMapLength - 1));
             }
-
-            public List<int> StepIndices { get; set; }
 
             public void DiamondStep()
             {
-                var diamondPoints = StepIndices
+                var diamondPoints = PointsToProcess
                     .AsParallel()
-                    .GroupBy(s => s % 4, s => ProcessedPoints[s])
-                    .Select(s => new
+                    .Select((p, index) => new
                     {
-                        Point = s.GetMidpoint(),
-                        Displacement = new Point(
-                            s.Max(squarePoint => squarePoint.X) - s.GetMidpoint().X,
-                            s.Max(squarePoint => squarePoint.Y) - s.GetMidpoint().Y
-                            ),
-                        HeightRanges = s
+                        Group = index % 4,
+                        Points = p
+                    })
+                    .GroupBy(p => p.Group, p => p.Points)
+                    .Select(p => new
+                    {
+                        Point = p.GetMidpoint(),
+                        HeightRanges = p
                             .Select(squarePoint => HeightMap[squarePoint.X, squarePoint.Y])
                             .ToList()
                     })
                     .ToList();
 
-                var unprocessedDiamondPoints = diamondPoints
-                    .Where(p => !ProcessedPoints.Contains(p.Point))
-                    .ToList();
+                PointsToProcess.Clear();
 
-                StepIndices.Clear();
-
-                foreach (var point in unprocessedDiamondPoints)
+                foreach (var point in diamondPoints)
                 {
                     HeightMap[point.Point.X, point.Point.Y] = _random.Next(point.HeightRanges.Min(), point.HeightRanges.Max());
 
-                    ProcessedPoints.Add(point.Point);
-                    StepIndices.Add(ProcessedPoints.Count - 1);
+                    PointsToProcess.Add(point.Point);
+                    StepIndices.Add(PointsToProcess.Count - 1);
                 }
 
                 foreach (var point in diamondPoints.Except(unprocessedDiamondPoints))
                 {
-                    StepIndices.Add(ProcessedPoints.IndexOf(point.Point));
+                    StepIndices.Add(PointsToProcess.IndexOf(point.Point));
                 }
             }
 
