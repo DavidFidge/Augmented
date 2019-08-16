@@ -23,5 +23,6 @@ namespace DavidFidge.MonoGame.Core.Interfaces.Graphics
         );
 
         HeightMapGenerator CreateHeightMap(int width, int length);
+        HeightMapGenerator DiamondSquare(int maxHeight);
     }
 }

@@ -122,6 +122,7 @@
     <Compile Include="Extensions\Vector3Extensions.cs" />
     <Compile Include="Extensions\PointExtensionsTests.cs" />
     <Compile Include="Extensions\VertexExtensionsTests.cs" />
+    <Compile Include="Graphics\DiamondSquareTests.cs" />
     <Compile Include="Graphics\HeightMapTests.cs" />
     <Compile Include="Graphics\HeightMapGeneratorTests.cs" />
     <Compile Include="Graphics\SimpleWorldTransformTests.cs" />

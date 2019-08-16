@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.InteropServices;
 
 using DavidFidge.MonoGame.Core.Graphics.Extensions;
 using DavidFidge.MonoGame.Core.Interfaces.Components;
@@ -228,6 +227,17 @@ namespace DavidFidge.MonoGame.Core.Graphics.Terrain
             return this;
         }
 
+        public HeightMapGenerator DiamondSquare(int maxHeight)
+        {
+            var heightMapPatch = new DiamondSquare(_random)
+                .Execute(1024, 0, maxHeight)
+                .HeightMap;
+
+            _heightMap.Patch(heightMapPatch, new Point(0, 0));
+
+            return this;
+        }
+
         private Point GetNextHillPoint(
             Point currentPoint,
             Vector2 startVector,
@@ -272,103 +282,5 @@ namespace DavidFidge.MonoGame.Core.Graphics.Terrain
 
             return shortestLengthStartToEndPoint.Value;
         }
-
-        public HeightMapGenerator GenerateDiamondSquare()
-        {
-            
-
-
-        }
-
-        public List<Point> GetSquares(List<Point> points)
-        {
-
-
-
-        }
-
-        public class DiamondSquare
-        {
-            private readonly IRandom _random;
-            public HeightMap HeightMap { get; private set; }
-            public List<Point> PointsToProcess { get; set; }
-
-            public DiamondSquare(IRandom random)
-            {
-                _random = random;
-            }
-
-            public void Initialise(
-                int heightMapWidth,
-                int heightMapLength)
-            {
-                PointsToProcess = new List<Point>();
-
-                if (heightMapWidth != heightMapLength)
-                    throw new Exception("Diamond square currently only supports square heightmaps with size equal to square root 2 + 1");
-
-                HeightMap = new HeightMap(heightMapWidth, heightMapLength);
-
-                var midPoint = HeightMap.Width / 2;
-
-                HeightMap[midPoint, midPoint] = 255;
-
-                PointsToProcess.Add(new Point(midPoint, midPoint));
-                PointsToProcess.Add(new Point(0, 0));
-                PointsToProcess.Add(new Point(0, heightMapLength - 1));
-                PointsToProcess.Add(new Point(heightMapWidth - 1, 0));
-                PointsToProcess.Add(new Point(heightMapWidth - 1, heightMapLength - 1));
-            }
-
-            public void DiamondStep()
-            {
-                var diamondPoints = PointsToProcess
-                    .AsParallel()
-                    .Select((p, index) => new
-                    {
-                        Group = index % 4,
-                        Points = p
-                    })
-                    .GroupBy(p => p.Group, p => p.Points)
-                    .Select(p => new
-                    {
-                        Point = p.GetMidpoint(),
-                        HeightRanges = p
-                            .Select(squarePoint => HeightMap[squarePoint.X, squarePoint.Y])
-                            .ToList()
-                    })
-                    .ToList();
-
-                PointsToProcess.Clear();
-
-                foreach (var point in diamondPoints)
-                {
-                    HeightMap[point.Point.X, point.Point.Y] = _random.Next(point.HeightRanges.Min(), point.HeightRanges.Max());
-
-                    PointsToProcess.Add(point.Point);
-                    StepIndices.Add(PointsToProcess.Count - 1);
-                }
-
-                foreach (var point in diamondPoints.Except(unprocessedDiamondPoints))
-                {
-                    StepIndices.Add(PointsToProcess.IndexOf(point.Point));
-                }
-            }
-
-
-
-            public void SquareStep()
-            {
-
-
-            }
-
-            //private class PointHeightRange()
-            //{
-            //    public Point 
-            //}
-
-        }
-
     }
 }
