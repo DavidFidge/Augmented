@@ -119,8 +119,10 @@
     <Compile Include="Graphics\IDrawable.cs" />
     <Compile Include="Graphics\EffectCollection.cs" />
     <Compile Include="Graphics\Terrain\DiamondSquare.cs" />
+    <Compile Include="Graphics\Terrain\DivideBy2HeightsReducer.cs" />
     <Compile Include="Graphics\Terrain\HeightMap.cs" />
     <Compile Include="Graphics\Terrain\HeightMapGenerator.cs" />
+    <Compile Include="Graphics\Terrain\IDiamondSquareHeightsReducer.cs" />
     <Compile Include="Interfaces\Components\IRandom.cs" />
     <Compile Include="Graphics\Trees\Tree.cs" />
     <Compile Include="Graphics\Trees\Trunk.cs" />

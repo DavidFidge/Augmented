@@ -30,6 +30,25 @@ namespace DavidFidge.MonoGame.Core.Graphics.Extensions
             return pointList;
         }
 
+        public static List<Point> PointsOutwardsFrom(this Point centrePoint, int distance, int? xMin = null, int? xMax = null, int? yMin = null, int? yMax = null)
+        {
+            var pointList = new List<Point>();
+
+            if ((xMax == null || centrePoint.X - distance <= xMax) && (xMin == null || centrePoint.X - distance >= xMin))
+                pointList.Add(new Point(centrePoint.X - distance, centrePoint.Y));
+
+            if ((xMax == null || centrePoint.X + distance <= xMax) && (xMin == null || centrePoint.X + distance >= xMin))
+                pointList.Add(new Point(centrePoint.X + distance, centrePoint.Y));
+
+            if ((yMax == null || centrePoint.Y - distance <= yMax) && (yMin == null || centrePoint.Y - distance >= yMin))
+                pointList.Add(new Point(centrePoint.X, centrePoint.Y - distance));
+
+            if ((yMax == null || centrePoint.Y + distance <= yMax) && (yMin == null || centrePoint.Y + distance >= yMin))
+                pointList.Add(new Point(centrePoint.X, centrePoint.Y + distance));
+
+            return pointList;
+        }
+
         public static Vector2 ToVector(this Point point)
         {
             return new Vector2(point.X, point.Y);

@@ -227,10 +227,14 @@ namespace DavidFidge.MonoGame.Core.Graphics.Terrain
             return this;
         }
 
-        public HeightMapGenerator DiamondSquare(int maxHeight)
+        public HeightMapGenerator DiamondSquare(
+            int size,
+            int minHeight,
+            int maxHeight,
+            IDiamondSquareHeightsReducer diamondSquareHeightsReducer = null)
         {
             var heightMapPatch = new DiamondSquare(_random)
-                .Execute(1024, 0, maxHeight)
+                .Execute(size, minHeight, maxHeight)
                 .HeightMap;
 
             _heightMap.Patch(heightMapPatch, new Point(0, 0));

@@ -13,6 +13,7 @@ namespace DavidFidge.MonoGame.Core.Graphics.Terrain
     public class DiamondSquare
     {
         private readonly IRandom _random;
+        public IDiamondSquareHeightsReducer HeightsReducer { get; set; }
         private int _minHeight;
         private int _maxHeight;
         private int _numberOfSteps;
@@ -23,9 +24,16 @@ namespace DavidFidge.MonoGame.Core.Graphics.Terrain
 
         public List<Square> Squares { get; set; }
 
+        public int MaxHeight => _maxHeight;
+        public int MinHeight => _minHeight;
+        public int NumberOfSteps => _numberOfSteps;
+
         public DiamondSquare(IRandom random)
         {
             _random = random;
+
+            if (HeightsReducer == null)
+                HeightsReducer = new DividingHeightsReducer();
         }
 
         public DiamondSquare Execute(int heightMapSize, int minHeight, int maxHeight)
@@ -37,20 +45,20 @@ namespace DavidFidge.MonoGame.Core.Graphics.Terrain
 
             if (Math.Log(heightMapSize, 2) % (int)Math.Log(heightMapSize, 2) > 0.0001d)
             {
-                throw new Exception("Diamond square currently only supports square heightmaps with size equal to square root 2.  If your height map is a different size then generate a diamond square map bigger and patch your height map with a portion of it");
+                throw new Exception("Diamond square currently only supports square height maps with size equal to square root 2.  If your height map is a different size then generate a diamond square map bigger and patch your height map with a portion of it");
             }
 
             if (heightMapSize < 2)
                 throw new Exception("Height map size must be at least 4");
 
             _numberOfSteps = (int) Math.Log(heightMapSize, 2);
-            _currentStep = _numberOfSteps;
+            _currentStep = NumberOfSteps;
 
             HeightMap = new HeightMap(heightMapSize + 1, heightMapSize + 1);
 
             _midPoint = new Point(HeightMap.Width / 2, HeightMap.Width / 2);
 
-            HeightMap[_midPoint.X, _midPoint.Y] = _maxHeight;
+            HeightMap[_midPoint.X, _midPoint.Y] = MaxHeight;
 
             Squares.Add(
                 new Square(
@@ -59,6 +67,8 @@ namespace DavidFidge.MonoGame.Core.Graphics.Terrain
                     new Point(heightMapSize, 0),
                     new Point(heightMapSize, heightMapSize)
                 ));
+
+            HeightsReducer.Initialise(this);
 
             while (_currentStep > 0)
             {
@@ -72,23 +82,39 @@ namespace DavidFidge.MonoGame.Core.Graphics.Terrain
         private void ExecuteNextDiamondSquareStep()
         {
             var newSquares = new List<Square>();
-            var squareStepPoints = new List<Point>();
+            var squareStepPoints = new HashSet<Point>();
+
+            var diamondPointWidth = 0;
 
             foreach (var squarePart in Squares)
             {
                 var midPoint = squarePart.Midpoint;
 
-                SetHeight(midPoint);
+                var heightRanges = squarePart.Points
+                    .Select(squarePoint => HeightMap[squarePoint.X, squarePoint.Y])
+                    .ToList();
+
+                SetHeight(midPoint, heightRanges);
 
                 BuildNewSquares(midPoint, squarePart, newSquares, squareStepPoints);
+
+                if (diamondPointWidth == 0)
+                    diamondPointWidth = midPoint.X - squarePart.LeftX;
             }
 
-            if (_currentStep != _numberOfSteps)
+            if (_currentStep != NumberOfSteps)
+            {
                 ReduceHeightLimits();
+            }
 
             foreach (var squareStepPoint in squareStepPoints)
             {
-                SetHeight(squareStepPoint);
+                var heightRanges = squareStepPoint
+                    .PointsOutwardsFrom(diamondPointWidth, 0, HeightMap.Width - 1, 0, HeightMap.Length - 1)
+                    .Select(squarePoint => HeightMap[squarePoint.X, squarePoint.Y])
+                    .ToList();
+
+                SetHeight(squareStepPoint, heightRanges);
             }
 
             ReduceHeightLimits();
@@ -98,19 +124,19 @@ namespace DavidFidge.MonoGame.Core.Graphics.Terrain
 
         private void ReduceHeightLimits()
         {
-            _maxHeight /= 2;
-            _minHeight /= 2;
+            _maxHeight = HeightsReducer.ReduceMaxHeight(this);
+            _minHeight = HeightsReducer.ReduceMinHeight(this);
         }
 
-        private void SetHeight(Point squareStepPoint)
+        private void SetHeight(Point squareStepPoint, List<int> surroundingHeights)
         {
             if (squareStepPoint != _midPoint)
             {
-                HeightMap[squareStepPoint.X, squareStepPoint.Y] = _random.Next(_minHeight, _maxHeight);
+                HeightMap[squareStepPoint.X, squareStepPoint.Y] = (int)surroundingHeights.Average() + _random.Next(_minHeight, MaxHeight);
             }
         }
 
-        private void BuildNewSquares(Point midPoint, Square currentSquare, List<Square> newSquares, List<Point> squareStepPoints)
+        private void BuildNewSquares(Point midPoint, Square currentSquare, List<Square> newSquares, HashSet<Point> squareStepPoints)
         {
             // Top Left quadrant
             var diamondPoint1 = new Point(currentSquare.LeftX, midPoint.Y);
@@ -188,6 +214,9 @@ namespace DavidFidge.MonoGame.Core.Graphics.Terrain
             public int RightX => Points.Max(p => p.X);
 
             public Point Midpoint => Points.GetMidpoint();
+
+            public int Width => RightX - LeftX;
+            public int Height => TopY - BottomY;
         }
     }
 }
