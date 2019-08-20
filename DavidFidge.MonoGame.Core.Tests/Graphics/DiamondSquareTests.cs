@@ -14,6 +14,7 @@ namespace DavidFidge.MonoGame.Core.Tests.Graphics
     {
         private IRandom _random;
         private IRandom _random2;
+        private IRandom _randomSubtractingHeights;
 
         private DiamondSquare _diamondSquare;
 
@@ -24,6 +25,7 @@ namespace DavidFidge.MonoGame.Core.Tests.Graphics
 
             _random = new TestRandom();
             _random2 = new TestRandom2();
+            _randomSubtractingHeights = new TestRandomSubtractingHeights();
         }
 
         [TestMethod]
@@ -89,6 +91,33 @@ namespace DavidFidge.MonoGame.Core.Tests.Graphics
                 78,67,61,82,103,82,61,67,78,
                 42,46,67,80,95,80,67,46,42,
                 0,42,78,91,113,91,78,42,0
+            };
+
+            CollectionAssert.AreEquivalent(expectedMap, result.ToArray());
+        }
+
+
+        [TestMethod]
+        public void Should()
+        {
+            // Arrange
+            var subtractingHeightsReducer = new SubtractingHeightsReducer();
+            _diamondSquare = new DiamondSquare(_random)
+            {
+                HeightsReducer = subtractingHeightsReducer
+            };
+
+            // Act
+            var result = _diamondSquare.Execute(4, -100, 100).HeightMap;
+
+            // Assert
+            var expectedMap = new int[5 * 5]
+            {
+                0,   84,  113,  84,  0,
+                84,  111, 118,  111, 84,
+                113, 118, 100,  118, 113,
+                84,  111, 118,  111, 84,
+                0,   84,  113,   84,  0
             };
 
             CollectionAssert.AreEquivalent(expectedMap, result.ToArray());
@@ -163,6 +192,44 @@ namespace DavidFidge.MonoGame.Core.Tests.Graphics
                 if (min == -6 && max == 6)
                 {
                     return 1;
+                }
+
+                throw new Exception("Unexpected call to IRandom");
+            }
+        }
+
+        private class TestRandomSubtractingHeights : IRandom
+        {
+            public double NextDouble()
+            {
+                throw new NotImplementedException();
+            }
+
+            public int Next()
+            {
+                throw new NotImplementedException();
+            }
+
+            public int Next(int min, int max)
+            {
+                if (min == -100 && max == 100)
+                {
+                    return 80;
+                }
+
+                if (min == 75 && max == 75)
+                {
+                    return 30;
+                }
+
+                if (min == -50 && max == 50)
+                {
+                    return 10;
+                }
+
+                if (min == -50 && max == 50)
+                {
+                    return 10;
                 }
 
                 throw new Exception("Unexpected call to IRandom");

@@ -28,8 +28,8 @@
 
         public void Initialise(DiamondSquare diamondSquare)
         {
-            _maxHeightDeduction = diamondSquare.MaxHeight / diamondSquare.NumberOfSteps;
-            _minHeightDeduction = diamondSquare.MinHeight / diamondSquare.NumberOfSteps;
+            _maxHeightDeduction = diamondSquare.MaxHeight / diamondSquare.NumberOfSteps * 2;
+            _minHeightDeduction = diamondSquare.MinHeight / diamondSquare.NumberOfSteps * 2;
         }
 
         public int ReduceMaxHeight(DiamondSquare diamondSquare)
