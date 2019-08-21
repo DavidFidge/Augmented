@@ -5,6 +5,7 @@ using System.Linq;
 using DavidFidge.MonoGame.Core.Graphics.Extensions;
 using DavidFidge.MonoGame.Core.Interfaces.Components;
 using DavidFidge.MonoGame.Core.Interfaces.Graphics;
+using DavidFidge.MonoGame.Core.Interfaces.Graphics.Terrain;
 
 using Microsoft.Xna.Framework;
 
@@ -29,11 +30,6 @@ namespace DavidFidge.MonoGame.Core.Graphics.Terrain
         {
             _heightMap = new HeightMap(width, length);
             return this;
-        }
-
-        public HeightMapGenerator Randomise()
-        {
-            return Randomise(_heightMap.Width, _heightMap.Length);
         }
 
         public HeightMapGenerator Randomise(int patchX, int patchY)
@@ -85,13 +81,6 @@ namespace DavidFidge.MonoGame.Core.Graphics.Terrain
             }
 
             return this;
-        }
-
-        private float ZeroAreaPercent(int [,] heightMap)
-        {
-            return heightMap
-                .Cast<int>()
-                .Count(i => i != 0);
         }
 
         public HeightMapGenerator Hill(
@@ -235,6 +224,21 @@ namespace DavidFidge.MonoGame.Core.Graphics.Terrain
             {
                 Hill(hillPoint, relativeSize, height, hillOptions);
             }
+
+            return this;
+        }
+
+        public HeightMapGenerator DiamondSquare(
+            int size,
+            int minHeight,
+            int maxHeight,
+            IDiamondSquareHeightsReducer diamondSquareHeightsReducer = null)
+        {
+            var heightMapPatch = new DiamondSquare(_random)
+                .Execute(size, minHeight, maxHeight)
+                .HeightMap;
+
+            _heightMap.Patch(heightMapPatch, new Point(0, 0));
 
             return this;
         }

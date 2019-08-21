@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.ComponentModel.DataAnnotations;
+using System.Reflection;
 using System.Text.RegularExpressions;
-
-using Castle.Core.Internal;
 
 using DavidFidge.MonoGame.Core.Components;
 using DavidFidge.MonoGame.Core.Interfaces;
@@ -85,7 +84,7 @@ namespace DavidFidge.MonoGame.Core.UserInterface
             if (!(expression.Body is MemberExpression memberExpression))
                 return string.Empty;
 
-            var displayAttribute = memberExpression.Member.GetAttribute<DisplayAttribute>();
+            var displayAttribute = memberExpression.Member.GetCustomAttribute<DisplayAttribute>();
 
             if (displayAttribute != null)
                 return displayAttribute.Name;

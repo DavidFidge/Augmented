@@ -258,6 +258,39 @@ namespace DavidFidge.MonoGame.Core.Tests.Graphics
         }
 
         [TestMethod]
+        public void Import_Should_Import_HeightMap_From_File()
+        {
+            // Arrange
+            var heightMap = new HeightMap(3, 2)
+                .FromArray(new int[3 * 2]
+                {
+                    1, 2, 3,
+                    4, 5, 6
+                });
+
+            var tempFileName = $"{Guid.NewGuid().ToString().Replace("-", "")}.csv";
+
+            heightMap.Export("Test", tempFileName);
+
+            var filePath = Path.Combine(
+                Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+                "Test",
+                tempFileName);
+
+            // Act
+            var result = HeightMap.Import(filePath);
+
+            // Assert
+            var expectedMap = new int[3 * 2]
+            {
+                1, 2, 3,
+                4, 5, 6
+            };
+
+            CollectionAssert.AreEquivalent(expectedMap, result.ToArray());
+        }
+
+        [TestMethod]
         public void Export_Should_Export_HeightMap_To_File()
         {
             // Arrange

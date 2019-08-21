@@ -100,11 +100,11 @@ namespace Augmented.Graphics.TerrainSpace
 
         public void LoadContent()
         {
-            var heightMap = _heightMapGenerator.CreateHeightMap(1000, 1000)
-                .WithHills(0.9f, 3000)
+            var heightMap = _heightMapGenerator.CreateHeightMap(33, 33)
+                .DiamondSquare(32, -20000, 20000, new SubtractingHeightsReducer())
                 .HeightMap();
 
-            var terrainVertices = CreateTerrainVertices(heightMap, new Vector3(0.1f, 0.1f, 0.01f));
+            var terrainVertices = CreateTerrainVertices(heightMap, new Vector3(10f, 10f, 0.01f));
             var terrainIndexes = CreateTerrainIndexes(heightMap);
 
             terrainVertices.GenerateNormalsForTriangleStrip(terrainIndexes);
