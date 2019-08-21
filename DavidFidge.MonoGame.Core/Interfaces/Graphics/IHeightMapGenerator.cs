@@ -1,4 +1,5 @@
 ﻿using DavidFidge.MonoGame.Core.Graphics.Terrain;
+using DavidFidge.MonoGame.Core.Interfaces.Graphics.Terrain;
 
 using Microsoft.Xna.Framework;
 

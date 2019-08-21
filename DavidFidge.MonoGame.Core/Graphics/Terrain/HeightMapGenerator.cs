@@ -5,6 +5,7 @@ using System.Linq;
 using DavidFidge.MonoGame.Core.Graphics.Extensions;
 using DavidFidge.MonoGame.Core.Interfaces.Components;
 using DavidFidge.MonoGame.Core.Interfaces.Graphics;
+using DavidFidge.MonoGame.Core.Interfaces.Graphics.Terrain;
 
 using Microsoft.Xna.Framework;
 

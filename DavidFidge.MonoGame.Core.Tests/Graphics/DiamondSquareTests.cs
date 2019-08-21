@@ -3,9 +3,12 @@ using System.Linq;
 
 using DavidFidge.MonoGame.Core.Graphics.Terrain;
 using DavidFidge.MonoGame.Core.Interfaces.Components;
+using DavidFidge.MonoGame.Core.Interfaces.Graphics.Terrain;
 using DavidFidge.TestInfrastructure;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+
+using NSubstitute;
 
 namespace DavidFidge.MonoGame.Core.Tests.Graphics
 {
@@ -14,7 +17,6 @@ namespace DavidFidge.MonoGame.Core.Tests.Graphics
     {
         private IRandom _random;
         private IRandom _random2;
-        private IRandom _randomSubtractingHeights;
 
         private DiamondSquare _diamondSquare;
 
@@ -25,7 +27,6 @@ namespace DavidFidge.MonoGame.Core.Tests.Graphics
 
             _random = new TestRandom();
             _random2 = new TestRandom2();
-            _randomSubtractingHeights = new TestRandomSubtractingHeights();
         }
 
         [TestMethod]
@@ -96,31 +97,48 @@ namespace DavidFidge.MonoGame.Core.Tests.Graphics
             CollectionAssert.AreEquivalent(expectedMap, result.ToArray());
         }
 
-
         [TestMethod]
-        public void Should()
+        public void SubtractingHeightsReducer_Should_Reduce_Heights_By_MaxHeight_Divided_By_Number_Of_Steps_Times_2()
         {
             // Arrange
             var subtractingHeightsReducer = new SubtractingHeightsReducer();
-            _diamondSquare = new DiamondSquare(_random)
-            {
-                HeightsReducer = subtractingHeightsReducer
-            };
+
+            var diamondSquare = Substitute.For<IDiamondSquare>();
+            diamondSquare.MaxHeight.Returns(100);
+            diamondSquare.MinHeight.Returns(-100);
+            diamondSquare.NumberOfSteps.Returns(2);
 
             // Act
-            var result = _diamondSquare.Execute(4, -100, 100).HeightMap;
+            subtractingHeightsReducer.Initialise(diamondSquare);
+
+            var newMaxHeight = subtractingHeightsReducer.ReduceMaxHeight(diamondSquare);
+            var newMinHeight = subtractingHeightsReducer.ReduceMinHeight(diamondSquare);
 
             // Assert
-            var expectedMap = new int[5 * 5]
-            {
-                0,   84,  113,  84,  0,
-                84,  111, 118,  111, 84,
-                113, 118, 100,  118, 113,
-                84,  111, 118,  111, 84,
-                0,   84,  113,   84,  0
-            };
+            Assert.AreEqual(75, newMaxHeight);
+            Assert.AreEqual(-75, newMinHeight);
+        }
 
-            CollectionAssert.AreEquivalent(expectedMap, result.ToArray());
+        [TestMethod]
+        public void SubtractingHeightsReducer_Should_Reduce_Heights_By_MaxHeight_Divided_By_Number_Of_Steps_Times_2_Times_Scale()
+        {
+            // Arrange
+            var subtractingHeightsReducer = new SubtractingHeightsReducer { Scale = 0.5m };
+
+            var diamondSquare = Substitute.For<IDiamondSquare>();
+            diamondSquare.MaxHeight.Returns(100);
+            diamondSquare.MinHeight.Returns(-100);
+            diamondSquare.NumberOfSteps.Returns(2);
+
+            // Act
+            subtractingHeightsReducer.Initialise(diamondSquare);
+
+            var newMaxHeight = subtractingHeightsReducer.ReduceMaxHeight(diamondSquare);
+            var newMinHeight = subtractingHeightsReducer.ReduceMinHeight(diamondSquare);
+
+            // Assert
+            Assert.AreEqual(88, newMaxHeight);
+            Assert.AreEqual(-88, newMinHeight);
         }
 
         private class TestRandom : IRandom
@@ -192,44 +210,6 @@ namespace DavidFidge.MonoGame.Core.Tests.Graphics
                 if (min == -6 && max == 6)
                 {
                     return 1;
-                }
-
-                throw new Exception("Unexpected call to IRandom");
-            }
-        }
-
-        private class TestRandomSubtractingHeights : IRandom
-        {
-            public double NextDouble()
-            {
-                throw new NotImplementedException();
-            }
-
-            public int Next()
-            {
-                throw new NotImplementedException();
-            }
-
-            public int Next(int min, int max)
-            {
-                if (min == -100 && max == 100)
-                {
-                    return 80;
-                }
-
-                if (min == 75 && max == 75)
-                {
-                    return 30;
-                }
-
-                if (min == -50 && max == 50)
-                {
-                    return 10;
-                }
-
-                if (min == -50 && max == 50)
-                {
-                    return 10;
                 }
 
                 throw new Exception("Unexpected call to IRandom");
