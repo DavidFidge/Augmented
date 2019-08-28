@@ -45,6 +45,7 @@ namespace Augmented.Installers
             RegisterOptionsView(container, store);
             RegisterVideoOptionsView(container, store);
             RegisterInGameOptionsView(container, store);
+            RegisterConsoleView(container, store);
             RegisterGameView(container, store);
             RegisterGameSpeedView(container, store);
 
@@ -168,6 +169,8 @@ namespace Augmented.Installers
                 Component.For<GameView>()
                     .Forward<IRequestHandler<OpenInGameOptionsRequest, Unit>>()
                     .Forward<IRequestHandler<CloseInGameOptionsRequest, Unit>>()
+                    .Forward<IRequestHandler<OpenConsoleRequest, Unit>>()
+                    .Forward<IRequestHandler<CloseConsoleRequest, Unit>>()
                     .DependsOn(Dependency.OnComponent<IKeyboardHandler, GameViewKeyboardHandler>())
                     .DependsOn(Dependency.OnComponent<IMouseHandler, GameViewMouseHandler>()),
 
@@ -189,6 +192,20 @@ namespace Augmented.Installers
                     .DependsOn(Dependency.OnComponent<IKeyboardHandler, InGameOptionsKeyboardHandler>()),
 
                 Component.For<InGameOptionsViewModel>()
+            );
+        }
+
+        private void RegisterConsoleView(IWindsorContainer container, IConfigurationStore store)
+        {
+            container.Register(
+                Component.For<ConsoleView>()
+                    .ImplementedBy<ConsoleView>()
+                    .DependsOn(Dependency.OnComponent<IKeyboardHandler, ConsoleKeyboardHandler>()),
+
+                Component.For<IKeyboardHandler>()
+                    .ImplementedBy<ConsoleKeyboardHandler>(),
+
+                Component.For<ConsoleViewModel>()
             );
         }
 

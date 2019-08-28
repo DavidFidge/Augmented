@@ -17,19 +17,24 @@ namespace Augmented.UserInterface.Views
 {
     public class GameView : BaseView<GameViewModel, GameData>,
         IRequestHandler<OpenInGameOptionsRequest>,
-        IRequestHandler<CloseInGameOptionsRequest>
+        IRequestHandler<CloseInGameOptionsRequest>,
+        IRequestHandler<OpenConsoleRequest>,
+        IRequestHandler<CloseConsoleRequest>
     {
         private readonly InGameOptionsView _inGameOptionsView;
+        private readonly ConsoleView _consoleView;
         private readonly GameSpeedView _gameSpeedView;
 
         public GameView(
             GameViewModel gameViewModel,
             InGameOptionsView inGameOptionsView,
+            ConsoleView consoleView,
             GameSpeedView gameSpeedView
         )
             : base(gameViewModel)
         {
             _inGameOptionsView = inGameOptionsView;
+            _consoleView = consoleView;
             _gameSpeedView = gameSpeedView;
             _components.Add(_gameSpeedView);
         }
@@ -37,6 +42,7 @@ namespace Augmented.UserInterface.Views
         protected override void InitializeInternal()
         {
             SetupInGameOptions();
+            SetupConsole();
             SetupGameSpeedView();
         }
 
@@ -74,20 +80,37 @@ namespace Augmented.UserInterface.Views
             RootPanel.AddChild(_inGameOptionsView.RootPanel);
         }
 
+        private void SetupConsole()
+        {
+            _consoleView.Initialize();
+
+            RootPanel.AddChild(_consoleView.RootPanel);
+        }
+
         public Task<Unit> Handle(OpenInGameOptionsRequest request, CancellationToken cancellationToken)
         {
             _inGameOptionsView.Show();
-
             return Unit.Task;
         }
 
         public Task<Unit> Handle(CloseInGameOptionsRequest request, CancellationToken cancellationToken)
         {
             _inGameOptionsView.Hide();
-
             return Unit.Task;
         }
 
         public bool IsMouseIn3DView => RootPanel != null && RootPanel.IsMouseInRootPanelEmptySpace;
+
+        public Task<Unit> Handle(OpenConsoleRequest request, CancellationToken cancellationToken)
+        {
+            _consoleView.Show();
+            return Unit.Task;
+        }
+
+        public Task<Unit> Handle(CloseConsoleRequest request, CancellationToken cancellationToken)
+        {
+            _consoleView.Hide();
+            return Unit.Task;
+        }
     }
 }

@@ -26,6 +26,9 @@ namespace Augmented.UserInterface.Input
             if (keyInFocus == Keys.Escape)
                 Mediator.Send(new OpenInGameOptionsRequest());
 
+            if (keyInFocus == Keys.OemTilde)
+                Mediator.Send(new OpenConsoleRequest());
+
             if (keyInFocus == Keys.F12)
                 Environment.Exit(0);
 
