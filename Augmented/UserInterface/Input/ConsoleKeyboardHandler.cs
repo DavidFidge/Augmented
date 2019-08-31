@@ -16,7 +16,7 @@ namespace Augmented.UserInterface.Input
                 Mediator.Send(new CloseConsoleRequest());
 
             if (keyInFocus == Keys.Enter)
-                Mediator.Send(new CloseConsoleRequest())
+                Mediator.Send(new SendConsoleCommandRequest());
         }
     }
 }

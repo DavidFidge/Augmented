@@ -49,6 +49,7 @@
     <Compile Include="Graphics\TerrainSpace\Terrain.cs" />
     <Compile Include="Interfaces\IAugmentedGameWorld.cs" />
     <Compile Include="Installers\GameInstaller.cs" />
+    <Compile Include="Messages\Console\CloseOptionsViewRequest.cs" />
     <Compile Include="Messages\GameSpeed\ChangeGameSpeedRequest.cs" />
     <Compile Include="Messages\Game\NewGameRequest.cs" />
     <Compile Include="Messages\InGameOptions\SendConsoleCommandRequest.cs" />

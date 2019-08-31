@@ -16,8 +16,7 @@ using Microsoft.Xna.Framework;
 
 namespace Augmented.UserInterface.Views
 {
-    public class GameSpeedView : BaseView<GameSpeedViewModel, GameSpeedData>,
-        IRequestHandler<UpdateViewRequest<GameSpeedData>>
+    public class GameSpeedView : BaseView<GameSpeedViewModel, GameSpeedData>
     {
         private Label _speedLabel;
         private Label _timeLabel;
@@ -99,7 +98,7 @@ namespace Augmented.UserInterface.Views
                     speedButtonPanel);
         }
 
-        public Task<Unit> Handle(UpdateViewRequest<GameSpeedData> request, CancellationToken cancellationToken)
+        protected override void UpdateView()
         {
             var gameSpeed = (Data.GameSpeedPercent / 100m).ToString("0.##");
 
@@ -119,8 +118,6 @@ namespace Augmented.UserInterface.Views
             }
 
             _timeLabel.Text = Data.TotalGameTime.ToString(@"hh\:mm\:ss");
-
-            return Unit.Task;
         }
     }
 }

@@ -200,12 +200,15 @@ namespace Augmented.Installers
             container.Register(
                 Component.For<ConsoleView>()
                     .ImplementedBy<ConsoleView>()
+                    .Forward<IRequestHandler<SendConsoleCommandRequest, Unit>>()
+                    .Forward<IRequestHandler<UpdateViewRequest<ConsoleData>, Unit>>()
                     .DependsOn(Dependency.OnComponent<IKeyboardHandler, ConsoleKeyboardHandler>()),
 
                 Component.For<IKeyboardHandler>()
                     .ImplementedBy<ConsoleKeyboardHandler>(),
 
                 Component.For<ConsoleViewModel>()
+                    .Forward<IRequestHandler<ExecuteConsoleCommandRequest, Unit>>()
             );
         }
 
