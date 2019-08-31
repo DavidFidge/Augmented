@@ -1,8 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Threading;
 
 using DavidFidge.MonoGame.Core.Interfaces;
 using DavidFidge.MonoGame.Core.Interfaces.Services;
+using DavidFidge.MonoGame.Core.Messages;
 using DavidFidge.MonoGame.Core.UserInterface;
 using DavidFidge.TestInfrastructure;
 
@@ -214,7 +216,7 @@ namespace DavidFidge.MonoGame.Core.Tests.UserInterface
         }
 
         [TestMethod]
-        public void Hide_For_View_With_Componet_Should_Also_Hide_Component_Panel_And_Revert_Input()
+        public void Hide_For_View_With_Component_Should_Also_Hide_Component_Panel_And_Revert_Input()
         {
             // Arrange
             var gameInputService = Substitute.For<IGameInputService>();
@@ -278,9 +280,50 @@ namespace DavidFidge.MonoGame.Core.Tests.UserInterface
                 .RemoveFromCurrentGroup(Arg.Is(mouseHandlerComponent), Arg.Is(keyboardHandlerComponent));
         }
 
+        [TestMethod]
+        public void UpdateViewRequest_Should_Call_UpdateView()
+        {
+            // Arrange
+            var testViewModel = new TestViewModel();
+            var rootPanel = Substitute.For<IRootPanel<Entity>>();
+
+            var testView = new TestView(testViewModel)
+            {
+                RootPanel = rootPanel
+            };
+
+            // Act
+            testView.Handle(new UpdateViewRequest<TestData>(), new CancellationToken());
+
+            // Assert
+            Assert.IsTrue(testView.UpdateViewCalled);
+        }
+
+        [TestMethod]
+        public void Notify_Should_Send_UpdateViewRequest()
+        {
+            // Arrange
+            var testViewModel = new TestViewModel();
+            SetupBaseComponent(testViewModel);
+
+            var rootPanel = Substitute.For<IRootPanel<Entity>>();
+
+            var testView = new TestView(testViewModel)
+            {
+                RootPanel = rootPanel
+            };
+
+            // Act
+            testViewModel.TestNotify();
+
+            // Assert
+            testViewModel.Mediator.Received().Send(Arg.Any<UpdateViewRequest<TestData>>());
+        }
+
         public class TestView : BaseView<TestViewModel, TestData>
         {
             public bool IsInitializeInternalCalled { get; private set; }
+            public bool UpdateViewCalled { get; private set; }
 
             public TestView(TestViewModel viewModel) : base(viewModel)
             {
@@ -300,6 +343,11 @@ namespace DavidFidge.MonoGame.Core.Tests.UserInterface
             {
                 return LabelFor(() => Data.PropertyWithoutDisplay);
             }
+
+            protected override void UpdateView()
+            {
+                UpdateViewCalled = true;
+            }
         }
 
         public class TestData
@@ -312,6 +360,10 @@ namespace DavidFidge.MonoGame.Core.Tests.UserInterface
 
         public class TestViewModel : BaseViewModel<TestData>
         {
+            public void TestNotify()
+            {
+                Notify();
+            }
         }
 
         public class TestViewWithComponentView : BaseView<TestViewWithComponentViewModel, TestViewWithComponentData>
