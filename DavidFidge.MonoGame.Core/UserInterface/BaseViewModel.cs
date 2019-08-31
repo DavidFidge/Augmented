@@ -8,8 +8,6 @@ namespace DavidFidge.MonoGame.Core.UserInterface
     public abstract class BaseViewModel<T> : BaseComponent
         where T : new()
     {
-        public IMediator Mediator { get; set; }
-
         public T Data { get; protected set; }
 
         public virtual void Initialize()
