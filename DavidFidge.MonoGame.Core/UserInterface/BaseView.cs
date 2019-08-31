@@ -2,22 +2,28 @@
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.ComponentModel.DataAnnotations;
+using System.Data;
 using System.Reflection;
 using System.Text.RegularExpressions;
+using System.Threading;
+using System.Threading.Tasks;
 
 using DavidFidge.MonoGame.Core.Components;
 using DavidFidge.MonoGame.Core.Interfaces;
 using DavidFidge.MonoGame.Core.Interfaces.Services;
 using DavidFidge.MonoGame.Core.Interfaces.UserInterface;
+using DavidFidge.MonoGame.Core.Messages;
 
 using GeonBit.UI.Entities;
 
 using InputHandlers.Keyboard;
 using InputHandlers.Mouse;
 
+using MediatR;
+
 namespace DavidFidge.MonoGame.Core.UserInterface
 {
-    public abstract class BaseView<TViewModel, TData> : BaseComponent, IView<Entity>
+    public abstract class BaseView<TViewModel, TData> : BaseComponent, IView<Entity>, IRequestHandler<UpdateViewRequest<TData>>
          where TViewModel : BaseViewModel<TData>
          where TData : new()
     {
@@ -105,6 +111,16 @@ namespace DavidFidge.MonoGame.Core.UserInterface
                 values.Add(matches[i].Value);
 
             return string.Join(" ", values);
+        }
+
+        protected virtual void UpdateView()
+        {
+        }
+
+        public Task<Unit> Handle(UpdateViewRequest<TData> request, CancellationToken cancellationToken)
+        {
+            UpdateView();
+            return Unit.Task;
         }
     }
 }

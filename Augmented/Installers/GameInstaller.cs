@@ -26,6 +26,7 @@ using DavidFidge.MonoGame.Core.Installers;
 using DavidFidge.MonoGame.Core.Interfaces.Components;
 using DavidFidge.MonoGame.Core.Interfaces.Graphics;
 using DavidFidge.MonoGame.Core.Messages;
+using DavidFidge.MonoGame.Core.UserInterface;
 
 using InputHandlers.Keyboard;
 using InputHandlers.Mouse;
@@ -207,12 +208,15 @@ namespace Augmented.Installers
             container.Register(
                 Component.For<ConsoleView>()
                     .ImplementedBy<ConsoleView>()
+                    .Forward<IRequestHandler<SendConsoleCommandRequest, Unit>>()
+                    .Forward<IRequestHandler<UpdateViewRequest<ConsoleData>, Unit>>()
                     .DependsOn(Dependency.OnComponent<IKeyboardHandler, ConsoleKeyboardHandler>()),
 
                 Component.For<IKeyboardHandler>()
                     .ImplementedBy<ConsoleKeyboardHandler>(),
 
                 Component.For<ConsoleViewModel>()
+                    .Forward<IRequestHandler<ExecuteConsoleCommandRequest, Unit>>()
             );
         }
 

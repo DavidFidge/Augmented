@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Linq;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -20,6 +22,7 @@ namespace Augmented.UserInterface.Views
         IRequestHandler<SendConsoleCommandRequest>
     {
         private TextInput _consoleEntry;
+        private Paragraph _consoleHistory;
 
         public ConsoleView(
             ConsoleViewModel consoleViewModel
@@ -29,7 +32,7 @@ namespace Augmented.UserInterface.Views
 
         protected override void InitializeInternal()
         {
-            var containerPanel = new Panel(new Vector2(-1, 0.25f), PanelSkin.None, Anchor.BottomCenter, new Vector2(0f, 20f))
+            var containerPanel = new Panel(new Vector2(-1, 0.3f), PanelSkin.None, Anchor.BottomCenter, new Vector2(0f, -15f))
             {
                 Padding = new Vector2(0f, 0f),
             };
@@ -66,23 +69,19 @@ namespace Augmented.UserInterface.Views
 
             consolePanel.AddChild(hr);
 
-            var consoleHistory = new Paragraph("xxx yyy", Anchor.AutoInline, new Vector2(-1, 0.8f));
+            _consoleHistory = new Paragraph(String.Empty, Anchor.AutoInline, new Vector2(-1, 1f));
 
-            consolePanel.AddChild(consoleHistory);
+            consolePanel.AddChild(_consoleHistory);
         }
 
         private void OnValueChange(Entity entity)
         {
-            _consoleEntry.TextParagraph.Text.Replace("`", String.Empty);
+            _consoleEntry.Value = _consoleEntry.Value.Replace("`", String.Empty);
         }
 
         public void FocusConsoleEntry()
         {
             _consoleEntry.IsFocused = true;
-        }
-
-        public void ExecuteCommand()
-        {
         }
 
         public override void Show()
@@ -93,8 +92,33 @@ namespace Augmented.UserInterface.Views
 
         public Task<Unit> Handle(SendConsoleCommandRequest request, CancellationToken cancellationToken)
         {
-            
+            if (!string.IsNullOrEmpty(_consoleEntry.TextParagraph.Text))
+            {
+                var executeConsoleCommandRequest = new ExecuteConsoleCommandRequest(_consoleEntry.Value);
+
+                _consoleEntry.Value = String.Empty;
+
+                Mediator.Send(executeConsoleCommandRequest, cancellationToken);
+            }
+
             return Unit.Task;
+        }
+
+        protected override void UpdateView()
+        {
+            var stringBuilder = new StringBuilder();
+
+            foreach (var lastCommand in Data.LastCommands)
+            {
+                if (!string.IsNullOrEmpty(lastCommand.Result))
+                    stringBuilder.AppendLine(lastCommand.Result);
+
+                stringBuilder.AppendLine(lastCommand.Text);
+            }
+
+            _consoleHistory.Text = stringBuilder.ToString();
+
+            base.UpdateView();
         }
     }
 }

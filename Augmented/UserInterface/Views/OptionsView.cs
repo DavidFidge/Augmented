@@ -47,7 +47,7 @@ namespace Augmented.UserInterface.Views
 
             SetupVideoOptionsItem();
 
-            new Button("Game Options")
+            new Button("Game Options (not implemented yet")
                 .SendOnClick<OpenGameOptionsRequest>(Mediator)
                 .AddTo(_optionsMenuPanel);
 
