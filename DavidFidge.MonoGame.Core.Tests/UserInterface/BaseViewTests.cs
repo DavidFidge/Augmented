@@ -299,27 +299,6 @@ namespace DavidFidge.MonoGame.Core.Tests.UserInterface
             Assert.IsTrue(testView.UpdateViewCalled);
         }
 
-        [TestMethod]
-        public void Notify_Should_Send_UpdateViewRequest()
-        {
-            // Arrange
-            var testViewModel = new TestViewModel();
-            SetupBaseComponent(testViewModel);
-
-            var rootPanel = Substitute.For<IRootPanel<Entity>>();
-
-            var testView = new TestView(testViewModel)
-            {
-                RootPanel = rootPanel
-            };
-
-            // Act
-            testViewModel.TestNotify();
-
-            // Assert
-            testViewModel.Mediator.Received().Send(Arg.Any<UpdateViewRequest<TestData>>());
-        }
-
         public class TestView : BaseView<TestViewModel, TestData>
         {
             public bool IsInitializeInternalCalled { get; private set; }
@@ -360,10 +339,6 @@ namespace DavidFidge.MonoGame.Core.Tests.UserInterface
 
         public class TestViewModel : BaseViewModel<TestData>
         {
-            public void TestNotify()
-            {
-                Notify();
-            }
         }
 
         public class TestViewWithComponentView : BaseView<TestViewWithComponentViewModel, TestViewWithComponentData>
