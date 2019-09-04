@@ -91,6 +91,7 @@
     <Compile Include="Interfaces\IScreenManager.cs" />
     <Compile Include="UserInterface\Screens\ScreenManager.cs" />
     <Compile Include="UserInterface\Screens\GameScreen.cs" />
+    <Compile Include="UserInterface\ViewModels\CreateHeightMapConsoleCommand.cs" />
     <Compile Include="UserInterface\ViewModels\GameSpeedViewModel.cs" />
     <Compile Include="UserInterface\ViewModels\GameViewModel.cs" />
     <Compile Include="UserInterface\ViewModels\ConsoleViewModel.cs" />

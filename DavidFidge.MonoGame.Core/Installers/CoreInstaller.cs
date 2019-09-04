@@ -5,9 +5,11 @@ using Castle.Windsor;
 
 using DavidFidge.MonoGame.Core.Components;
 using DavidFidge.MonoGame.Core.Configuration;
+using DavidFidge.MonoGame.Core.ConsoleCommands;
 using DavidFidge.MonoGame.Core.Graphics.Quads;
 using DavidFidge.MonoGame.Core.Interfaces;
 using DavidFidge.MonoGame.Core.Interfaces.Components;
+using DavidFidge.MonoGame.Core.Interfaces.ConsoleCommands;
 using DavidFidge.MonoGame.Core.Interfaces.Services;
 using DavidFidge.MonoGame.Core.Interfaces.UserInterface;
 using DavidFidge.MonoGame.Core.Services;
@@ -82,6 +84,9 @@ namespace DavidFidge.MonoGame.Core.Installers
 
                 Component.For<IConfigurationSettings>()
                     .ImplementedBy<ConfigurationSettings>(),
+
+                Component.For<IConsoleCommandServiceFactory>()
+                    .ImplementedBy<ConsoleCommandServiceFactory>(),
 
                 Component.For<IGraphicsSettings>()
                     .UsingFactoryMethod(k => BaseConfigurationSectionHandler.Load<GraphicsSettings>())

@@ -113,7 +113,7 @@ namespace Augmented.UserInterface.Views
                 if (!string.IsNullOrEmpty(lastCommand.Result))
                     stringBuilder.AppendLine(lastCommand.Result);
 
-                stringBuilder.AppendLine(lastCommand.Text);
+                stringBuilder.AppendLine(lastCommand.ToString());
             }
 
             _consoleHistory.Text = stringBuilder.ToString();
