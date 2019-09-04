@@ -6,5 +6,6 @@ namespace Augmented.Interfaces
     {
         void Draw(Matrix view, Matrix projection);
         void LoadContent();
+        void RecreateHeightMap();
     }
 }

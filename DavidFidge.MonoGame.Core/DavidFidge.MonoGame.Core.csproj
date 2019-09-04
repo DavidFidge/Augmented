@@ -98,9 +98,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ConsoleCommands\ConsoleCommandAttribute.cs" />
+    <Compile Include="ConsoleCommands\ConsoleCommandServiceFactory.cs" />
     <Compile Include="Components\Random.cs" />
     <Compile Include="Components\BaseComponent.cs" />
     <Compile Include="Configuration\BaseConfigurationSectionHandler.cs" />
+    <Compile Include="ConsoleCommands\ConsoleCommand.cs" />
+    <Compile Include="Interfaces\ConsoleCommands\IConsoleCommand.cs" />
+    <Compile Include="Interfaces\ConsoleCommands\IConsoleCommandServiceFactory.cs" />
     <Compile Include="Graphics\Camera\BaseCamera.cs" />
     <Compile Include="Graphics\Camera\FreeGameCamera.cs" />
     <Compile Include="Graphics\Camera\IGameCamera.cs" />

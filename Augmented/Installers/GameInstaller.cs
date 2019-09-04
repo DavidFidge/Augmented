@@ -26,7 +26,6 @@ using DavidFidge.MonoGame.Core.Installers;
 using DavidFidge.MonoGame.Core.Interfaces.Components;
 using DavidFidge.MonoGame.Core.Interfaces.Graphics;
 using DavidFidge.MonoGame.Core.Messages;
-using DavidFidge.MonoGame.Core.UserInterface;
 
 using InputHandlers.Keyboard;
 using InputHandlers.Mouse;
