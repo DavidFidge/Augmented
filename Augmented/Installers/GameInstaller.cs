@@ -1,6 +1,4 @@
-﻿using System.Web.UI.WebControls;
-
-using Augmented.Graphics;
+﻿using Augmented.Graphics;
 using Augmented.Graphics.Camera;
 using Augmented.Graphics.Models;
 using Augmented.Graphics.TerrainSpace;
@@ -26,6 +24,7 @@ using DavidFidge.MonoGame.Core.Installers;
 using DavidFidge.MonoGame.Core.Interfaces.Components;
 using DavidFidge.MonoGame.Core.Interfaces.Graphics;
 using DavidFidge.MonoGame.Core.Messages;
+using DavidFidge.MonoGame.Core.UserInterface;
 
 using InputHandlers.Keyboard;
 using InputHandlers.Mouse;
@@ -49,19 +48,14 @@ namespace Augmented.Installers
             RegisterGameView(container, store);
             RegisterGameSpeedView(container, store);
 
+            RegisterKeyboardHandlers(container);
+            RegisterMouseHandlers(container);
+
             container.Register(
 
                 Component.For<IContentStrings>()
                     .ImplementedBy<ContentStrings>()
                     .Forward<ICoreContent>(),
-
-                Component.For<IKeyboardHandler>()
-                    .ImplementedBy<NullKeyboardHandler>()
-                    .IsDefault(),
-
-                Component.For<IMouseHandler>()
-                    .ImplementedBy<NullMouseHandler>()
-                    .IsDefault(),
 
                 Component.For<IGame>()
                     .Forward<IRequestHandler<ExitGameRequest, Unit>>()
@@ -71,9 +65,9 @@ namespace Augmented.Installers
                     .Forward<IRequestHandler<NewGameRequest, Unit>>()
                     .Forward<IRequestHandler<ExitCurrentGameRequest, Unit>>()
                     .ImplementedBy<ScreenManager>(),
-
-                Component.For<TitleScreen>(),
-                Component.For<GameScreen>(),
+                
+                Classes.FromThisAssembly()
+                    .BasedOn<Screen>(),
 
                 Component.For<GameView3D>()
                     .Forward<IRequestHandler<Move3DViewRequest, Unit>>()
@@ -97,16 +91,34 @@ namespace Augmented.Installers
                 Component.For<Tree>()
                     .LifeStyle.Transient,
 
-                Component.For<IGameCamera>()
-                    .ImplementedBy<FreeGameCamera>()
-                    .LifeStyle.Transient,
-
-                Component.For<IGameCamera>()
-                    .ImplementedBy<StrategyGameCamera>()
-                    .LifeStyle.Transient,
+                Classes.FromAssemblyContaining<IGameCamera>()
+                    .BasedOn<IGameCamera>()
+                    .LifestyleTransient()
+                    .WithServiceDefaultInterfaces(),
 
                 Component.For<IAugmentedGameWorld>()
                     .ImplementedBy<AugmentedGameWorld>()
+            );
+        }
+
+        private void RegisterMouseHandlers(IWindsorContainer container)
+        {
+            container.Register(
+                Classes.FromThisAssembly()
+                    .BasedOn<IMouseHandler>()
+                    .ConfigureFor<NullMouseHandler>(c => c.IsDefault())
+                    .WithServiceDefaultInterfaces()
+            );
+        }
+
+        private void RegisterKeyboardHandlers(IWindsorContainer container)
+        {
+            container.Register(
+                Classes.FromThisAssembly()
+                    .BasedOn<IKeyboardHandler>()
+                    .ConfigureFor<NullKeyboardHandler>(c => c.IsDefault())
+                    .ConfigureFor<GameViewKeyboardHandler>(c => c.DependsOn(Dependency.OnComponent<ICameraMovement, FreeCameraMovement>()))
+                    .WithServiceDefaultInterfaces()
             );
         }
 
@@ -118,10 +130,8 @@ namespace Augmented.Installers
                     .Forward<IRequestHandler<CloseOptionsViewRequest, Unit>>()
                     .DependsOn(Dependency.OnComponent<IKeyboardHandler, TitleViewKeyboardHandler>()),
 
-                Component.For<IKeyboardHandler>()
-                    .ImplementedBy<TitleViewKeyboardHandler>(),
-
-                Component.For<TitleViewModel>());
+                Component.For<TitleViewModel>()
+            );
         }
 
         private void RegisterOptionsView(IWindsorContainer container, IConfigurationStore store)
@@ -131,9 +141,6 @@ namespace Augmented.Installers
                     .Forward<IRequestHandler<OpenVideoOptionsRequest, Unit>>()
                     .Forward<IRequestHandler<CloseVideoOptionsRequest, Unit>>()
                     .DependsOn(Dependency.OnComponent<IKeyboardHandler, OptionsKeyboardHandler>()),
-
-                Component.For<IKeyboardHandler>()
-                    .ImplementedBy<OptionsKeyboardHandler>(),
 
                 Component.For<OptionsViewModel>()
             );
@@ -150,9 +157,6 @@ namespace Augmented.Installers
                     .Forward<IRequestHandler<VideoOptionsVerticalSyncToggle, Unit>>()
                     .ImplementedBy<VideoOptionsViewModel>(),
 
-                Component.For<IKeyboardHandler>()
-                    .ImplementedBy<VideoOptionsKeyboardHandler>(),
-
                 Component.For<VideoOptionsView>()
                     .DependsOn(Dependency.OnComponent<IKeyboardHandler, VideoOptionsKeyboardHandler>())
             );
@@ -166,14 +170,6 @@ namespace Augmented.Installers
                     .Forward<IRequestHandler<CloseInGameOptionsRequest, Unit>>()
                     .DependsOn(Dependency.OnComponent<IKeyboardHandler, GameViewKeyboardHandler>())
                     .DependsOn(Dependency.OnComponent<IMouseHandler, GameViewMouseHandler>()),
-
-                Component.For<IKeyboardHandler>()
-                    .ImplementedBy<GameViewKeyboardHandler>()
-                    .DependsOn(Dependency.OnComponent<ICameraMovement, FreeCameraMovement>()
-                ),
-
-                Component.For<IMouseHandler>()
-                    .ImplementedBy<GameViewMouseHandler>(),
 
                 Component.For<GameViewModel>(),
 
@@ -192,9 +188,6 @@ namespace Augmented.Installers
                     .ImplementedBy<InGameOptionsView>()
                     .DependsOn(Dependency.OnComponent<IKeyboardHandler, InGameOptionsKeyboardHandler>()),
 
-                Component.For<IKeyboardHandler>()
-                    .ImplementedBy<InGameOptionsKeyboardHandler>(),
-
                 Component.For<InGameOptionsViewModel>()
             );
         }
@@ -206,12 +199,10 @@ namespace Augmented.Installers
                     .Forward<IRequestHandler<UpdateViewRequest<GameSpeedData>, Unit>>()
                     .DependsOn(Dependency.OnComponent<IKeyboardHandler, GameSpeedKeyboardHandler>()),
 
-                Component.For<IKeyboardHandler>()
-                    .ImplementedBy<GameSpeedKeyboardHandler>(),
-
                 Component.For<GameSpeedViewModel>()
                     .Forward<INotificationHandler<GameTimeUpdateNotification>>()
-                    .Forward<IRequestHandler<ChangeGameSpeedRequest, Unit>>());
+                    .Forward<IRequestHandler<ChangeGameSpeedRequest, Unit>>()
+            );
         }
     }
 }
