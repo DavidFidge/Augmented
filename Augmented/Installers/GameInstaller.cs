@@ -22,8 +22,10 @@ using DavidFidge.MonoGame.Core.Graphics.Terrain;
 using DavidFidge.MonoGame.Core.Graphics.Trees;
 using DavidFidge.MonoGame.Core.Installers;
 using DavidFidge.MonoGame.Core.Interfaces.Components;
+using DavidFidge.MonoGame.Core.Interfaces.ConsoleCommands;
 using DavidFidge.MonoGame.Core.Interfaces.Graphics;
 using DavidFidge.MonoGame.Core.Messages;
+using DavidFidge.MonoGame.Core.UserInterface;
 
 using InputHandlers.Keyboard;
 using InputHandlers.Mouse;
@@ -207,7 +209,11 @@ namespace Augmented.Installers
                     .ImplementedBy<ConsoleKeyboardHandler>(),
 
                 Component.For<ConsoleViewModel>()
-                    .Forward<IRequestHandler<ExecuteConsoleCommandRequest, Unit>>()
+                    .Forward<IRequestHandler<ExecuteConsoleCommandRequest, Unit>>(),
+
+                Classes.FromThisAssembly()
+                    .BasedOn<IConsoleCommand>()
+                    .WithServiceDefaultInterfaces()
             );
         }
 
