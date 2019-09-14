@@ -1,4 +1,7 @@
 ﻿using DavidFidge.MonoGame.Core.Components;
+using DavidFidge.MonoGame.Core.Messages;
+
+using MediatR;
 
 namespace DavidFidge.MonoGame.Core.UserInterface
 {
@@ -10,6 +13,11 @@ namespace DavidFidge.MonoGame.Core.UserInterface
         public virtual void Initialize()
         {
             Data = new T();
+        }
+
+        protected void Notify()
+        {
+            Mediator.Send(new UpdateViewRequest<T>());
         }
     }
 }

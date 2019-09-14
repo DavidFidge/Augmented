@@ -22,6 +22,7 @@ using DavidFidge.MonoGame.Core.Graphics.Terrain;
 using DavidFidge.MonoGame.Core.Graphics.Trees;
 using DavidFidge.MonoGame.Core.Installers;
 using DavidFidge.MonoGame.Core.Interfaces.Components;
+using DavidFidge.MonoGame.Core.Interfaces.ConsoleCommands;
 using DavidFidge.MonoGame.Core.Interfaces.Graphics;
 using DavidFidge.MonoGame.Core.Messages;
 using DavidFidge.MonoGame.Core.UserInterface;
@@ -45,6 +46,7 @@ namespace Augmented.Installers
             RegisterOptionsView(container, store);
             RegisterVideoOptionsView(container, store);
             RegisterInGameOptionsView(container, store);
+            RegisterConsoleView(container, store);
             RegisterGameView(container, store);
             RegisterGameSpeedView(container, store);
 
@@ -168,6 +170,8 @@ namespace Augmented.Installers
                 Component.For<GameView>()
                     .Forward<IRequestHandler<OpenInGameOptionsRequest, Unit>>()
                     .Forward<IRequestHandler<CloseInGameOptionsRequest, Unit>>()
+                    .Forward<IRequestHandler<OpenConsoleRequest, Unit>>()
+                    .Forward<IRequestHandler<CloseConsoleRequest, Unit>>()
                     .DependsOn(Dependency.OnComponent<IKeyboardHandler, GameViewKeyboardHandler>())
                     .DependsOn(Dependency.OnComponent<IMouseHandler, GameViewMouseHandler>()),
 
@@ -189,6 +193,27 @@ namespace Augmented.Installers
                     .DependsOn(Dependency.OnComponent<IKeyboardHandler, InGameOptionsKeyboardHandler>()),
 
                 Component.For<InGameOptionsViewModel>()
+            );
+        }
+
+        private void RegisterConsoleView(IWindsorContainer container, IConfigurationStore store)
+        {
+            container.Register(
+                Component.For<ConsoleView>()
+                    .ImplementedBy<ConsoleView>()
+                    .Forward<IRequestHandler<SendConsoleCommandRequest, Unit>>()
+                    .Forward<IRequestHandler<UpdateViewRequest<ConsoleData>, Unit>>()
+                    .DependsOn(Dependency.OnComponent<IKeyboardHandler, ConsoleKeyboardHandler>()),
+
+                Component.For<IKeyboardHandler>()
+                    .ImplementedBy<ConsoleKeyboardHandler>(),
+
+                Component.For<ConsoleViewModel>()
+                    .Forward<IRequestHandler<ExecuteConsoleCommandRequest, Unit>>(),
+
+                Classes.FromThisAssembly()
+                    .BasedOn<IConsoleCommand>()
+                    .WithServiceDefaultInterfaces()
             );
         }
 

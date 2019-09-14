@@ -1,4 +1,6 @@
-﻿using DavidFidge.MonoGame.Core.Graphics;
+﻿using System;
+
+using DavidFidge.MonoGame.Core.Graphics;
 using DavidFidge.MonoGame.Core.Graphics.Extensions;
 using DavidFidge.MonoGame.Core.Graphics.Terrain;
 using DavidFidge.MonoGame.Core.Interfaces.Components;
@@ -18,6 +20,7 @@ namespace Augmented.Graphics.TerrainSpace
         private VertexBuffer _terrainVertexBuffer;
         private Effect _effect;
         private SamplerState _samplerState;
+        private HeightMap _heightMap;
 
         public Terrain(
             IHeightMapGenerator heightMapGenerator,
@@ -98,36 +101,52 @@ namespace Augmented.Graphics.TerrainSpace
             return terrainIndexes;
         }
 
-        public void LoadContent()
+        public void CreateHeightMap()
         {
-            var heightMap = _heightMapGenerator.CreateHeightMap(33, 33)
+            _heightMap = _heightMapGenerator
+                .CreateHeightMap(33, 33)
                 .DiamondSquare(32, -20000, 20000, new SubtractingHeightsReducer())
                 .HeightMap();
+        }
 
-            var terrainVertices = CreateTerrainVertices(heightMap, new Vector3(10f, 10f, 0.01f));
-            var terrainIndexes = CreateTerrainIndexes(heightMap);
+        public void LoadContent()
+        {
+            if (_heightMap == null)
+                throw new Exception("Create height map first");
+
+            var terrainVertices = CreateTerrainVertices(_heightMap, new Vector3(10f, 10f, 0.01f));
+            var terrainIndexes = CreateTerrainIndexes(_heightMap);
 
             terrainVertices.GenerateNormalsForTriangleStrip(terrainIndexes);
 
-            _terrainVertexBuffer = new VertexBuffer(
-                _gameProvider.Game.GraphicsDevice,
-                VertexPositionNormalTexture.VertexDeclaration,
-                terrainVertices.Length,
-                BufferUsage.WriteOnly
-             );
+            if (_terrainVertexBuffer == null || _terrainVertexBuffer.VertexCount != terrainVertices.Length)
+            {
+                _terrainVertexBuffer = new VertexBuffer(
+                    _gameProvider.Game.GraphicsDevice,
+                    VertexPositionNormalTexture.VertexDeclaration,
+                    terrainVertices.Length,
+                    BufferUsage.WriteOnly
+                );
+            }
 
             _terrainVertexBuffer.SetData(terrainVertices);
 
-            _terrainIndexBuffer = new IndexBuffer(
-                _gameProvider.Game.GraphicsDevice,
-                IndexElementSize.ThirtyTwoBits,
-                terrainIndexes.Length,
-                BufferUsage.WriteOnly
-            );
+            if (_terrainIndexBuffer == null || _terrainIndexBuffer.IndexCount != terrainIndexes.Length)
+            {
+                _terrainIndexBuffer = new IndexBuffer(
+                    _gameProvider.Game.GraphicsDevice,
+                    IndexElementSize.ThirtyTwoBits,
+                    terrainIndexes.Length,
+                    BufferUsage.WriteOnly
+                );
+            }
 
             _terrainIndexBuffer.SetData(terrainIndexes);
 
-            _effect = _gameProvider.Game.EffectCollection.BuildTextureEffect(_contentStrings.GrassTexture);
+            if (_effect == null)
+            {
+                _effect = _gameProvider.Game.EffectCollection.BuildTextureEffect(_contentStrings.GrassTexture);
+            }
         }
 
         public void Draw(Matrix view, Matrix projection)

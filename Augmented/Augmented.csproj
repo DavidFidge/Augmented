@@ -49,10 +49,14 @@
     <Compile Include="Graphics\TerrainSpace\Terrain.cs" />
     <Compile Include="Interfaces\IAugmentedGameWorld.cs" />
     <Compile Include="Installers\GameInstaller.cs" />
+    <Compile Include="Messages\Console\CloseOptionsViewRequest.cs" />
     <Compile Include="Messages\GameSpeed\ChangeGameSpeedRequest.cs" />
     <Compile Include="Messages\Game\NewGameRequest.cs" />
+    <Compile Include="Messages\InGameOptions\SendConsoleCommandRequest.cs" />
     <Compile Include="Messages\InGameOptions\CloseInGameOptionsRequest.cs" />
     <Compile Include="Messages\InGameOptions\ExitCurrentGameRequest.cs" />
+    <Compile Include="Messages\InGameOptions\CloseConsoleRequest.cs" />
+    <Compile Include="Messages\InGameOptions\OpenConsoleRequest.cs" />
     <Compile Include="Messages\InGameOptions\Rotate3DViewRequest.cs" />
     <Compile Include="Messages\InGameOptions\Move3DViewRequest.cs" />
     <Compile Include="Messages\InGameOptions\Zoom3DViewRequest.cs" />
@@ -66,6 +70,7 @@
     <Compile Include="Messages\Options\OpenVideoOptionsRequest.cs" />
     <Compile Include="UserInterface\Data\GameSpeedData.cs" />
     <Compile Include="UserInterface\Data\GameData.cs" />
+    <Compile Include="UserInterface\Data\ConsoleData.cs" />
     <Compile Include="UserInterface\Data\InGameOptionsData.cs" />
     <Compile Include="UserInterface\Data\VideoOptionsData.cs" />
     <Compile Include="UserInterface\Data\OptionsData.cs" />
@@ -73,6 +78,7 @@
     <Compile Include="UserInterface\Input\CameraMovement\FreeCameraMovement.cs" />
     <Compile Include="UserInterface\Input\CameraMovement\ICameraMovement.cs" />
     <Compile Include="UserInterface\Input\CameraMovement\StrategyCameraMovement.cs" />
+    <Compile Include="UserInterface\Input\ConsoleKeyboardHandler.cs" />
     <Compile Include="UserInterface\Input\NullKeyboardHandler.cs" />
     <Compile Include="UserInterface\Input\NullMouseHandler.cs" />
     <Compile Include="UserInterface\Input\GameViewMouseHandler.cs" />
@@ -85,11 +91,14 @@
     <Compile Include="Interfaces\IScreenManager.cs" />
     <Compile Include="UserInterface\Screens\ScreenManager.cs" />
     <Compile Include="UserInterface\Screens\GameScreen.cs" />
+    <Compile Include="UserInterface\ViewModels\CreateHeightMapConsoleCommand.cs" />
     <Compile Include="UserInterface\ViewModels\GameSpeedViewModel.cs" />
     <Compile Include="UserInterface\ViewModels\GameViewModel.cs" />
+    <Compile Include="UserInterface\ViewModels\ConsoleViewModel.cs" />
     <Compile Include="UserInterface\ViewModels\InGameOptionsViewModel.cs" />
     <Compile Include="UserInterface\ViewModels\TitleViewModel.cs" />
     <Compile Include="UserInterface\Views\GameSpeedView.cs" />
+    <Compile Include="UserInterface\Views\ConsoleView.cs" />
     <Compile Include="UserInterface\Views\InGameOptionsView.cs" />
     <Compile Include="UserInterface\Views\GameView.cs" />
     <Compile Include="UserInterface\Views\TitleView.cs" />
