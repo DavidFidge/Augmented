@@ -176,6 +176,13 @@
     <Compile Include="Graphics\DisplayMode.cs" />
     <Compile Include="Interfaces\UserInterface\IView.cs" />
     <Compile Include="Interfaces\UserInterface\IRootPanel.cs" />
+    <Compile Include="UserInterface\ActionMapping\EmptyActionMapStore.cs" />
+    <Compile Include="UserInterface\ActionMapping\DefaultActionMapStore.cs" />
+    <Compile Include="Interfaces\UserInterface\IActionMapStore.cs" />
+    <Compile Include="UserInterface\KeyCombination.cs" />
+    <Compile Include="UserInterface\ActionMapping\ActionMapAttribute.cs" />
+    <Compile Include="UserInterface\ActionMapping\ActionMap.cs" />
+    <Compile Include="Interfaces\UserInterface\IActionMap.cs" />
     <Compile Include="UserInterface\BaseMouseHandler.cs" />
     <Compile Include="UserInterface\EntityExtensions.cs" />
     <Compile Include="UserInterface\PanelExtensions.cs" />

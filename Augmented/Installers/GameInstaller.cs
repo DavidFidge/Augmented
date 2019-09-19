@@ -24,6 +24,7 @@ using DavidFidge.MonoGame.Core.Installers;
 using DavidFidge.MonoGame.Core.Interfaces.Components;
 using DavidFidge.MonoGame.Core.Interfaces.ConsoleCommands;
 using DavidFidge.MonoGame.Core.Interfaces.Graphics;
+using DavidFidge.MonoGame.Core.Interfaces.UserInterface;
 using DavidFidge.MonoGame.Core.Messages;
 using DavidFidge.MonoGame.Core.UserInterface;
 
@@ -99,7 +100,10 @@ namespace Augmented.Installers
                     .WithServiceDefaultInterfaces(),
 
                 Component.For<IAugmentedGameWorld>()
-                    .ImplementedBy<AugmentedGameWorld>()
+                    .ImplementedBy<AugmentedGameWorld>(),
+
+                Component.For<IActionMapStore>()
+                    .ImplementedBy<DefaultActionMapStore>()
             );
         }
 

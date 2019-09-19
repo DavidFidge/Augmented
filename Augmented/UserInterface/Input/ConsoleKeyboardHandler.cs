@@ -12,10 +12,10 @@ namespace Augmented.UserInterface.Input
     {
         public override void HandleKeyboardKeyDown(Keys[] keysDown, Keys keyInFocus, KeyboardModifier keyboardModifier)
         {
-            if (keyInFocus == Keys.OemTilde)
+            if (ActionMap.ActionIs<CloseConsoleRequest>(keyInFocus, keyboardModifier))
                 Mediator.Send(new CloseConsoleRequest());
 
-            if (keyInFocus == Keys.Enter)
+            if (ActionMap.ActionIs<SendConsoleCommandRequest>(keyInFocus, keyboardModifier))
                 Mediator.Send(new SendConsoleCommandRequest());
         }
     }

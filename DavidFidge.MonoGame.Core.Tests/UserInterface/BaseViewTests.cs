@@ -22,12 +22,6 @@ namespace DavidFidge.MonoGame.Core.Tests.UserInterface
     [TestClass]
     public class BaseViewTests : BaseTest
     {
-        [TestInitialize]
-        public override void Setup()
-        {
-            base.Setup();
-        }
-
         [TestMethod]
         public void LabelFor_Should_Return_DisplayAttribute_Name()
         {

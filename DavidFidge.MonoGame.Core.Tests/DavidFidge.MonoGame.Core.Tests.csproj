@@ -127,6 +127,7 @@
     <Compile Include="Graphics\HeightMapGeneratorTests.cs" />
     <Compile Include="Graphics\SimpleWorldTransformTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UserInterface\ActionMapTests.cs" />
     <Compile Include="UserInterface\BaseViewModelTests.cs" />
     <Compile Include="UserInterface\BaseViewTests.cs" />
     <Compile Include="Services\GameInputServiceTests.cs" />

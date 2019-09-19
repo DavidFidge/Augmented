@@ -1,4 +1,5 @@
 ﻿using DavidFidge.MonoGame.Core.Components;
+using DavidFidge.MonoGame.Core.Interfaces.UserInterface;
 
 using InputHandlers.Keyboard;
 
@@ -8,6 +9,8 @@ namespace DavidFidge.MonoGame.Core.UserInterface
 {
     public abstract class BaseKeyboardHandler : BaseComponent, IKeyboardHandler
     {
+        public IActionMap ActionMap { get; set; }
+
         public virtual void HandleKeyboardKeyDown(Keys[] keysDown, Keys keyInFocus, KeyboardModifier keyboardModifier)
         {
         }
