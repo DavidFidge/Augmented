@@ -19,7 +19,7 @@ namespace DavidFidge.MonoGame.Core.UserInterface
                 .GetAssemblies()
                 .AsParallel()
                 .SelectMany(a => a.GetTypes())
-                .Select(t => t.GetAttribute<ActionMapAttribute>())
+                .SelectMany(t => t.GetAttributes<ActionMapAttribute>())
                 .Where(t => t != null)
                 .ToDictionary(t => t.Name, t => new KeyCombination(t.DefaultKey, t.DefaultKeyboardModifier));
             }

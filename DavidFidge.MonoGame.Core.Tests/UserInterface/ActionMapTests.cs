@@ -127,8 +127,98 @@ namespace DavidFidge.MonoGame.Core.Tests.UserInterface
             Assert.IsFalse(result);
         }
 
+        [TestMethod]
+        public void ActionIs_Should_Return_True_When_Selector_Is_Used()
+        {
+            // Arrange
+            var keyCombinations = new Dictionary<string, KeyCombination>()
+            {
+                {
+                    "TestMap1", new KeyCombination(Keys.A, KeyboardModifier.Alt)
+                },
+                {
+                    "TestMap2", new KeyCombination(Keys.B)
+                }
+            };
+
+            _actionMapStore.GetKeyMap().Returns(keyCombinations);
+
+            // Act
+            var result = _actionMap.ActionIs<TestActionMultiple>(new KeyCombination(Keys.A, KeyboardModifier.Alt), "TestMap1");
+
+            // Assert
+            Assert.IsTrue(result);
+        }
+
+        [TestMethod]
+        public void ActionIs_Should_Return_True_When_Second_Selector_Is_Used()
+        {
+            // Arrange
+            var keyCombinations = new Dictionary<string, KeyCombination>()
+            {
+                {
+                    "TestMap1", new KeyCombination(Keys.A, KeyboardModifier.Alt)
+                },
+                {
+                    "TestMap2", new KeyCombination(Keys.B)
+                }
+            };
+
+            _actionMapStore.GetKeyMap().Returns(keyCombinations);
+
+            // Act
+            var result = _actionMap.ActionIs<TestActionMultiple>(new KeyCombination(Keys.B), "TestMap2");
+
+            // Assert
+            Assert.IsTrue(result);
+        }
+
+        [TestMethod]
+        public void ActionIs_Should_Return_False_When_Selector_Is_Used_And_Key_Does_Not_Match()
+        {
+            // Arrange
+            var keyCombinations = new Dictionary<string, KeyCombination>()
+            {
+                {
+                    "TestMap1", new KeyCombination(Keys.A)
+                },
+                {
+                    "TestMap2", new KeyCombination(Keys.B)
+                }
+            };
+
+            _actionMapStore.GetKeyMap().Returns(keyCombinations);
+
+            // Act
+            var result = _actionMap.ActionIs<TestActionMultiple>(new KeyCombination(Keys.A), "TestMap2");
+
+            // Assert
+            Assert.IsFalse(result);
+        }
+
+        [TestMethod]
+        public void ActionIs_Should_Throw_Exception_If_Action_Is_Not_An_Attribute_On_Generic_Class_When_Using_Selector()
+        {
+            // Arrange
+            var keyCombinations = new Dictionary<string, KeyCombination>();
+
+            _actionMapStore.GetKeyMap().Returns(keyCombinations);
+
+            // Act
+            var result = Assert.ThrowsException<Exception>(() => _actionMap.ActionIs<TestActionMultiple>(new KeyCombination(Keys.A), "DoesNotExist"));
+
+            // Assert
+            Assert.AreEqual($"No ActionMapAttribute with name DoesNotExist found on class TestActionMultiple", result.Message);
+        }
+
         [ActionMap(Name = "TestMap1")]
         public class TestAction
+        {
+        }
+
+        [ActionMap(Name = "TestMap1")]
+        [ActionMap(Name = "TestMap2")]
+        public class TestActionMultiple
         {
         }
 

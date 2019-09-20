@@ -11,7 +11,7 @@ namespace Augmented.UserInterface.Input
     {
         public override void HandleKeyboardKeyDown(Keys[] keysDown, Keys keyInFocus, KeyboardModifier keyboardModifier)
         {
-            if (keyInFocus == Keys.Escape)
+            if (ActionMap.ActionIs<ExitGameRequest>(keyInFocus, keyboardModifier))
                 Mediator.Send(new ExitGameRequest());
         }
     }

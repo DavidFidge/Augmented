@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework.Input;
 
 namespace DavidFidge.MonoGame.Core.UserInterface
 {
+    [AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
     public class ActionMapAttribute : Attribute
     {
         public string Name { get; set; }

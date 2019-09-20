@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 using Castle.Core.Internal;
 
@@ -19,17 +20,27 @@ namespace DavidFidge.MonoGame.Core.UserInterface
             _actionMapStore = actionMapStore;
         }
 
-        public bool ActionIs<T>(Keys key, KeyboardModifier keyboardModifier)
+        public bool ActionIs<T>(Keys key, KeyboardModifier keyboardModifier, string selector = null)
         {
-            return ActionIs<T>(new KeyCombination(key, keyboardModifier));
+            return ActionIs<T>(new KeyCombination(key, keyboardModifier), selector);
         }
 
-        public bool ActionIs<T>(KeyCombination keyCombination)
+        public bool ActionIs<T>(KeyCombination keyCombination, string selector = null)
         {
-            var actionMap = typeof(T).GetAttribute<ActionMapAttribute>();
+            var actionMaps = typeof(T).GetAttributes<ActionMapAttribute>().ToList();
 
-            if (actionMap == null)
+            if (actionMaps.IsNullOrEmpty())
                 throw new Exception($"No {typeof(ActionMapAttribute).Name} found on class {typeof(T).Name}");
+
+            var actionMap = actionMaps.First();
+
+            if (selector != null)
+            {
+                actionMap = actionMaps.SingleOrDefault(a => a.Name == selector);
+
+                if (actionMap == null)
+                    throw new Exception($"No {typeof(ActionMapAttribute).Name} with name {selector} found on class {typeof(T).Name}");
+            }
 
             var actionToKey = _actionMapStore.GetKeyMap();
 

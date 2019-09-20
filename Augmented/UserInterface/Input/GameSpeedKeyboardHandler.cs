@@ -12,19 +12,17 @@ namespace Augmented.UserInterface.Input
     {
         public override void HandleKeyboardKeyDown(Keys[] keysDown, Keys keyInFocus, KeyboardModifier keyboardModifier)
         {
-            switch (keyInFocus)
+            if (ActionMap.ActionIs<ChangeGameSpeedRequest>(keyInFocus, keyboardModifier, "Decrease Game Speed"))
             {
-                case Keys.Subtract:
-                case Keys.OemMinus:
-                    Mediator.Send(new ChangeGameSpeedRequest().DecreaseSpeedRequest());
-                    break;
-                case Keys.Add:
-                case Keys.OemPlus:
-                    Mediator.Send(new ChangeGameSpeedRequest().IncreaseSpeedRequest());
-                    break;
-                case Keys.Space:
-                    Mediator.Send(new ChangeGameSpeedRequest().TogglePauseGameRequest());
-                    break;
+                Mediator.Send(new ChangeGameSpeedRequest().DecreaseSpeedRequest());
+            }
+            else if (ActionMap.ActionIs<ChangeGameSpeedRequest>(keyInFocus, keyboardModifier, "Increase Game Speed"))
+            {
+                Mediator.Send(new ChangeGameSpeedRequest().IncreaseSpeedRequest());
+            }
+            else if (ActionMap.ActionIs<ChangeGameSpeedRequest>(keyInFocus, keyboardModifier, "Pause Game"))
+            {
+                Mediator.Send(new ChangeGameSpeedRequest().TogglePauseGameRequest());
             }
         }
     }
