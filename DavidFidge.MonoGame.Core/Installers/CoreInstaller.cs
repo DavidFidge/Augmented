@@ -6,7 +6,6 @@ using Castle.Windsor;
 using DavidFidge.MonoGame.Core.Components;
 using DavidFidge.MonoGame.Core.Configuration;
 using DavidFidge.MonoGame.Core.ConsoleCommands;
-using DavidFidge.MonoGame.Core.Graphics;
 using DavidFidge.MonoGame.Core.Graphics.Quads;
 using DavidFidge.MonoGame.Core.Interfaces;
 using DavidFidge.MonoGame.Core.Interfaces.Components;
@@ -15,7 +14,9 @@ using DavidFidge.MonoGame.Core.Interfaces.Services;
 using DavidFidge.MonoGame.Core.Interfaces.UserInterface;
 using DavidFidge.MonoGame.Core.Services;
 using DavidFidge.MonoGame.Core.UserInterface;
+
 using GeonBit.UI.Entities;
+
 using InputHandlers.Keyboard;
 using InputHandlers.Mouse;
 
@@ -90,7 +91,14 @@ namespace DavidFidge.MonoGame.Core.Installers
                     .ImplementedBy<ConsoleCommandServiceFactory>(),
 
                 Component.For<IGraphicsSettings>()
-                    .UsingFactoryMethod(k => BaseConfigurationSectionHandler.Load<GraphicsSettings>())
+                    .UsingFactoryMethod(k => BaseConfigurationSectionHandler.Load<GraphicsSettings>()),
+
+                Component.For<IActionMap>()
+                    .ImplementedBy<ActionMap>(),
+
+                Component.For<IActionMapStore>()
+                    .ImplementedBy<EmptyActionMapStore>()
+                    .IsFallback()
             );
         }
     }

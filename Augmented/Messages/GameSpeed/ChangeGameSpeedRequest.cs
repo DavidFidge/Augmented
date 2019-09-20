@@ -1,7 +1,14 @@
-﻿using MediatR;
+﻿using DavidFidge.MonoGame.Core.UserInterface;
+
+using MediatR;
+
+using Microsoft.Xna.Framework.Input;
 
 namespace Augmented.Messages
 {
+    [ActionMap(Name = "Increase Game Speed", DefaultKey = Keys.OemPlus)]
+    [ActionMap(Name = "Decrease Game Speed", DefaultKey = Keys.OemMinus)]
+    [ActionMap(Name = "Pause Game", DefaultKey = Keys.Space)]
     public class ChangeGameSpeedRequest : IRequest
     {
         public int Increment { get; private set; }

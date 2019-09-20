@@ -23,10 +23,10 @@ namespace Augmented.UserInterface.Input
         }
         public override void HandleKeyboardKeyDown(Keys[] keysDown, Keys keyInFocus, KeyboardModifier keyboardModifier)
         {
-            if (keyInFocus == Keys.Escape)
+            if (ActionMap.ActionIs<OpenInGameOptionsRequest>(keyInFocus, keyboardModifier))
                 Mediator.Send(new OpenInGameOptionsRequest());
 
-            if (keyInFocus == Keys.OemTilde)
+            if (ActionMap.ActionIs<OpenConsoleRequest>(keyInFocus, keyboardModifier))
                 Mediator.Send(new OpenConsoleRequest());
 
             if (keyInFocus == Keys.F12)
