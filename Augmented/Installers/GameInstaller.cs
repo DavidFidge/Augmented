@@ -76,7 +76,7 @@ namespace Augmented.Installers
                     .Forward<IRequestHandler<Move3DViewRequest, Unit>>()
                     .Forward<IRequestHandler<Zoom3DViewRequest, Unit>>()
                     .Forward<IRequestHandler<Rotate3DViewRequest, Unit>>()
-                    .DependsOn(Dependency.OnComponent<IGameCamera, FreeGameCamera>()
+                    .DependsOn(Dependency.OnComponent<IGameCamera, StrategyGameCamera>()
                 ),
 
                 Component.For<IHeightMapGenerator>()
@@ -123,7 +123,7 @@ namespace Augmented.Installers
                 Classes.FromThisAssembly()
                     .BasedOn<IKeyboardHandler>()
                     .ConfigureFor<NullKeyboardHandler>(c => c.IsDefault())
-                    .ConfigureFor<GameViewKeyboardHandler>(c => c.DependsOn(Dependency.OnComponent<ICameraMovement, FreeCameraMovement>()))
+                    .ConfigureFor<GameViewKeyboardHandler>(c => c.DependsOn(Dependency.OnComponent<ICameraMovement, StrategyCameraMovement>()))
                     .WithServiceDefaultInterfaces()
             );
         }
