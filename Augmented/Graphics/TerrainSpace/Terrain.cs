@@ -21,6 +21,7 @@ namespace Augmented.Graphics.TerrainSpace
         private Effect _effect;
         private SamplerState _samplerState;
         private HeightMap _heightMap;
+        private Vector3 _scale;
 
         public Terrain(
             IHeightMapGenerator heightMapGenerator,
@@ -41,10 +42,10 @@ namespace Augmented.Graphics.TerrainSpace
 
         public IWorldTransform WorldTransform { get; }
         
-        public VertexPositionNormalTexture[] CreateTerrainVertices(HeightMap heightMap, Vector3 scale)
+        public VertexPositionNormalTexture[] CreateTerrainVertices()
         {
-            var width = heightMap.Width;
-            var height = heightMap.Length;
+            var width = _heightMap.Width;
+            var height = _heightMap.Length;
 
             var terrainVertices = new VertexPositionNormalTexture[width * height];
 
@@ -54,7 +55,7 @@ namespace Augmented.Graphics.TerrainSpace
             {
                 for (var x = 0; x < width; x++)
                 {
-                    var position = new Vector3(x * scale.X, y * scale.Y, heightMap[x, y] * scale.Z);
+                    var position = new Vector3(x, y, _heightMap[x, y]);
                     var normal = new Vector3(0, 0, 1f);
                     var texture = new Vector2(x / (width / 10f), y / (height / 10f));
 
@@ -65,10 +66,10 @@ namespace Augmented.Graphics.TerrainSpace
             return terrainVertices;
         }
 
-        public int[] CreateTerrainIndexes(HeightMap heightMap)
+        public int[] CreateTerrainIndexes()
         {
-            var width = heightMap.Width;
-            var height = heightMap.Length;
+            var width = _heightMap.Width;
+            var height = _heightMap.Length;
             var terrainIndexes = new int[width * 2 * (height - 1)];
 
             var i = 0;
@@ -101,12 +102,56 @@ namespace Augmented.Graphics.TerrainSpace
             return terrainIndexes;
         }
 
-        public void CreateHeightMap()
+        public void CreateHeightMap(TerrainParameters terrainParameters)
         {
+            _scale = GetScale(terrainParameters);
+
+            var hillHeight = GetHillHeight(terrainParameters);
+
+            var heightMapSize = 32;
+
             _heightMap = _heightMapGenerator
-                .CreateHeightMap(33, 33)
-                .DiamondSquare(32, -20000, 20000, new SubtractingHeightsReducer())
+                .CreateHeightMap(heightMapSize + 1, heightMapSize + 1)
+                .DiamondSquare(heightMapSize, -hillHeight, hillHeight, new SubtractingHeightsReducer())
                 .HeightMap();
+
+            WorldTransform.ChangeScale(new Vector3(20f, 20f, 0.005f) * _scale);
+        }
+
+        private int GetHillHeight(TerrainParameters terrainParameters)
+        {
+            var hillHeight = 20000;
+
+            switch (terrainParameters.HillHeight)
+            {
+                case TerrainSpace.HillHeight.Low:
+                    hillHeight /= 2;
+                    break;
+                case TerrainSpace.HillHeight.High:
+                    hillHeight *= 2;
+                    break;
+            }
+
+            return hillHeight;
+        }
+
+        private Vector3 GetScale(TerrainParameters terrainParameters)
+        {
+            var scale = Vector3.One;
+
+            switch (terrainParameters.Size)
+            {
+                case WorldSize.Small:
+                    scale.X *= 0.5f;
+                    scale.Y *= 0.5f;
+                    break;
+                case WorldSize.Big:
+                    scale.X *= 2f;
+                    scale.Y *= 2f;
+                    break;
+            }
+
+            return scale;
         }
 
         public void LoadContent()
@@ -114,8 +159,8 @@ namespace Augmented.Graphics.TerrainSpace
             if (_heightMap == null)
                 throw new Exception("Create height map first");
 
-            var terrainVertices = CreateTerrainVertices(_heightMap, new Vector3(10f, 10f, 0.01f));
-            var terrainIndexes = CreateTerrainIndexes(_heightMap);
+            var terrainVertices = CreateTerrainVertices();
+            var terrainIndexes = CreateTerrainIndexes();
 
             terrainVertices.GenerateNormalsForTriangleStrip(terrainIndexes);
 

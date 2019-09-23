@@ -18,13 +18,12 @@ namespace Augmented.Graphics
         {
             _terrain = terrain;
             _augmentedModel = augmentedModel;
-            _terrain.WorldTransform.ChangeScale(new Vector3(1f, 1f, 0.5f));
-            _terrain.CreateHeightMap();
+            _terrain.CreateHeightMap(new TerrainParameters(WorldSize.Medium, HillHeight.Medium));
         }
 
         public void RecreateHeightMap()
         {
-            _terrain.CreateHeightMap();
+            _terrain.CreateHeightMap(new TerrainParameters(WorldSize.Medium, HillHeight.Medium));
             _terrain.LoadContent();
         }
 

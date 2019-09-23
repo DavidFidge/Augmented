@@ -46,6 +46,7 @@
     <Compile Include="Graphics\AugmentedGameWorld.cs" />
     <Compile Include="Graphics\Camera\GameView3D.cs" />
     <Compile Include="Graphics\Models\AugmentedModel.cs" />
+    <Compile Include="Graphics\TerrainSpace\TerrainParameters.cs" />
     <Compile Include="Graphics\TerrainSpace\Terrain.cs" />
     <Compile Include="Interfaces\IAugmentedGameWorld.cs" />
     <Compile Include="Installers\GameInstaller.cs" />

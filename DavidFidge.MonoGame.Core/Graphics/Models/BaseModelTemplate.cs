@@ -183,7 +183,9 @@ namespace DavidFidge.MonoGame.Core.Graphics.Models
 
             DrawModel(view, projection);
             DrawBoundingBox(view, projection, graphicsDevice);
-            _selectionQuad.Draw(view, projection);
+
+            if (IsSelected)
+                _selectionQuad.Draw(view, projection);
         }
 
         private void DrawModel(Matrix view, Matrix projection)
