@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Linq;
 using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 
-using Augmented.Messages;
 using Augmented.UserInterface.Data;
 using Augmented.UserInterface.ViewModels;
 
@@ -12,14 +8,11 @@ using DavidFidge.MonoGame.Core.UserInterface;
 
 using GeonBit.UI.Entities;
 
-using MediatR;
-
 using Microsoft.Xna.Framework;
 
 namespace Augmented.UserInterface.Views
 {
-    public class ConsoleView : BaseView<ConsoleViewModel, ConsoleData>,
-        IRequestHandler<SendConsoleCommandRequest>
+    public class ConsoleView : BaseView<ConsoleViewModel, ConsoleData>
     {
         private TextInput _consoleEntry;
         private Paragraph _consoleHistory;
@@ -77,6 +70,7 @@ namespace Augmented.UserInterface.Views
         private void OnValueChange(Entity entity)
         {
             _consoleEntry.Value = _consoleEntry.Value.Replace("`", String.Empty);
+            Data.Command = _consoleEntry.Value;
         }
 
         public void FocusConsoleEntry()
@@ -90,22 +84,10 @@ namespace Augmented.UserInterface.Views
             FocusConsoleEntry();
         }
 
-        public Task<Unit> Handle(SendConsoleCommandRequest request, CancellationToken cancellationToken)
-        {
-            if (!string.IsNullOrEmpty(_consoleEntry.TextParagraph.Text))
-            {
-                var executeConsoleCommandRequest = new ExecuteConsoleCommandRequest(_consoleEntry.Value);
-
-                _consoleEntry.Value = String.Empty;
-
-                Mediator.Send(executeConsoleCommandRequest, cancellationToken);
-            }
-
-            return Unit.Task;
-        }
-
         protected override void UpdateView()
         {
+            _consoleEntry.Value = Data.Command;
+
             var stringBuilder = new StringBuilder();
 
             foreach (var lastCommand in Data.LastCommands)

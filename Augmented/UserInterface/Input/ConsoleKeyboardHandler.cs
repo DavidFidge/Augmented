@@ -1,4 +1,5 @@
 ﻿using Augmented.Messages;
+using Augmented.Messages.Console;
 
 using DavidFidge.MonoGame.Core.UserInterface;
 
@@ -15,8 +16,14 @@ namespace Augmented.UserInterface.Input
             if (ActionMap.ActionIs<CloseConsoleRequest>(keyInFocus, keyboardModifier))
                 Mediator.Send(new CloseConsoleRequest());
 
-            if (ActionMap.ActionIs<SendConsoleCommandRequest>(keyInFocus, keyboardModifier))
-                Mediator.Send(new SendConsoleCommandRequest());
+            if (ActionMap.ActionIs<ExecuteConsoleCommandRequest>(keyInFocus, keyboardModifier))
+                Mediator.Send(new ExecuteConsoleCommandRequest());
+
+            if (ActionMap.ActionIs<RecallConsoleHistoryBackRequest>(keyInFocus, keyboardModifier))
+                Mediator.Send(new RecallConsoleHistoryBackRequest());
+
+            if (ActionMap.ActionIs<RecallConsoleHistoryForwardRequest>(keyInFocus, keyboardModifier))
+                Mediator.Send(new RecallConsoleHistoryForwardRequest());
         }
     }
 }

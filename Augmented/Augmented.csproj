@@ -50,10 +50,9 @@
     <Compile Include="Graphics\TerrainSpace\Terrain.cs" />
     <Compile Include="Interfaces\IAugmentedGameWorld.cs" />
     <Compile Include="Installers\GameInstaller.cs" />
-    <Compile Include="Messages\Console\CloseOptionsViewRequest.cs" />
+    <Compile Include="Messages\Console\ExecuteConsoleCommandRequest.cs" />
     <Compile Include="Messages\GameSpeed\ChangeGameSpeedRequest.cs" />
     <Compile Include="Messages\Game\NewGameRequest.cs" />
-    <Compile Include="Messages\InGameOptions\SendConsoleCommandRequest.cs" />
     <Compile Include="Messages\InGameOptions\CloseInGameOptionsRequest.cs" />
     <Compile Include="Messages\InGameOptions\ExitCurrentGameRequest.cs" />
     <Compile Include="Messages\InGameOptions\CloseConsoleRequest.cs" />
@@ -97,6 +96,8 @@
     <Compile Include="UserInterface\ViewModels\GameViewModel.cs" />
     <Compile Include="UserInterface\ViewModels\ConsoleViewModel.cs" />
     <Compile Include="UserInterface\ViewModels\InGameOptionsViewModel.cs" />
+    <Compile Include="Messages\Console\RecallConsoleHistoryBackRequest.cs" />
+    <Compile Include="Messages\Console\RecallConsoleHistoryForwardRequest.cs" />
     <Compile Include="UserInterface\ViewModels\TitleViewModel.cs" />
     <Compile Include="UserInterface\Views\GameSpeedView.cs" />
     <Compile Include="UserInterface\Views\ConsoleView.cs" />
