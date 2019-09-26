@@ -4,6 +4,7 @@ using Augmented.Graphics.Models;
 using Augmented.Graphics.TerrainSpace;
 using Augmented.Interfaces;
 using Augmented.Messages;
+using Augmented.Messages.Console;
 using Augmented.UserInterface.Data;
 using Augmented.UserInterface.Input;
 using Augmented.UserInterface.Input.CameraMovementSpace;
@@ -205,7 +206,6 @@ namespace Augmented.Installers
             container.Register(
                 Component.For<ConsoleView>()
                     .ImplementedBy<ConsoleView>()
-                    .Forward<IRequestHandler<SendConsoleCommandRequest, Unit>>()
                     .Forward<IRequestHandler<UpdateViewRequest<ConsoleData>, Unit>>()
                     .DependsOn(Dependency.OnComponent<IKeyboardHandler, ConsoleKeyboardHandler>()),
 
@@ -213,6 +213,8 @@ namespace Augmented.Installers
                     .ImplementedBy<ConsoleKeyboardHandler>(),
 
                 Component.For<ConsoleViewModel>()
+                    .Forward<IRequestHandler<RecallConsoleHistoryBackRequest, Unit>>()
+                    .Forward<IRequestHandler<RecallConsoleHistoryForwardRequest, Unit>>()
                     .Forward<IRequestHandler<ExecuteConsoleCommandRequest, Unit>>(),
 
                 Classes.FromThisAssembly()
