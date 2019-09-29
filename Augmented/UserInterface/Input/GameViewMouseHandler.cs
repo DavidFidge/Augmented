@@ -53,5 +53,17 @@ namespace Augmented.UserInterface.Input
         {
             Mediator.Send(new Zoom3DViewRequest(difference));
         }
+
+        public override void HandleLeftMouseClick(MouseState mouseState, MouseState origin)
+        {
+            Mediator.Send(new Pick3DViewRequest(mouseState.X,
+                mouseState.Y));
+        }
+
+        public override void HandleRightMouseClick(MouseState mouseState, MouseState origin)
+        {
+            Mediator.Send(new Action3DViewRequest(mouseState.X,
+                mouseState.Y));
+        }
     }
 }

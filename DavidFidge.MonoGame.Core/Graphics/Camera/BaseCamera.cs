@@ -15,7 +15,6 @@ namespace DavidFidge.MonoGame.Core.Graphics.Camera
 
         protected float _viewportWidth;
         protected float _viewportHeight;
-        protected int _fieldOfView;
         protected Vector3 _cameraPosition;
 
         protected float _moveSpeed = 1f;
@@ -52,10 +51,10 @@ namespace DavidFidge.MonoGame.Core.Graphics.Camera
             _viewportWidth = _gameProvider.Game.GraphicsDevice.Viewport.Width;
         }
 
-        public Ray GetPointerRay(MouseState m)
+        public Ray GetPointerRay(int x, int y)
         {
-            var nearScreenPoint = new Vector3(m.X, m.Y, 0);
-            var farScreenPoint = new Vector3(m.X, m.Y, 1);
+            var nearScreenPoint = new Vector3(x, y, 0);
+            var farScreenPoint = new Vector3(x, y, 1);
 
             var near3DPoint = _gameProvider.Game.GraphicsDevice.Viewport.Unproject(nearScreenPoint, Projection, View, Matrix.Identity);
             var far3DPoint = _gameProvider.Game.GraphicsDevice.Viewport.Unproject(farScreenPoint, Projection, View, Matrix.Identity);

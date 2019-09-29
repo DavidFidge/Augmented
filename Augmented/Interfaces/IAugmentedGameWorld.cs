@@ -7,5 +7,7 @@ namespace Augmented.Interfaces
         void Draw(Matrix view, Matrix projection);
         void LoadContent();
         void RecreateHeightMap();
+        void Pick(Ray ray);
+        void Action(Ray ray);
     }
 }

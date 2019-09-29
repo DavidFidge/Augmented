@@ -38,5 +38,16 @@ namespace Augmented.Graphics
             _augmentedModel.Draw(view, projection);
             _terrain.Draw(view, projection);
         }
+
+        public void Pick(Ray ray)
+        {
+
+            throw new System.NotImplementedException();
+        }
+
+        public void Action(Ray ray)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

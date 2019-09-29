@@ -10,46 +10,46 @@ using MediatR;
 namespace Augmented.Graphics.Camera
 {
     public class GameView3D :
-        IRequestHandler<Zoom3DViewRequest>,
+        IRequestHandler<Pick3DViewRequest>,
+        IRequestHandler<Action3DViewRequest>,
         IRequestHandler<Move3DViewRequest>,
         IRequestHandler<Rotate3DViewRequest>
     {
         private readonly IAugmentedGameWorld _augmentedGameWorld;
-
-        public IGameCamera Camera { get; }
+        private readonly IGameCamera _camera;
 
         public GameView3D(
             IGameCamera gameCamera,
             IAugmentedGameWorld augmentedGameWorld)
         {
             _augmentedGameWorld = augmentedGameWorld;
-            Camera = gameCamera;
+            _camera = gameCamera;
         }
 
         public void Initialise()
         {
-            Camera.Initialise();
+            _camera.Initialise();
         }
 
         public void Update()
         {
-            Camera.Update();
+            _camera.Update();
         }
 
         public void Draw()
         {
-            _augmentedGameWorld.Draw(Camera.View, Camera.Projection);
+            _augmentedGameWorld.Draw(_camera.View, _camera.Projection);
         }
 
         public Task<Unit> Handle(Zoom3DViewRequest request, CancellationToken cancellationToken)
         {
-            Camera.Zoom(request.Difference);
+            _camera.Zoom(request.Difference);
             return Unit.Task;
         }
 
         public Task<Unit> Handle(Move3DViewRequest request, CancellationToken cancellationToken)
         {
-            Camera.GameUpdateContinuousMovement = request.CameraMovementFlags;
+            _camera.GameUpdateContinuousMovement = request.CameraMovementFlags;
 
             return Unit.Task;
         }
@@ -57,14 +57,32 @@ namespace Augmented.Graphics.Camera
         public Task<Unit> Handle(Rotate3DViewRequest request, CancellationToken cancellationToken)
         {
             if (request.XRotation > float.Epsilon)
-                Camera.Rotate(CameraMovement.RotateDown, request.XRotation);
+                _camera.Rotate(CameraMovement.RotateDown, request.XRotation);
             else if (request.XRotation < float.Epsilon)
-                Camera.Rotate(CameraMovement.RotateUp, -request.XRotation);
+                _camera.Rotate(CameraMovement.RotateUp, -request.XRotation);
 
             if (request.ZRotation > float.Epsilon)
-                Camera.Rotate(CameraMovement.RotateLeft, request.ZRotation);
+                _camera.Rotate(CameraMovement.RotateLeft, request.ZRotation);
             else if (request.ZRotation < float.Epsilon)
-                Camera.Rotate(CameraMovement.RotateRight, -request.ZRotation);
+                _camera.Rotate(CameraMovement.RotateRight, -request.ZRotation);
+
+            return Unit.Task;
+        }
+
+        public Task<Unit> Handle(Pick3DViewRequest request, CancellationToken cancellationToken)
+        {
+            var ray = _camera.GetPointerRay(request.X, request.Y);
+
+            _augmentedGameWorld.Pick(ray);
+
+            return Unit.Task;
+        }
+
+        public Task<Unit> Handle(Action3DViewRequest request, CancellationToken cancellationToken)
+        {
+            var ray = _camera.GetPointerRay(request.X, request.Y);
+
+            _augmentedGameWorld.Action(ray);
 
             return Unit.Task;
         }

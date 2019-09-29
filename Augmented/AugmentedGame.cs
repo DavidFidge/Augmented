@@ -6,8 +6,6 @@ using Augmented.Graphics;
 using Augmented.Interfaces;
 using Augmented.UserInterface.Data;
 
-using Castle.MicroKernel.Registration;
-
 using DavidFidge.MonoGame.Core.Graphics;
 using DavidFidge.MonoGame.Core.Interfaces.Components;
 using DavidFidge.MonoGame.Core.Interfaces.Services;
