@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 
 using DavidFidge.MonoGame.Core.ContentPipeline;
 using DavidFidge.MonoGame.Core.Graphics.Extensions;

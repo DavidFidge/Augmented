@@ -1,18 +1,9 @@
-﻿using System.Linq;
-
-using DavidFidge.MonoGame.Core.Graphics.Extensions;
-using DavidFidge.MonoGame.Core.Services;
+﻿using DavidFidge.MonoGame.Core.Graphics.Extensions;
 using DavidFidge.TestInfrastructure;
-
-using InputHandlers.Keyboard;
-using InputHandlers.Mouse;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-
-using NSubstitute;
 
 namespace DavidFidge.MonoGame.Core.Tests.Services
 {

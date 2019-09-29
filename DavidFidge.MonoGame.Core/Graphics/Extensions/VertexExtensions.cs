@@ -1,8 +1,4 @@
-﻿using System.Security.Cryptography;
-
-using DavidFidge.MonoGame.Core.Interfaces.Components;
-
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace DavidFidge.MonoGame.Core.Graphics.Extensions

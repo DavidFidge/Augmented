@@ -36,14 +36,8 @@
     <Reference Include="Castle.Windsor, Version=4.0.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
       <HintPath>..\packages\Castle.Windsor.4.1.1\lib\net45\Castle.Windsor.dll</HintPath>
     </Reference>
-    <Reference Include="DataTypes, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\GeonBit.UI.3.3.0\lib\geonbitui\DataTypes.dll</HintPath>
-    </Reference>
     <Reference Include="ExtendedXmlSerializer, Version=2.1.17.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ExtendedXmlSerializer.2.1.17\lib\net45\ExtendedXmlSerializer.dll</HintPath>
-    </Reference>
-    <Reference Include="GeonBit.UI, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\GeonBit.UI.3.3.0\lib\geonbitui\GeonBit.UI.dll</HintPath>
     </Reference>
     <Reference Include="InputHandlers, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\InputHandlers.MonoGame.WindowsDX.1.1.0\lib\net45\InputHandlers.dll</HintPath>
@@ -157,7 +151,6 @@
     <Compile Include="Interfaces\Services\ISaveGameStore.cs" />
     <Compile Include="Interfaces\Services\IGameStore.cs" />
     <Compile Include="Interfaces\Components\IStopwatchProvider.cs" />
-    <Compile Include="Interfaces\UserInterface\IUserInterface.cs" />
     <Compile Include="Messages\GameTimeUpdateNotification.cs" />
     <Compile Include="Messages\UpdateViewRequest.cs" />
     <Compile Include="Messages\ExitGameRequest.cs" />
@@ -174,8 +167,6 @@
     <Compile Include="Services\SaveGameService.cs" />
     <Compile Include="Components\StopwatchProvider.cs" />
     <Compile Include="Graphics\DisplayMode.cs" />
-    <Compile Include="Interfaces\UserInterface\IView.cs" />
-    <Compile Include="Interfaces\UserInterface\IRootPanel.cs" />
     <Compile Include="UserInterface\ActionMapping\EmptyActionMapStore.cs" />
     <Compile Include="UserInterface\ActionMapping\DefaultActionMapStore.cs" />
     <Compile Include="Interfaces\UserInterface\IActionMapStore.cs" />
@@ -184,19 +175,9 @@
     <Compile Include="UserInterface\ActionMapping\ActionMap.cs" />
     <Compile Include="Interfaces\UserInterface\IActionMap.cs" />
     <Compile Include="UserInterface\BaseMouseHandler.cs" />
-    <Compile Include="UserInterface\EntityExtensions.cs" />
-    <Compile Include="UserInterface\PanelExtensions.cs" />
-    <Compile Include="UserInterface\RootGeonBitPanel.cs" />
-    <Compile Include="UserInterface\UserInterface.cs" />
-    <Compile Include="Interfaces\UserInterface\IScreen.cs" />
     <Compile Include="UserInterface\BaseKeyboardHandler.cs" />
     <Compile Include="UserInterface\BaseViewModel.cs" />
-    <Compile Include="UserInterface\ButtonExtensions.cs" />
-    <Compile Include="UserInterface\LabelExtensions.cs" />
     <Compile Include="UserInterface\ToggleRequest.cs" />
-    <Compile Include="UserInterface\SelectList.cs" />
-    <Compile Include="UserInterface\Screen.cs" />
-    <Compile Include="UserInterface\BaseView.cs" />
     <Compile Include="UserInterface\ViewType.cs" />
   </ItemGroup>
   <ItemGroup>

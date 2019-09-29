@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-
-using Castle.Components.DictionaryAdapter.Xml;
+﻿using System.Collections.Generic;
 
 using DavidFidge.MonoGame.Core.Graphics.Models;
 using DavidFidge.MonoGame.Core.Interfaces.Components;

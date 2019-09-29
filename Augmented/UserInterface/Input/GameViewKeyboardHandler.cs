@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 
 using Augmented.Messages;
 using Augmented.UserInterface.Input.CameraMovementSpace;

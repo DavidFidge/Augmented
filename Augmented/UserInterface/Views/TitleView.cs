@@ -6,7 +6,8 @@ using Augmented.UserInterface.Data;
 using Augmented.UserInterface.ViewModels;
 
 using DavidFidge.MonoGame.Core.Messages;
-using DavidFidge.MonoGame.Core.UserInterface;
+using DavidFidge.Monogame.Core.View;
+using DavidFidge.Monogame.Core.View.Extensions;
 
 using GeonBit.UI.Entities;
 

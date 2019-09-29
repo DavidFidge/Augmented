@@ -1,7 +1,4 @@
-﻿using InputHandlers.Keyboard;
-using InputHandlers.Mouse;
-
-namespace DavidFidge.MonoGame.Core.Interfaces.Services
+﻿namespace DavidFidge.MonoGame.Core.Interfaces.Services
 {
     public interface IConfigurationSettings
     {

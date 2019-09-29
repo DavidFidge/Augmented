@@ -1,18 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using System.ComponentModel.DataAnnotations;
-using System.Data;
+using System.Linq.Expressions;
 using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 
 using DavidFidge.MonoGame.Core.Components;
-using DavidFidge.MonoGame.Core.Interfaces;
 using DavidFidge.MonoGame.Core.Interfaces.Services;
-using DavidFidge.MonoGame.Core.Interfaces.UserInterface;
 using DavidFidge.MonoGame.Core.Messages;
+using DavidFidge.MonoGame.Core.UserInterface;
+using DavidFidge.Monogame.Core.View.Interfaces;
 
 using GeonBit.UI.Entities;
 
@@ -21,7 +20,7 @@ using InputHandlers.Mouse;
 
 using MediatR;
 
-namespace DavidFidge.MonoGame.Core.UserInterface
+namespace DavidFidge.Monogame.Core.View
 {
     public abstract class BaseView<TViewModel, TData> : BaseComponent, IView<Entity>, IRequestHandler<UpdateViewRequest<TData>>
          where TViewModel : BaseViewModel<TData>

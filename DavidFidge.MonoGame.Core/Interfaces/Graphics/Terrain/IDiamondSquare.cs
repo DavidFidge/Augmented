@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-using DavidFidge.MonoGame.Core.Graphics.Terrain;
+﻿using DavidFidge.MonoGame.Core.Graphics.Terrain;
 
 namespace DavidFidge.MonoGame.Core.Interfaces.Graphics.Terrain
 {

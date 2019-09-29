@@ -2,10 +2,11 @@
 using System.Linq;
 using System.Threading;
 
-using DavidFidge.MonoGame.Core.Interfaces;
 using DavidFidge.MonoGame.Core.Interfaces.Services;
 using DavidFidge.MonoGame.Core.Messages;
 using DavidFidge.MonoGame.Core.UserInterface;
+using DavidFidge.Monogame.Core.View;
+using DavidFidge.Monogame.Core.View.Interfaces;
 using DavidFidge.TestInfrastructure;
 
 using GeonBit.UI.Entities;

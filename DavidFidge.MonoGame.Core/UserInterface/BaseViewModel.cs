@@ -1,8 +1,6 @@
 ﻿using DavidFidge.MonoGame.Core.Components;
 using DavidFidge.MonoGame.Core.Messages;
 
-using MediatR;
-
 namespace DavidFidge.MonoGame.Core.UserInterface
 {
     public abstract class BaseViewModel<T> : BaseComponent

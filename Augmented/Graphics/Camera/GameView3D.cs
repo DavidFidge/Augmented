@@ -1,10 +1,11 @@
-﻿using System;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
 
 using Augmented.Interfaces;
 using Augmented.Messages;
+
 using DavidFidge.MonoGame.Core.Graphics.Camera;
+
 using MediatR;
 
 namespace Augmented.Graphics.Camera

@@ -28,13 +28,13 @@ using DavidFidge.MonoGame.Core.Interfaces.Graphics;
 using DavidFidge.MonoGame.Core.Interfaces.UserInterface;
 using DavidFidge.MonoGame.Core.Messages;
 using DavidFidge.MonoGame.Core.UserInterface;
+using DavidFidge.Monogame.Core.View;
+using DavidFidge.Monogame.Core.View.Installers;
 
 using InputHandlers.Keyboard;
 using InputHandlers.Mouse;
 
 using MediatR;
-
-using Unit = MediatR.Unit;
 
 namespace Augmented.Installers
 {
@@ -43,6 +43,7 @@ namespace Augmented.Installers
         public void Install(IWindsorContainer container, IConfigurationStore store)
         {
             container.Install(new CoreInstaller());
+            container.Install(new ViewInstaller());
 
             RegisterTitleView(container, store);
             RegisterOptionsView(container, store);
