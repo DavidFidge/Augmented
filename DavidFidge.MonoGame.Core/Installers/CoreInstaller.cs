@@ -7,15 +7,12 @@ using DavidFidge.MonoGame.Core.Components;
 using DavidFidge.MonoGame.Core.Configuration;
 using DavidFidge.MonoGame.Core.ConsoleCommands;
 using DavidFidge.MonoGame.Core.Graphics.Quads;
-using DavidFidge.MonoGame.Core.Interfaces;
 using DavidFidge.MonoGame.Core.Interfaces.Components;
 using DavidFidge.MonoGame.Core.Interfaces.ConsoleCommands;
 using DavidFidge.MonoGame.Core.Interfaces.Services;
 using DavidFidge.MonoGame.Core.Interfaces.UserInterface;
 using DavidFidge.MonoGame.Core.Services;
 using DavidFidge.MonoGame.Core.UserInterface;
-
-using GeonBit.UI.Entities;
 
 using InputHandlers.Keyboard;
 using InputHandlers.Mouse;
@@ -39,9 +36,6 @@ namespace DavidFidge.MonoGame.Core.Installers
             container.Install(new MediatorInstaller());
 
             container.Register(
-                Component.For<IRootPanel<Entity>>()
-                    .ImplementedBy<RootGeonBitPanel>()
-                    .LifeStyle.Transient,
 
                 Component.For<IGameTimeService>()
                     .ImplementedBy<GameTimeService>(),
@@ -66,8 +60,6 @@ namespace DavidFidge.MonoGame.Core.Installers
                 Component.For<IMouseInput>()
                     .ImplementedBy<MouseInput>(),
 
-                Component.For<IUserInterface>()
-                    .ImplementedBy<UserInterface.UserInterface>(),
 
                 Component.For<ILogger>()
                     .Instance(config),

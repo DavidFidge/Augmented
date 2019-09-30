@@ -1,6 +1,4 @@
-﻿using System.IO;
-
-using DavidFidge.MonoGame.Core.Graphics.Extensions;
+﻿using DavidFidge.MonoGame.Core.Graphics.Extensions;
 using DavidFidge.MonoGame.Core.Interfaces.Components;
 using DavidFidge.MonoGame.Core.Interfaces.Graphics;
 

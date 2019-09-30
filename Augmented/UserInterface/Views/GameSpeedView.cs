@@ -1,16 +1,12 @@
-﻿using System.Threading;
-using System.Threading.Tasks;
-
-using Augmented.Messages;
+﻿using Augmented.Messages;
 using Augmented.UserInterface.Data;
 using Augmented.UserInterface.ViewModels;
 
-using DavidFidge.MonoGame.Core.Messages;
 using DavidFidge.MonoGame.Core.UserInterface;
+using DavidFidge.Monogame.Core.View;
+using DavidFidge.Monogame.Core.View.Extensions;
 
 using GeonBit.UI.Entities;
-
-using MediatR;
 
 using Microsoft.Xna.Framework;
 

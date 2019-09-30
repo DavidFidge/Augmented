@@ -4,7 +4,7 @@ using System.Text;
 using Augmented.UserInterface.Data;
 using Augmented.UserInterface.ViewModels;
 
-using DavidFidge.MonoGame.Core.UserInterface;
+using DavidFidge.Monogame.Core.View;
 
 using GeonBit.UI.Entities;
 

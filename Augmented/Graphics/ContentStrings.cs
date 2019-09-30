@@ -1,6 +1,4 @@
-﻿using DavidFidge.MonoGame.Core.Graphics;
-
-namespace Augmented.Graphics
+﻿namespace Augmented.Graphics
 {
     public class ContentStrings : IContentStrings
     {

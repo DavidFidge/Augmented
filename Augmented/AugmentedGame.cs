@@ -9,9 +9,9 @@ using Augmented.UserInterface.Data;
 using DavidFidge.MonoGame.Core.Graphics;
 using DavidFidge.MonoGame.Core.Interfaces.Components;
 using DavidFidge.MonoGame.Core.Interfaces.Services;
-using DavidFidge.MonoGame.Core.Interfaces.UserInterface;
 using DavidFidge.MonoGame.Core.Messages;
 using DavidFidge.MonoGame.Core.Services;
+using DavidFidge.Monogame.Core.View.Interfaces;
 
 using MediatR;
 

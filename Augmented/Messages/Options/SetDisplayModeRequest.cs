@@ -1,4 +1,5 @@
 ﻿using DavidFidge.MonoGame.Core.Services;
+
 using MediatR;
 
 namespace Augmented.Messages

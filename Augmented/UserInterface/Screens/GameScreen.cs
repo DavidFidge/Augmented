@@ -3,7 +3,7 @@ using Augmented.Messages;
 using Augmented.UserInterface.Views;
 
 using DavidFidge.MonoGame.Core.Interfaces.Services;
-using DavidFidge.MonoGame.Core.UserInterface;
+using DavidFidge.Monogame.Core.View;
 
 namespace Augmented.UserInterface.Screens
 {

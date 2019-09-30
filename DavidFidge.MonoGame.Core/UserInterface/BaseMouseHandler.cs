@@ -1,6 +1,7 @@
 ﻿using DavidFidge.MonoGame.Core.Components;
 
 using InputHandlers.Mouse;
+
 using Microsoft.Xna.Framework.Input;
 
 namespace DavidFidge.MonoGame.Core.UserInterface

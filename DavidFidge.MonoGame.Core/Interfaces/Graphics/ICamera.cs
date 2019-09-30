@@ -1,6 +1,4 @@
-﻿using DavidFidge.MonoGame.Core.Graphics.Camera;
-
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 
 namespace DavidFidge.MonoGame.Core.Interfaces.Graphics
 {

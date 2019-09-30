@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Threading;
 
 using Augmented.Messages;
 using Augmented.UserInterface.Data;
 using Augmented.UserInterface.ViewModels;
-using Augmented.UserInterface.Views;
 
 using DavidFidge.MonoGame.Core.Interfaces.Services;
 using DavidFidge.MonoGame.Core.Messages;
