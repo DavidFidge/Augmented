@@ -31,7 +31,6 @@ namespace Augmented
         private readonly IUserInterface _userInterface;
         private readonly IGameOptionsStore _gameOptionsStore;
         private readonly IScreenManager _screenManager;
-        private readonly IAugmentedGameWorld _augmentedGameWorld;
         private readonly IContentStrings _contentStrings;
         public ICoreContent CoreContent => _contentStrings;
 
@@ -67,7 +66,6 @@ namespace Augmented
             Content.RootDirectory = "Content";
 
             _screenManager = screenManager;
-            _augmentedGameWorld = augmentedGameWorld;
             _contentStrings = contentStrings;
 
             EffectCollection = new EffectCollection(_gameProvider);
@@ -137,8 +135,6 @@ namespace Augmented
             Content.Load<Texture2D>(_contentStrings.GrassTexture);
             Content.Load<Texture2D>(_contentStrings.SelectionTexture);
             EffectCollection.Add(_contentStrings.SelectionEffect, Content.Load<Effect>(_contentStrings.SelectionEffect));
-
-            _augmentedGameWorld.LoadContent();
         }
 
         /// <summary>
@@ -164,6 +160,7 @@ namespace Augmented
             _gameTimeService.Update(gameTime);
             _gameInputService.Poll();
             _screenManager.Update();
+
 
             base.Update(gameTime);
         }

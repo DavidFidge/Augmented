@@ -54,6 +54,9 @@
     <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.12.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="NGenerics, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\NGenerics.1.5.3\lib\netstandard2.0\NGenerics.dll</HintPath>
+    </Reference>
     <Reference Include="Serilog, Version=2.0.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
       <HintPath>..\packages\Serilog.2.7.1\lib\net46\Serilog.dll</HintPath>
     </Reference>
@@ -92,12 +95,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Components\Entity.cs" />
     <Compile Include="ConsoleCommands\ConsoleCommandAttribute.cs" />
     <Compile Include="ConsoleCommands\ConsoleCommandServiceFactory.cs" />
     <Compile Include="Components\Random.cs" />
     <Compile Include="Components\BaseComponent.cs" />
     <Compile Include="Configuration\BaseConfigurationSectionHandler.cs" />
     <Compile Include="ConsoleCommands\ConsoleCommand.cs" />
+    <Compile Include="Graphics\ILoadContent.cs" />
+    <Compile Include="Graphics\SceneGraph\DrawVisitor.cs" />
+    <Compile Include="Interfaces\Graphics\ISceneGraph.cs" />
+    <Compile Include="Graphics\SceneGraph\LoadContentVisitor.cs" />
+    <Compile Include="Graphics\SceneGraph\SceneGraph.cs" />
     <Compile Include="Interfaces\ConsoleCommands\IConsoleCommand.cs" />
     <Compile Include="Interfaces\ConsoleCommands\IConsoleCommandServiceFactory.cs" />
     <Compile Include="Graphics\Camera\BaseCamera.cs" />
@@ -131,7 +140,7 @@
     <Compile Include="Configuration\GraphicsSettings.cs" />
     <Compile Include="Interfaces\Graphics\IHeightMapGenerator.cs" />
     <Compile Include="Graphics\Quads\MaterialQuadTemplate.cs" />
-    <Compile Include="Graphics\SimpleWorldTransform.cs" />
+    <Compile Include="Graphics\WorldTransform.cs" />
     <Compile Include="Graphics\Quads\TexturedQuadTemplate.cs" />
     <Compile Include="Installers\MediatorInstaller.cs" />
     <Compile Include="Installers\CoreInstaller.cs" />

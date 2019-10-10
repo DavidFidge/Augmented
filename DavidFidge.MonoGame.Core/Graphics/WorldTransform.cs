@@ -4,9 +4,9 @@ using Microsoft.Xna.Framework;
 
 namespace DavidFidge.MonoGame.Core.Graphics
 {
-    public class SimpleWorldTransform : IWorldTransform
+    public class WorldTransform : IWorldTransform
     {
-        public SimpleWorldTransform()
+        public WorldTransform()
         {
             Scale = Vector3.One;
             Translation = Vector3.Zero;

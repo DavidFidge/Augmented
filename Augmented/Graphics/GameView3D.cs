@@ -1,10 +1,10 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 
-using Augmented.Interfaces;
 using Augmented.Messages;
 
 using DavidFidge.MonoGame.Core.Graphics.Camera;
+using DavidFidge.MonoGame.Core.Interfaces.Graphics;
 
 using MediatR;
 
@@ -15,15 +15,10 @@ namespace Augmented.Graphics.Camera
         IRequestHandler<Move3DViewRequest>,
         IRequestHandler<Rotate3DViewRequest>
     {
-        private readonly IAugmentedGameWorld _augmentedGameWorld;
-
         public IGameCamera Camera { get; }
 
-        public GameView3D(
-            IGameCamera gameCamera,
-            IAugmentedGameWorld augmentedGameWorld)
+        public GameView3D(IGameCamera gameCamera)
         {
-            _augmentedGameWorld = augmentedGameWorld;
             Camera = gameCamera;
         }
 
@@ -37,9 +32,9 @@ namespace Augmented.Graphics.Camera
             Camera.Update();
         }
 
-        public void Draw()
+        public void Draw(ISceneGraph sceneGraph)
         {
-            _augmentedGameWorld.Draw(Camera.View, Camera.Projection);
+            sceneGraph.Draw(Camera.View, Camera.Projection);
         }
 
         public Task<Unit> Handle(Zoom3DViewRequest request, CancellationToken cancellationToken)

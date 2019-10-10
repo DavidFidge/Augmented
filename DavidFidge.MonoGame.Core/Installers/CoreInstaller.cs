@@ -6,9 +6,11 @@ using Castle.Windsor;
 using DavidFidge.MonoGame.Core.Components;
 using DavidFidge.MonoGame.Core.Configuration;
 using DavidFidge.MonoGame.Core.ConsoleCommands;
+using DavidFidge.MonoGame.Core.Graphics;
 using DavidFidge.MonoGame.Core.Graphics.Quads;
 using DavidFidge.MonoGame.Core.Interfaces.Components;
 using DavidFidge.MonoGame.Core.Interfaces.ConsoleCommands;
+using DavidFidge.MonoGame.Core.Interfaces.Graphics;
 using DavidFidge.MonoGame.Core.Interfaces.Services;
 using DavidFidge.MonoGame.Core.Interfaces.UserInterface;
 using DavidFidge.MonoGame.Core.Services;
@@ -90,7 +92,11 @@ namespace DavidFidge.MonoGame.Core.Installers
 
                 Component.For<IActionMapStore>()
                     .ImplementedBy<EmptyActionMapStore>()
-                    .IsFallback()
+                    .IsFallback(),
+
+                Component.For<ISceneGraph>()
+                    .ImplementedBy<SceneGraph>()
+                    .LifestyleTransient()
             );
         }
     }
