@@ -1,5 +1,6 @@
 ﻿using System;
 
+using DavidFidge.MonoGame.Core.Components;
 using DavidFidge.MonoGame.Core.Graphics;
 using DavidFidge.MonoGame.Core.Graphics.Extensions;
 using DavidFidge.MonoGame.Core.Graphics.Terrain;
@@ -9,9 +10,11 @@ using DavidFidge.MonoGame.Core.Interfaces.Graphics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
+using IDrawable = DavidFidge.MonoGame.Core.Graphics.IDrawable;
+
 namespace Augmented.Graphics.TerrainSpace
 {
-    public class Terrain : IWorldTransformable
+    public class Terrain : Entity, IDrawable, ILoadContent
     {
         private readonly IHeightMapGenerator _heightMapGenerator;
         private readonly IGameProvider _gameProvider;
@@ -31,7 +34,7 @@ namespace Augmented.Graphics.TerrainSpace
             _heightMapGenerator = heightMapGenerator;
             _gameProvider = gameProvider;
             _contentStrings = contentStrings;
-            WorldTransform = new SimpleWorldTransform();
+            WorldTransform = new WorldTransform();
 
             _samplerState = new SamplerState
             {
@@ -40,8 +43,6 @@ namespace Augmented.Graphics.TerrainSpace
             };
         }
 
-        public IWorldTransform WorldTransform { get; }
-        
         public VertexPositionNormalTexture[] CreateTerrainVertices()
         {
             var width = _heightMap.Width;

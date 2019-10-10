@@ -1,4 +1,5 @@
-﻿using Augmented.Graphics;
+﻿using Augmented.Components;
+using Augmented.Graphics;
 using Augmented.Graphics.Camera;
 using Augmented.Graphics.Models;
 using Augmented.Graphics.TerrainSpace;
@@ -12,6 +13,7 @@ using Augmented.UserInterface.Screens;
 using Augmented.UserInterface.ViewModels;
 using Augmented.UserInterface.Views;
 
+using Castle.Facilities.TypedFactory;
 using Castle.MicroKernel.Registration;
 using Castle.MicroKernel.SubSystems.Configuration;
 using Castle.Windsor;
@@ -87,8 +89,11 @@ namespace Augmented.Installers
                 Component.For<Terrain>()
                     .LifeStyle.Transient,
 
-                Component.For<AugmentedModel>()
+                Component.For<AugmentedEntity>()
                     .LifeStyle.Transient,
+
+                Component.For<IAugmentedEntityFactory>()
+                    .AsFactory(),
 
                 Component.For<Cylinder>()
                     .LifeStyle.Transient,
@@ -102,7 +107,11 @@ namespace Augmented.Installers
                     .WithServiceDefaultInterfaces(),
 
                 Component.For<IAugmentedGameWorld>()
-                    .ImplementedBy<AugmentedGameWorld>(),
+                    .ImplementedBy<AugmentedGameWorld>()
+                    .LifestyleTransient(),
+
+                Component.For<IAugmentedGameWorldFactory>()
+                    .AsFactory(),
 
                 Component.For<IActionMapStore>()
                     .ImplementedBy<DefaultActionMapStore>()

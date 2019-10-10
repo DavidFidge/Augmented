@@ -13,12 +13,12 @@ using DavidFidge.MonoGame.Core.Messages;
 using DavidFidge.MonoGame.Core.UserInterface;
 using DavidFidge.Monogame.Core.View.Interfaces;
 
-using GeonBit.UI.Entities;
-
 using InputHandlers.Keyboard;
 using InputHandlers.Mouse;
 
 using MediatR;
+
+using Entity = GeonBit.UI.Entities.Entity;
 
 namespace DavidFidge.Monogame.Core.View
 {
