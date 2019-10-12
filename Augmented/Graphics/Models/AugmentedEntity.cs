@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 
+using DavidFidge.MonoGame.Core.Graphics;
 using DavidFidge.MonoGame.Core.Graphics.Extensions;
 using DavidFidge.MonoGame.Core.Graphics.Models;
 using DavidFidge.MonoGame.Core.Interfaces.Components;
@@ -8,9 +9,9 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Augmented.Graphics.Models
 {
-    public class AugmentedModel : BaseModelTemplate
+    public class AugmentedEntity : BaseModelTemplate, ILoadContent
     {
-        public AugmentedModel(IGameProvider gameProvider) : base(gameProvider)
+        public AugmentedEntity(IGameProvider gameProvider) : base(gameProvider)
         {
         }
 

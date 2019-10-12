@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 
+using DavidFidge.MonoGame.Core.Components;
 using DavidFidge.MonoGame.Core.ContentPipeline;
 using DavidFidge.MonoGame.Core.Graphics.Extensions;
 using DavidFidge.MonoGame.Core.Graphics.Quads;
@@ -12,7 +13,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace DavidFidge.MonoGame.Core.Graphics.Models
 {
-    public abstract class BaseModelTemplate : IDrawable, ISelectable
+    public abstract class BaseModelTemplate : Entity, IDrawable, ISelectable
     {
         protected readonly IGameProvider _gameProvider;
         protected Model _model { get; set; }
@@ -46,7 +47,7 @@ namespace DavidFidge.MonoGame.Core.Graphics.Models
         protected BaseModelTemplate(IGameProvider gameProvider)
         {
             _gameProvider = gameProvider;
-            WorldTransform = new SimpleWorldTransform();
+            WorldTransform = new WorldTransform();
         }
 
         protected void LoadContentInternal(Model model)

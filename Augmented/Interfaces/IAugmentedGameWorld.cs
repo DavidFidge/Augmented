@@ -1,13 +1,16 @@
-﻿using Microsoft.Xna.Framework;
+﻿using DavidFidge.MonoGame.Core.Interfaces.Graphics;
+
+using Microsoft.Xna.Framework;
 
 namespace Augmented.Interfaces
 {
     public interface IAugmentedGameWorld
     {
-        void Draw(Matrix view, Matrix projection);
-        void LoadContent();
+        ISceneGraph SceneGraph { get; }
         void RecreateHeightMap();
+        void Update();
         void Pick(Ray ray);
         void Action(Ray ray);
+        void StartNewGame();
     }
 }

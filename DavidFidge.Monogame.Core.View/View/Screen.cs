@@ -1,7 +1,7 @@
 ﻿using DavidFidge.MonoGame.Core.Components;
 using DavidFidge.Monogame.Core.View.Interfaces;
 
-using GeonBit.UI.Entities;
+using Entity = GeonBit.UI.Entities.Entity;
 
 namespace DavidFidge.Monogame.Core.View
 {

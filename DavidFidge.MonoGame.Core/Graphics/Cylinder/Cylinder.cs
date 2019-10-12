@@ -20,7 +20,7 @@ namespace DavidFidge.MonoGame.Core.Graphics.Cylinder
         public Cylinder(IGameProvider gameProvider)
         {
             _gameProvider = gameProvider;
-            WorldTransform = new SimpleWorldTransform();
+            WorldTransform = new WorldTransform();
         }
 
         public void LoadContent(float radius, float height)

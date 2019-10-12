@@ -96,7 +96,7 @@ namespace DavidFidge.MonoGame.Core.Graphics.Quads
         {
             AlphaEnabled = true;
             _gameProvider = gameProvider;
-            WorldTransform = new SimpleWorldTransform();
+            WorldTransform = new WorldTransform();
         }
 
         protected void LoadContent(float width, float height)

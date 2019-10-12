@@ -10,23 +10,23 @@ using Microsoft.Xna.Framework;
 namespace DavidFidge.MonoGame.Core.Tests.Graphics
 {
     [TestClass]
-    public class SimpleWorldTransformTests : BaseTest
+    public class WorldTransformTests : BaseTest
     {
-        private SimpleWorldTransform _simpleWorldTransform;
+        private WorldTransform _worldTransform;
 
         [TestInitialize]
         public override void Setup()
         {
             base.Setup();
 
-            _simpleWorldTransform = new SimpleWorldTransform();
+            _worldTransform = new WorldTransform();
         }
 
         [TestMethod]
         public void World_Should_Return_Identity_Matrix_From_Constructor()
         {
             // Act
-            var result = _simpleWorldTransform.World;
+            var result = _worldTransform.World;
 
             // Assert
             AssertMatrixAreEquivalent(Matrix.Identity, result);
@@ -39,10 +39,10 @@ namespace DavidFidge.MonoGame.Core.Tests.Graphics
             var translation = new Vector3(2f, 3f, 4f);
 
             // Act
-            _simpleWorldTransform.ChangeTranslation(translation);
+            _worldTransform.ChangeTranslation(translation);
 
             // Assert
-            AssertMatrixAreEquivalent(Matrix.CreateTranslation(translation), _simpleWorldTransform.World);
+            AssertMatrixAreEquivalent(Matrix.CreateTranslation(translation), _worldTransform.World);
         }
 
         [TestMethod]
@@ -50,17 +50,17 @@ namespace DavidFidge.MonoGame.Core.Tests.Graphics
         {
             // Arrange
             var translation = new Vector3(2f, 3f, 4f);
-            _simpleWorldTransform.ChangeTranslation(translation);
+            _worldTransform.ChangeTranslation(translation);
 
             var relativeTranslation = new Vector3(1f, 2f, 3f);
 
             // Act
-            _simpleWorldTransform.ChangeTranslationRelative(relativeTranslation);
+            _worldTransform.ChangeTranslationRelative(relativeTranslation);
 
             // Assert
             AssertMatrixAreEquivalent(
                 Matrix.CreateTranslation(translation + relativeTranslation),
-                _simpleWorldTransform.World
+                _worldTransform.World
                 );
         }
 
@@ -71,14 +71,14 @@ namespace DavidFidge.MonoGame.Core.Tests.Graphics
             var translation = new Vector3(2f, 3f, 4f);
             var scale = new Vector3(5f, 6f, 7f);
             var rotation = new Vector3(0.1f, 0.2f, 0.3f);
-            _simpleWorldTransform.ChangeTranslation(translation);
-            _simpleWorldTransform.ChangeRotation(rotation.X, rotation.Y, rotation.Z);
-            _simpleWorldTransform.ChangeScale(scale);
+            _worldTransform.ChangeTranslation(translation);
+            _worldTransform.ChangeRotation(rotation.X, rotation.Y, rotation.Z);
+            _worldTransform.ChangeScale(scale);
 
             var relativeTranslation = new Vector3(1f, 2f, 3f);
 
             // Act
-            _simpleWorldTransform.ChangeTranslationRelative(relativeTranslation);
+            _worldTransform.ChangeTranslationRelative(relativeTranslation);
 
             // Assert
             AssertMatrixAreEquivalent(
@@ -87,7 +87,7 @@ namespace DavidFidge.MonoGame.Core.Tests.Graphics
                 * Matrix.CreateRotationY(rotation.Y)
                 * Matrix.CreateRotationZ(rotation.Z)
                 * Matrix.CreateTranslation(translation + relativeTranslation),
-                _simpleWorldTransform.World
+                _worldTransform.World
             );
         }
 
@@ -98,10 +98,10 @@ namespace DavidFidge.MonoGame.Core.Tests.Graphics
             var scale = new Vector3(2f, 3f, 4f);
 
             // Act
-            _simpleWorldTransform.ChangeScale(scale);
+            _worldTransform.ChangeScale(scale);
 
             // Assert
-            AssertMatrixAreEquivalent(Matrix.CreateScale(scale), _simpleWorldTransform.World);
+            AssertMatrixAreEquivalent(Matrix.CreateScale(scale), _worldTransform.World);
         }
 
         [TestMethod]
@@ -109,17 +109,17 @@ namespace DavidFidge.MonoGame.Core.Tests.Graphics
         {
             // Arrange
             var scale = new Vector3(2f, 3f, 4f);
-            _simpleWorldTransform.ChangeScale(scale);
+            _worldTransform.ChangeScale(scale);
 
             var relativeScale = new Vector3(1f, 2f, 3f);
 
             // Act
-            _simpleWorldTransform.ChangeScaleRelative(relativeScale);
+            _worldTransform.ChangeScaleRelative(relativeScale);
 
             // Assert
             AssertMatrixAreEquivalent(
                 Matrix.CreateScale(scale + relativeScale),
-                _simpleWorldTransform.World
+                _worldTransform.World
             );
         }
 
@@ -130,14 +130,14 @@ namespace DavidFidge.MonoGame.Core.Tests.Graphics
             var translation = new Vector3(2f, 3f, 4f);
             var scale = new Vector3(5f, 6f, 7f);
             var rotation = new Vector3(0.1f, 0.2f, 0.3f);
-            _simpleWorldTransform.ChangeTranslation(translation);
-            _simpleWorldTransform.ChangeRotation(rotation.X, rotation.Y, rotation.Z);
-            _simpleWorldTransform.ChangeScale(scale);
+            _worldTransform.ChangeTranslation(translation);
+            _worldTransform.ChangeRotation(rotation.X, rotation.Y, rotation.Z);
+            _worldTransform.ChangeScale(scale);
 
             var relativeScale = new Vector3(1f, 2f, 3f);
 
             // Act
-            _simpleWorldTransform.ChangeScaleRelative(relativeScale);
+            _worldTransform.ChangeScaleRelative(relativeScale);
 
             // Assert
             AssertMatrixAreEquivalent(
@@ -146,7 +146,7 @@ namespace DavidFidge.MonoGame.Core.Tests.Graphics
                 * Matrix.CreateRotationY(rotation.Y)
                 * Matrix.CreateRotationZ(rotation.Z)
                 * Matrix.CreateTranslation(translation),
-                _simpleWorldTransform.World
+                _worldTransform.World
             );
         }
 
@@ -157,14 +157,14 @@ namespace DavidFidge.MonoGame.Core.Tests.Graphics
             var rotation = new Vector3(0.1f, 0.2f, 0.3f);
 
             // Act
-            _simpleWorldTransform.ChangeRotation(rotation.X, rotation.Y, rotation.Z);
+            _worldTransform.ChangeRotation(rotation.X, rotation.Y, rotation.Z);
 
             // Assert
             AssertMatrixAreEquivalent(
                 Matrix.CreateRotationX(rotation.X)
                 * Matrix.CreateRotationY(rotation.Y)
                 * Matrix.CreateRotationZ(rotation.Z),
-                _simpleWorldTransform.World);
+                _worldTransform.World);
         }
 
         [TestMethod]
@@ -172,12 +172,12 @@ namespace DavidFidge.MonoGame.Core.Tests.Graphics
         {
             // Arrange
             var rotation = new Vector3(0.1f, 0.2f, 0.3f);
-            _simpleWorldTransform.ChangeRotation(rotation.X, rotation.Y, rotation.Z);
+            _worldTransform.ChangeRotation(rotation.X, rotation.Y, rotation.Z);
 
             var relativeRotation = new Vector3(0.4f, 0.5f, 0.6f);
 
             // Act
-            _simpleWorldTransform.ChangeRotationRelative(
+            _worldTransform.ChangeRotationRelative(
                 relativeRotation.X,
                 relativeRotation.Y,
                 relativeRotation.Z);
@@ -193,7 +193,7 @@ namespace DavidFidge.MonoGame.Core.Tests.Graphics
 
             AssertMatrixAreEquivalent(
                 secondRotation * firstRotation,
-                _simpleWorldTransform.World);
+                _worldTransform.World);
         }
 
         [TestMethod]
@@ -203,14 +203,14 @@ namespace DavidFidge.MonoGame.Core.Tests.Graphics
             var translation = new Vector3(2f, 3f, 4f);
             var scale = new Vector3(5f, 6f, 7f);
             var rotation = new Vector3(0.1f, 0.2f, 0.3f);
-            _simpleWorldTransform.ChangeTranslation(translation);
-            _simpleWorldTransform.ChangeRotation(rotation.X, rotation.Y, rotation.Z);
-            _simpleWorldTransform.ChangeScale(scale);
+            _worldTransform.ChangeTranslation(translation);
+            _worldTransform.ChangeRotation(rotation.X, rotation.Y, rotation.Z);
+            _worldTransform.ChangeScale(scale);
 
             var relativeRotation = new Vector3(0.4f, 0.5f, 0.6f);
 
             // Act
-            _simpleWorldTransform.ChangeRotationRelative(
+            _worldTransform.ChangeRotationRelative(
                 relativeRotation.X,
                 relativeRotation.Y,
                 relativeRotation.Z);
@@ -229,7 +229,7 @@ namespace DavidFidge.MonoGame.Core.Tests.Graphics
                 * secondRotation
                 * firstRotation
                 * Matrix.CreateTranslation(translation),
-                _simpleWorldTransform.World
+                _worldTransform.World
             );
         }
 
@@ -237,17 +237,17 @@ namespace DavidFidge.MonoGame.Core.Tests.Graphics
         public void ChangeRotationRelative_RotatingXYZ_Then_MinusZYX_Should_Go_Back_To_Identity()
         {
             // Act
-            _simpleWorldTransform.ChangeRotationRelative((float)Math.PI / 2f, 0f, 0f);
-            _simpleWorldTransform.ChangeRotationRelative(0f, (float)Math.PI / 2f, 0f);
-            _simpleWorldTransform.ChangeRotationRelative(0f, 0f, (float)Math.PI / 2f);
-            _simpleWorldTransform.ChangeRotationRelative(0f, 0f, -(float)Math.PI / 2f);
-            _simpleWorldTransform.ChangeRotationRelative(0f, -(float)Math.PI / 2f, 0f);
-            _simpleWorldTransform.ChangeRotationRelative(-(float)Math.PI / 2f, 0f, 0f);
+            _worldTransform.ChangeRotationRelative((float)Math.PI / 2f, 0f, 0f);
+            _worldTransform.ChangeRotationRelative(0f, (float)Math.PI / 2f, 0f);
+            _worldTransform.ChangeRotationRelative(0f, 0f, (float)Math.PI / 2f);
+            _worldTransform.ChangeRotationRelative(0f, 0f, -(float)Math.PI / 2f);
+            _worldTransform.ChangeRotationRelative(0f, -(float)Math.PI / 2f, 0f);
+            _worldTransform.ChangeRotationRelative(-(float)Math.PI / 2f, 0f, 0f);
 
             // Assert
             AssertMatrixAreEquivalent(
                 Matrix.Identity,
-                _simpleWorldTransform.World);
+                _worldTransform.World);
         }
 
         public void AssertMatrixAreEquivalent(Matrix expected, Matrix actual)

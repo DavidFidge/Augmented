@@ -1,4 +1,5 @@
 ﻿using Augmented.Graphics.Camera;
+using Augmented.Interfaces;
 using Augmented.Messages;
 using Augmented.UserInterface.Views;
 
@@ -11,13 +12,16 @@ namespace Augmented.UserInterface.Screens
     {
         private readonly GameView3D _gameView3D;
         private readonly IGameTimeService _gameTimeService;
+        private IAugmentedGameWorld _augmentedGameWorld;
 
         public GameScreen(
+            IAugmentedGameWorld augmentedGameWorld,
             GameView gameView,
             GameView3D gameView3D,
             IGameTimeService gameTimeService
             ) : base(gameView)
         {
+            _augmentedGameWorld = augmentedGameWorld;
             _gameView3D = gameView3D;
             _gameTimeService = gameTimeService;
         }
@@ -29,14 +33,17 @@ namespace Augmented.UserInterface.Screens
 
         public void StartNewGame()
         {
+            _augmentedGameWorld.StartNewGame();
+            _gameView3D.StartNewGame();
+
             Mediator.Send(new ChangeGameSpeedRequest().ResetRequest());
 
-            _gameView3D.Initialise();
             _gameTimeService.Start();
         }
 
         public override void Update()
         {
+            _augmentedGameWorld.Update();
             _gameView3D.Update();
         }
 
