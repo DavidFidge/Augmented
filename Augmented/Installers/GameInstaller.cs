@@ -80,6 +80,8 @@ namespace Augmented.Installers
                     .Forward<IRequestHandler<Move3DViewRequest, Unit>>()
                     .Forward<IRequestHandler<Zoom3DViewRequest, Unit>>()
                     .Forward<IRequestHandler<Rotate3DViewRequest, Unit>>()
+                    .Forward<IRequestHandler<Select3DViewRequest, Unit>>()
+                    .Forward<IRequestHandler<Action3DViewRequest, Unit>>()
                     .DependsOn(Dependency.OnComponent<IGameCamera, StrategyGameCamera>()
                 ),
 
@@ -107,11 +109,7 @@ namespace Augmented.Installers
                     .WithServiceDefaultInterfaces(),
 
                 Component.For<IAugmentedGameWorld>()
-                    .ImplementedBy<AugmentedGameWorld>()
-                    .LifestyleTransient(),
-
-                Component.For<IAugmentedGameWorldFactory>()
-                    .AsFactory(),
+                    .ImplementedBy<AugmentedGameWorld>(),
 
                 Component.For<IActionMapStore>()
                     .ImplementedBy<DefaultActionMapStore>()

@@ -240,10 +240,10 @@ namespace DavidFidge.MonoGame.Core.Graphics.Models
         }
 
         public bool IsSelected { get; set; }
-    }
 
-    public interface ISelectable
-    {
-        bool IsSelected { get; set; }
+        public float? Intersects(Ray ray)
+        {
+            return ray.Intersects(_boundingSphere);
+        }
     }
 }

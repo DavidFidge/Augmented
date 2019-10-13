@@ -48,7 +48,7 @@ namespace DavidFidge.MonoGame.Core.Tests.Graphics
             Assert.IsTrue(testEntityChild1.HasLoadContentBeenCalled);
             Assert.IsTrue(testEntityChild2.HasLoadContentBeenCalled);
         }
-        
+
         [TestMethod]
         public void Should_Call_Draw_With_Correct_Parameters()
         {
@@ -91,6 +91,49 @@ namespace DavidFidge.MonoGame.Core.Tests.Graphics
             Assert.IsTrue(testEntityRoot.HasDrawBeenCalled);
             Assert.IsTrue(testEntityChild1.HasDrawBeenCalled);
             Assert.IsTrue(testEntityChild2.HasDrawBeenCalled);
+        }
+
+        [TestMethod]
+        public void NonIntersecting_Entity_Should_Be_Deselected()
+        {
+            // Arrange
+            var nonIntersectingEntity = new TestSelectEntity();
+
+            _sceneGraph.Root = nonIntersectingEntity.SceneNode;
+
+            // Act
+            var result = _sceneGraph.Select(new Ray(Vector3.Zero, Vector3.Zero));
+
+            // Assert
+            Assert.IsNull(result);
+        }
+
+        [TestMethod]
+        public void Intersecting_Entities_Should_Return_Entity_With_Shortest_Intersecting_Distance()
+        {
+            // Arrange
+            var entity1 = new TestSelectEntity { IntersectsReturnValue = 0.5f };
+            var entity2 = new TestSelectEntity { IntersectsReturnValue = 0.4f };
+
+            _sceneGraph.Root = entity1.SceneNode;
+            entity1.SceneNode.Add(entity2.SceneNode);
+
+            // Act
+            var result = _sceneGraph.Select(new Ray(Vector3.Zero, Vector3.Zero));
+
+            // Assert
+            Assert.AreEqual(entity2, result);
+        }
+
+        public class TestSelectEntity : Entity, ISelectable
+        {
+            public bool IsSelected { get; set; }
+            public float? IntersectsReturnValue { get; set; }
+
+            public float? Intersects(Ray ray)
+            {
+                return IntersectsReturnValue;
+            }
         }
 
         public class TestEntity : Entity, ILoadContent, IDrawable

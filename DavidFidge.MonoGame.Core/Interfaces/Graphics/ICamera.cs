@@ -9,5 +9,6 @@ namespace DavidFidge.MonoGame.Core.Interfaces.Graphics
         Matrix Projection { get; }
         void Update();
         void Initialise();
+        Ray GetPointerRay(int x, int y);
     }
 }

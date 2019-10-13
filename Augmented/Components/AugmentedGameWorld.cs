@@ -1,11 +1,17 @@
 ﻿using System.Collections.Generic;
+using System.Xml.Serialization;
 
 using Augmented.Graphics.Models;
 using Augmented.Graphics.TerrainSpace;
 using Augmented.Interfaces;
 
+using DavidFidge.MonoGame.Core.Components;
 using DavidFidge.MonoGame.Core.Graphics;
 using DavidFidge.MonoGame.Core.Interfaces.Graphics;
+
+using Microsoft.Xna.Framework;
+
+using NGenerics.Patterns.Visitor;
 
 namespace Augmented.Components
 {
@@ -25,6 +31,10 @@ namespace Augmented.Components
             _augmentedEntityFactory = augmentedEntityFactory;
             SceneGraph = sceneGraph;
             _terrain = terrain;
+        }
+
+        public void StartNewGame()
+        {
             _terrain.CreateHeightMap(new TerrainParameters(WorldSize.Medium, HillHeight.Medium));
 
             _augmentedEntities.Add(_augmentedEntityFactory.Create());
@@ -35,6 +45,8 @@ namespace Augmented.Components
             {
                 _terrain.SceneNode.Add(entity.SceneNode);
             }
+
+            SceneGraph.LoadContent();
         }
 
         public void RecreateHeightMap()
@@ -45,6 +57,28 @@ namespace Augmented.Components
 
         public void Update()
         {
+        }
+
+        public void Select(Ray ray)
+        {
+            SceneGraph.Root.BreadthFirstTraversal(new ActionVisitor<Entity>(
+                e =>
+                {
+                    if (e is ISelectable deselect)
+                        deselect.IsSelected = false;
+                }));
+
+            var selectedEntity = SceneGraph.Select(ray);
+
+            if (selectedEntity != null && selectedEntity is ISelectable selectable)
+            {
+                selectable.IsSelected = true;
+            }
+        }
+
+        public void Action(Ray ray)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

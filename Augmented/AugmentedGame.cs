@@ -161,7 +161,6 @@ namespace Augmented
             _gameInputService.Poll();
             _screenManager.Update();
 
-
             base.Update(gameTime);
         }
 
