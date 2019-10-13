@@ -57,7 +57,7 @@ namespace Augmented.UserInterface.Input
 
         public override void HandleLeftMouseClick(MouseState mouseState, MouseState origin)
         {
-            Mediator.Send(new Pick3DViewRequest(mouseState.X,
+            Mediator.Send(new Select3DViewRequest(mouseState.X,
                 mouseState.Y));
         }
 

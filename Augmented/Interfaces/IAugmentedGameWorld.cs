@@ -9,7 +9,7 @@ namespace Augmented.Interfaces
         ISceneGraph SceneGraph { get; }
         void RecreateHeightMap();
         void Update();
-        void Pick(Ray ray);
+        void Select(Ray ray);
         void Action(Ray ray);
         void StartNewGame();
     }

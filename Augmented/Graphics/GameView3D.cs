@@ -12,7 +12,7 @@ using MediatR;
 namespace Augmented.Graphics.Camera
 {
     public class GameView3D :
-        IRequestHandler<Pick3DViewRequest>,
+        IRequestHandler<Select3DViewRequest>,
         IRequestHandler<Action3DViewRequest>,
         IRequestHandler<Move3DViewRequest>,
         IRequestHandler<Rotate3DViewRequest>
@@ -69,11 +69,11 @@ namespace Augmented.Graphics.Camera
             return Unit.Task;
         }
 
-        public Task<Unit> Handle(Pick3DViewRequest request, CancellationToken cancellationToken)
+        public Task<Unit> Handle(Select3DViewRequest request, CancellationToken cancellationToken)
         {
             var ray = _camera.GetPointerRay(request.X, request.Y);
 
-            _augmentedGameWorld.Pick(ray);
+            _augmentedGameWorld.Select(ray);
 
             return Unit.Task;
         }

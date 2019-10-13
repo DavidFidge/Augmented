@@ -102,8 +102,11 @@
     <Compile Include="Components\BaseComponent.cs" />
     <Compile Include="Configuration\BaseConfigurationSectionHandler.cs" />
     <Compile Include="ConsoleCommands\ConsoleCommand.cs" />
+    <Compile Include="Graphics\IActionable.cs" />
+    <Compile Include="Graphics\ISelectable.cs" />
     <Compile Include="Graphics\ILoadContent.cs" />
     <Compile Include="Graphics\SceneGraph\DrawVisitor.cs" />
+    <Compile Include="Graphics\SceneGraph\SelectVisitor.cs" />
     <Compile Include="Interfaces\Graphics\ISceneGraph.cs" />
     <Compile Include="Graphics\SceneGraph\LoadContentVisitor.cs" />
     <Compile Include="Graphics\SceneGraph\SceneGraph.cs" />

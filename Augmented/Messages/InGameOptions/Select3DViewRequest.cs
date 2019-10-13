@@ -2,9 +2,9 @@
 
 namespace Augmented.Messages
 {
-    public class Pick3DViewRequest : IRequest
+    public class Select3DViewRequest : IRequest
     {
-        public Pick3DViewRequest(int x, int y)
+        public Select3DViewRequest(int x, int y)
         {
             X = x;
             Y = y;

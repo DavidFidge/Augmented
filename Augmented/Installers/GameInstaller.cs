@@ -80,7 +80,7 @@ namespace Augmented.Installers
                     .Forward<IRequestHandler<Move3DViewRequest, Unit>>()
                     .Forward<IRequestHandler<Zoom3DViewRequest, Unit>>()
                     .Forward<IRequestHandler<Rotate3DViewRequest, Unit>>()
-                    .Forward<IRequestHandler<Pick3DViewRequest, Unit>>()
+                    .Forward<IRequestHandler<Select3DViewRequest, Unit>>()
                     .Forward<IRequestHandler<Action3DViewRequest, Unit>>()
                     .DependsOn(Dependency.OnComponent<IGameCamera, StrategyGameCamera>()
                 ),

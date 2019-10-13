@@ -11,5 +11,6 @@ namespace DavidFidge.MonoGame.Core.Interfaces.Graphics
         GeneralTree<Entity> Root { get; set; }
         void Draw(Matrix cameraView, Matrix cameraProjection);
         void LoadContent();
+        Entity Select(Ray ray);
     }
 }
