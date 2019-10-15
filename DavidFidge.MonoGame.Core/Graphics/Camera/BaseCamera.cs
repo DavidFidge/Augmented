@@ -51,7 +51,7 @@ namespace DavidFidge.MonoGame.Core.Graphics.Camera
             _viewportWidth = _gameProvider.Game.GraphicsDevice.Viewport.Width;
         }
 
-        public Ray GetPointerRay(int x, int y)
+        public Ray GetPointerRay(int x, int y, bool normalised = true)
         {
             var nearScreenPoint = new Vector3(x, y, 0);
             var farScreenPoint = new Vector3(x, y, 1);
@@ -61,7 +61,8 @@ namespace DavidFidge.MonoGame.Core.Graphics.Camera
 
             var pointerRayDirection = far3DPoint - near3DPoint;
 
-            pointerRayDirection.Normalize();
+            if (normalised)
+                pointerRayDirection.Normalize();
 
             return new Ray(near3DPoint, pointerRayDirection);
         }

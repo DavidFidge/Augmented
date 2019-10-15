@@ -326,5 +326,168 @@ namespace DavidFidge.MonoGame.Core.Tests.Graphics
             Assert.AreEqual("1,2,3", stringList[0]);
             Assert.AreEqual("4,5,6", stringList[1]);
         }
+
+        [TestMethod]
+        public void GetExactHeight_Should_Get_Height_Within_Lower_Triangle_With_A_Higher_Upper_Triangle()
+        {
+            // Arrange
+            var heightMap = new HeightMap(2, 2)
+                .FromArray(new int[2 * 2]
+                {
+                    1, 1,
+                    1, 2
+                });
+
+            // Act
+            var result = heightMap.GetExactHeightAt(0.5f, 0.25f);
+
+            // Assert
+            Assert.AreEqual(1f, result);
+        }
+
+        [TestMethod]
+        public void GetExactHeight_Should_Get_Height_Within_Upper_Triangle_With_A_Higher_Upper_Triangle()
+        {
+            // Arrange
+            var heightMap = new HeightMap(2, 2)
+                .FromArray(new int[2 * 2]
+                {
+                    1, 1,
+                    1, 2
+                });
+
+            // Act
+            var result = heightMap.GetExactHeightAt(0.5f, 0.75f);
+
+            // Assert
+            Assert.AreEqual(1.25f, result);
+        }
+
+        [TestMethod]
+        public void GetExactHeight_Should_Get_Height_On_Top_Boundary_With_A_Higher_Upper_Triangle()
+        {
+            // Arrange
+            var heightMap = new HeightMap(2, 2)
+                .FromArray(new int[2 * 2]
+                {
+                    1, 1,
+                    1, 2
+                });
+
+            // Act
+            var result = heightMap.GetExactHeightAt(0.5f, 1);
+
+            // Assert
+            Assert.AreEqual(1.5f, result);
+        }
+
+        [TestMethod]
+        public void GetExactHeight_Should_Get_Height_On_Bottom_Boundary_With_A_Higher_Upper_Triangle()
+        {
+            // Arrange
+            var heightMap = new HeightMap(2, 2)
+                .FromArray(new int[2 * 2]
+                {
+                    1, 1,
+                    1, 2
+                });
+
+            // Act
+            var result = heightMap.GetExactHeightAt(0.5f, 0);
+
+            // Assert
+            Assert.AreEqual(1, result);
+        }
+
+
+        [TestMethod]
+        public void GetExactHeight_Should_Get_Height_Within_Lower_Triangle_With_A_Lower_Upper_Triangle()
+        {
+            // Arrange
+            var heightMap = new HeightMap(2, 2)
+                .FromArray(new int[2 * 2]
+                {
+                    2, 1,
+                    1, 1
+                });
+
+            // Act
+            var result = heightMap.GetExactHeightAt(0.5f, 0.25f);
+
+            // Assert
+            Assert.AreEqual(1.25f, result);
+        }
+
+        [TestMethod]
+        public void GetExactHeight_Should_Get_Height_Within_Upper_Triangle_With_A_Lower_Upper_Triangle()
+        {
+            // Arrange
+            var heightMap = new HeightMap(2, 2)
+                .FromArray(new int[2 * 2]
+                {
+                    2, 1,
+                    1, 1
+                });
+
+            // Act
+            var result = heightMap.GetExactHeightAt(0.5f, 0.75f);
+
+            // Assert
+            Assert.AreEqual(1f, result);
+        }
+
+        [TestMethod]
+        public void GetExactHeight_Should_Get_Height_On_Top_Boundary_With_A_Lower_Upper_Triangle()
+        {
+            // Arrange
+            var heightMap = new HeightMap(2, 2)
+                .FromArray(new int[2 * 2]
+                {
+                    2, 1,
+                    1, 1
+                });
+
+            // Act
+            var result = heightMap.GetExactHeightAt(0.5f, 1);
+
+            // Assert
+            Assert.AreEqual(1f, result);
+        }
+
+        [TestMethod]
+        public void GetExactHeight_Should_Get_Height_On_Bottom_Boundary_With_A_Lower_Upper_Triangle()
+        {
+            // Arrange
+            var heightMap = new HeightMap(2, 2)
+                .FromArray(new int[2 * 2]
+                {
+                    2, 1,
+                    1, 1
+                });
+
+            // Act
+            var result = heightMap.GetExactHeightAt(0.5f, 0);
+
+            // Assert
+            Assert.AreEqual(1.5f, result);
+        }
+
+        [TestMethod]
+        public void GetExactHeight_Should_Get_Height_In_Middle()
+        {
+            // Arrange
+            var heightMap = new HeightMap(2, 2)
+                .FromArray(new int[2 * 2]
+                {
+                    1, 2,
+                    3, 4
+                });
+
+            // Act
+            var result = heightMap.GetExactHeightAt(0.5f, 0.5f);
+
+            // Assert
+            Assert.AreEqual(2.5f, result);
+        }
     }
 }

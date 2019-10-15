@@ -183,6 +183,58 @@ namespace DavidFidge.MonoGame.Core.Graphics.Terrain
             return _heightMap.GetEnumerator();
         }
 
+        public float? GetExactHeightAt(float xCoord, float yCoord)
+        {
+            var invalid = xCoord < 0;
+            invalid |= yCoord < 0;
+            invalid |= xCoord > Length - 1;
+            invalid |= yCoord > Width - 1;
+
+            if (invalid)
+                return null;
+
+            var xLower = (int)xCoord;
+            var xHigher = xLower + 1;
+            var xRelative = (xCoord - xLower) / ((float)xHigher - (float)xLower);
+            var yLower = (int)yCoord;
+            var yHigher = yLower + 1;
+
+            // If this is the top edge of the height map then we can
+            // use the set of triangles on the final row
+            if (yHigher > Width - 1)
+            {
+                yHigher = Width - 1;
+                yLower = yHigher - 1;
+            }
+            
+            var yRelative = (yCoord - yLower) / ((float)yHigher - (float)yLower);
+
+
+            var heightLxLy = _heightMap[GetIndex(xLower, yLower)];
+            var heightLxHy = _heightMap[GetIndex(xLower, yHigher)];
+            var heightHxLy = _heightMap[GetIndex(xHigher, yLower)];
+            var heightHxHy = _heightMap[GetIndex(xHigher, yHigher)];
+
+            var pointAboveLowerTriangle = (xRelative + yRelative < 1);
+
+            float finalHeight;
+
+            if (pointAboveLowerTriangle)
+            {
+                finalHeight = heightLxLy;
+                finalHeight += yRelative * (heightLxHy - heightLxLy);
+                finalHeight += xRelative * (heightHxLy - heightLxLy);
+            }
+            else
+            {
+                finalHeight = heightHxHy;
+                finalHeight += (1.0f - yRelative) * (heightHxLy - heightHxHy);
+                finalHeight += (1.0f - xRelative) * (heightLxHy - heightHxHy);
+            }
+
+            return finalHeight;
+        }
+
         public object Clone()
         {
             return new HeightMap(Width, Length)

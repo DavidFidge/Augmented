@@ -105,7 +105,7 @@ namespace Augmented.Graphics.TerrainSpace
 
         public void CreateHeightMap(TerrainParameters terrainParameters)
         {
-            _scale = GetScale(terrainParameters);
+            _scale = new Vector3(20f, 20f, 0.005f) * GetScale(terrainParameters);
 
             var hillHeight = GetHillHeight(terrainParameters);
 
@@ -116,7 +116,7 @@ namespace Augmented.Graphics.TerrainSpace
                 .DiamondSquare(heightMapSize, -hillHeight, hillHeight, new SubtractingHeightsReducer())
                 .HeightMap();
 
-            WorldTransform.ChangeScale(new Vector3(20f, 20f, 0.005f) * _scale);
+            WorldTransform.ChangeScale(_scale);
         }
 
         private int GetHillHeight(TerrainParameters terrainParameters)
@@ -226,6 +226,14 @@ namespace Augmented.Graphics.TerrainSpace
             }
 
             graphicsDevice.SamplerStates[0] = oldSamplerState;
+        }
+
+        public float? GetExactHeightAt(float xCoord, float yCoord)
+        {
+            xCoord /= _scale.X;
+            yCoord /= _scale.Y;
+
+            return _heightMap.GetExactHeightAt(xCoord, yCoord);
         }
     }
 }
