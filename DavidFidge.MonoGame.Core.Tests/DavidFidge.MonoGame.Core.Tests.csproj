@@ -121,6 +121,7 @@
     <Compile Include="Extensions\FloatExtensions.cs" />
     <Compile Include="Extensions\Vector3Extensions.cs" />
     <Compile Include="Extensions\PointExtensionsTests.cs" />
+    <Compile Include="Extensions\RayExtensionsTests.cs" />
     <Compile Include="Extensions\VertexExtensionsTests.cs" />
     <Compile Include="Graphics\DiamondSquareTests.cs" />
     <Compile Include="Graphics\HeightMapTests.cs" />

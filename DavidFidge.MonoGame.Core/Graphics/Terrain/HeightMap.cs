@@ -30,6 +30,9 @@ namespace DavidFidge.MonoGame.Core.Graphics.Terrain
 
         public int Area => Length * Width;
 
+        public int Min => _heightMap.Min();
+        public int Max => _heightMap.Max();
+
         public HeightMap FromArray(int[] array)
         {
             if (array.Length != Width * Length)

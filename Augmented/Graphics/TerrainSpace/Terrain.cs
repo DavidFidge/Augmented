@@ -228,12 +228,46 @@ namespace Augmented.Graphics.TerrainSpace
             graphicsDevice.SamplerStates[0] = oldSamplerState;
         }
 
-        public float? GetExactHeightAt(float xCoord, float yCoord)
+        private float? GetExactHeightAt(float xCoord, float yCoord)
         {
             xCoord /= _scale.X;
             yCoord /= _scale.Y;
 
             return _heightMap.GetExactHeightAt(xCoord, yCoord);
+        }
+
+        private Ray? ClipRay(Ray ray)
+        {
+            var min = _heightMap.Min * _scale.Z;
+            var max = _heightMap.Max * _scale.Z;
+
+            return ray.ClipToZ(min, max);
+        }
+
+        private Vector3 BinarySearch(Ray ray)
+        {
+            var accuracy = 0.01f;
+            var heightAtStartingPoint = GetExactHeightAt(ray.Position.X, -ray.Position.Y);
+
+            var currentError = ray.Position.Z - heightAtStartingPoint;
+            var counter = 0;
+
+            while (currentError > accuracy)
+            {
+                ray.Direction /= 2.0f;
+                var nextPoint = ray.Position + ray.Direction;
+                var heightAtNextPoint = GetExactHeightAt(nextPoint.X, -nextPoint.Y);
+                if (nextPoint.Z > heightAtNextPoint)
+                {
+                    ray.Position = nextPoint;
+                    currentError = ray.Position.Z - heightAtNextPoint;
+                }
+
+                if (counter++ == 1000)
+                    break;
+            }
+
+            return ray.Position;
         }
     }
 }
