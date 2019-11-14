@@ -2,7 +2,7 @@
 
 namespace DavidFidge.MonoGame.Core.Interfaces.Graphics
 {
-    public interface ICamera : ITransform
+    public interface ICamera
     {
         void Reset();
         Matrix View { get; }

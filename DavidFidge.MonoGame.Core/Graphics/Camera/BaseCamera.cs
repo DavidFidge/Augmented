@@ -2,7 +2,6 @@
 using DavidFidge.MonoGame.Core.Interfaces.Graphics;
 
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
 
 namespace DavidFidge.MonoGame.Core.Graphics.Camera
 {
@@ -67,42 +66,9 @@ namespace DavidFidge.MonoGame.Core.Graphics.Camera
             return new Ray(near3DPoint, pointerRayDirection);
         }
 
-        protected abstract void SetViewMatrix();
-
         public void ChangeTranslationRelative(Vector3 translationDelta)
         {
             _cameraPosition += translationDelta;
         }
-
-        public void ChangeTranslation(Vector3 translation)
-        {
-            _cameraPosition = translation;
-        }
-
-        public void ChangeScaleRelative(Vector3 scaleDelta)
-        {
-        }
-
-        public void ChangeScale(Vector3 scale)
-        {
-        }
-
-        public virtual void ChangeRotationRelative(float x, float y, float z)
-        {
-        }
-
-        public virtual void ChangeRotation(float x, float y, float z)
-        {
-        }
-
-        public Vector3 Translation => _cameraPosition;
-
-        public Vector3 Scale => new Vector3(1f);
-
-        public virtual Matrix Rotation => Matrix.Identity;
-
-        public Matrix TranslationMatrix => Matrix.CreateTranslation(_cameraPosition);
-
-        public Matrix ScaleMatrix => Matrix.Identity;
     }
 }

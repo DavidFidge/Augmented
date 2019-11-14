@@ -1,20 +1,14 @@
 ﻿using System;
 
+using DavidFidge.MonoGame.Core.Graphics;
 using DavidFidge.MonoGame.Core.Interfaces.Graphics;
-
-using NGenerics.DataStructures.Trees;
 
 namespace DavidFidge.MonoGame.Core.Components
 {
-    public abstract class Entity : IWorldTransformable
+    public abstract class Entity : ITransformable
     {
-        protected Entity()
-        {
-            SceneNode = new GeneralTree<Entity>(this);
-        }
-
-        public GeneralTree<Entity> SceneNode { get; }
         public Guid Id { get; set; } = Guid.NewGuid();
-        public IWorldTransform WorldTransform { get; set; }
+        public ITransform WorldTransform { get; set; } = new EntityTransform();
+        public ITransform LocalTransform { get; set; } = new EntityTransform();
     }
 }

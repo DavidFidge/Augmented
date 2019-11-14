@@ -34,7 +34,6 @@ namespace Augmented.Graphics.TerrainSpace
             _heightMapGenerator = heightMapGenerator;
             _gameProvider = gameProvider;
             _contentStrings = contentStrings;
-            WorldTransform = new WorldTransform();
 
             _samplerState = new SamplerState
             {
@@ -107,6 +106,8 @@ namespace Augmented.Graphics.TerrainSpace
         {
             _scale = new Vector3(20f, 20f, 0.005f) * GetScale(terrainParameters);
 
+            LocalTransform.ChangeScale(_scale);
+
             var hillHeight = GetHillHeight(terrainParameters);
 
             var heightMapSize = 32;
@@ -116,7 +117,8 @@ namespace Augmented.Graphics.TerrainSpace
                 .DiamondSquare(heightMapSize, -hillHeight, hillHeight, new SubtractingHeightsReducer())
                 .HeightMap();
 
-            WorldTransform.ChangeScale(_scale);
+            var min = new Vector3(0, 0, _heightMap.Min);
+            var max = new Vector3(_heightMap.Width - 1, _heightMap.Length - 1, _heightMap.Max);
         }
 
         private int GetHillHeight(TerrainParameters terrainParameters)
@@ -195,7 +197,7 @@ namespace Augmented.Graphics.TerrainSpace
             }
         }
 
-        public void Draw(Matrix view, Matrix projection)
+        public void Draw(Matrix view, Matrix projection, Matrix world)
         {
             var graphicsDevice = _gameProvider.Game.GraphicsDevice;
 
@@ -207,7 +209,7 @@ namespace Augmented.Graphics.TerrainSpace
             if (_effect != null)
             {
                 _effect.SetWorldViewProjection(
-                    WorldTransform.World,
+                    world,
                     view,
                     projection
                 );
@@ -227,47 +229,22 @@ namespace Augmented.Graphics.TerrainSpace
 
             graphicsDevice.SamplerStates[0] = oldSamplerState;
         }
-
-        private float? GetExactHeightAt(float xCoord, float yCoord)
+        
+        public Vector3? RayToTerrainPoint(Ray ray, ISceneGraph sceneGraph)
         {
-            xCoord /= _scale.X;
-            yCoord /= _scale.Y;
+            var worldTransform = sceneGraph.GetWorldTransformWithLocalTransform(this);
+            var worldTransformInverse = Matrix.Invert(worldTransform);
 
-            return _heightMap.GetExactHeightAt(xCoord, yCoord);
-        }
+            var translatedRay = new Ray(Vector3.Transform(ray.Position, worldTransformInverse), Vector3.Transform(Vector3.Normalize(ray.Direction), worldTransformInverse));
 
-        private Ray? ClipRay(Ray ray)
-        {
-            var min = _heightMap.Min * _scale.Z;
-            var max = _heightMap.Max * _scale.Z;
+            var rayOverFirstHill = _heightMap.LinearSearch(translatedRay);
 
-            return ray.ClipToZ(min, max);
-        }
+            if (rayOverFirstHill == null)
+                return null;
 
-        private Vector3 BinarySearch(Ray ray)
-        {
-            var accuracy = 0.01f;
-            var heightAtStartingPoint = GetExactHeightAt(ray.Position.X, -ray.Position.Y);
+            var approximatePositionOnHill = _heightMap.BinarySearch(rayOverFirstHill.Value);
 
-            var currentError = ray.Position.Z - heightAtStartingPoint;
-            var counter = 0;
-
-            while (currentError > accuracy)
-            {
-                ray.Direction /= 2.0f;
-                var nextPoint = ray.Position + ray.Direction;
-                var heightAtNextPoint = GetExactHeightAt(nextPoint.X, -nextPoint.Y);
-                if (nextPoint.Z > heightAtNextPoint)
-                {
-                    ray.Position = nextPoint;
-                    currentError = ray.Position.Z - heightAtNextPoint;
-                }
-
-                if (counter++ == 1000)
-                    break;
-            }
-
-            return ray.Position;
+            return Vector3.Transform(approximatePositionOnHill, worldTransform);
         }
     }
 }

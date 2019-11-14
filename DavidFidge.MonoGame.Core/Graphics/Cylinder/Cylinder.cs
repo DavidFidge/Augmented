@@ -15,12 +15,9 @@ namespace DavidFidge.MonoGame.Core.Graphics.Cylinder
         private Effect _effect;
         private int _primitiveCount;
 
-        public IWorldTransform WorldTransform { get; }
-
         public Cylinder(IGameProvider gameProvider)
         {
             _gameProvider = gameProvider;
-            WorldTransform = new WorldTransform();
         }
 
         public void LoadContent(float radius, float height)
@@ -62,7 +59,7 @@ namespace DavidFidge.MonoGame.Core.Graphics.Cylinder
             _effect = _gameProvider.Game.EffectCollection.BuildMaterialEffect(Color.Blue);
         }
 
-        public void Draw(Matrix view, Matrix projection)
+        public void Draw(Matrix view, Matrix projection, Matrix world)
         {
             var graphicsDevice = _gameProvider.Game.GraphicsDevice;
 
@@ -73,7 +70,7 @@ namespace DavidFidge.MonoGame.Core.Graphics.Cylinder
                 return;
             
             _effect.SetWorldViewProjection(
-                WorldTransform.World,
+                world,
                 view,
                 projection
             );

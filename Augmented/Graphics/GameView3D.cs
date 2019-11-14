@@ -14,7 +14,8 @@ namespace Augmented.Graphics.Camera
         IRequestHandler<Select3DViewRequest>,
         IRequestHandler<Action3DViewRequest>,
         IRequestHandler<Move3DViewRequest>,
-        IRequestHandler<Rotate3DViewRequest>
+        IRequestHandler<Rotate3DViewRequest>,
+        IRequestHandler<Zoom3DViewRequest>
     {
         private readonly IGameCamera _camera;
         private readonly IAugmentedGameWorld _augmentedGameWorld;

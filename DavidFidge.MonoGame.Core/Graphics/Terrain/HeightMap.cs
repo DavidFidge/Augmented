@@ -198,7 +198,6 @@ namespace DavidFidge.MonoGame.Core.Graphics.Terrain
 
             var xLower = (int)xCoord;
             var xHigher = xLower + 1;
-            var xRelative = (xCoord - xLower) / ((float)xHigher - (float)xLower);
             var yLower = (int)yCoord;
             var yHigher = yLower + 1;
 
@@ -209,9 +208,16 @@ namespace DavidFidge.MonoGame.Core.Graphics.Terrain
                 yHigher = Width - 1;
                 yLower = yHigher - 1;
             }
-            
-            var yRelative = (yCoord - yLower) / ((float)yHigher - (float)yLower);
 
+            // Same for right-most edge
+            if (xHigher > Length - 1)
+            {
+                xHigher = Length - 1;
+                xLower = xHigher - 1;
+            }
+
+            var yRelative = (yCoord - yLower) / ((float)yHigher - (float)yLower);
+            var xRelative = (xCoord - xLower) / ((float)xHigher - (float)xLower);
 
             var heightLxLy = _heightMap[GetIndex(xLower, yLower)];
             var heightLxHy = _heightMap[GetIndex(xLower, yHigher)];
@@ -236,6 +242,89 @@ namespace DavidFidge.MonoGame.Core.Graphics.Terrain
             }
 
             return finalHeight;
+        }
+
+        public Ray? LinearSearch(Ray ray, int intervals = 10)
+        {
+            var boundingBox = new BoundingBox(new Vector3(0, 0, Min), new Vector3(Width - 1, Length - 1, Max));
+
+            var intersects = ray.Intersects(boundingBox);
+
+            if (intersects == null)
+                return null;
+
+            var rayAtIntersection = GetRayAtIntersectionWithDirectionAsDistance(ray, intersects, boundingBox);
+            
+            rayAtIntersection.Direction /= intervals;
+
+            var nextPoint = rayAtIntersection.Position + rayAtIntersection.Direction;
+            
+            var heightAtNextPoint = GetExactHeightAt(nextPoint.X, nextPoint.Y);
+
+            while (heightAtNextPoint == null || heightAtNextPoint < nextPoint.Z)
+            {
+                var lastPointFoundHeight = heightAtNextPoint != null;
+
+                rayAtIntersection.Position = nextPoint;
+                nextPoint = rayAtIntersection.Position + rayAtIntersection.Direction;
+                heightAtNextPoint = GetExactHeightAt(nextPoint.X, nextPoint.Y);
+
+                if (HasSearchGonePastHeightMap(heightAtNextPoint, lastPointFoundHeight))
+                    return null;
+            }
+
+            return rayAtIntersection;
+        }
+
+        private Ray GetRayAtIntersectionWithDirectionAsDistance(Ray ray, float? intersects, BoundingBox boundingBox)
+        {
+            var rayAtIntersection = new Ray(ray.Position + (ray.Direction * intersects.Value), ray.Direction);
+
+            var boundingBoxSize = (int)(Math.Abs(Vector3.Distance(boundingBox.Max, boundingBox.Min)) + 1);
+
+            var rayOnOppositeSide = new Ray(
+                rayAtIntersection.Position + (rayAtIntersection.Direction * boundingBoxSize),
+                -rayAtIntersection.Direction
+            );
+
+            var intersectionOpposite = rayOnOppositeSide.Intersects(boundingBox);
+
+            var endPosition = rayOnOppositeSide.Position + (rayOnOppositeSide.Direction * intersectionOpposite.Value);
+
+            rayAtIntersection.Direction = endPosition - rayAtIntersection.Position;
+
+            return rayAtIntersection;
+        }
+
+        private bool HasSearchGonePastHeightMap(float? heightAtNextPoint, bool heightFound)
+        {
+            return heightAtNextPoint == null && heightFound;
+        }
+
+        public Vector3 BinarySearch(Ray ray, float accuracy = 0.01f)
+        {
+            var heightAtStartingPoint = GetExactHeightAt(ray.Position.X, ray.Position.Y);
+
+            var currentError = ray.Position.Z - heightAtStartingPoint;
+            var counter = 0;
+
+            while (currentError > accuracy)
+            {
+                ray.Direction /= 2.0f;
+                var nextPoint = ray.Position + ray.Direction;
+                var heightAtNextPoint = GetExactHeightAt(nextPoint.X, nextPoint.Y);
+                
+                if (nextPoint.Z > heightAtNextPoint)
+                {
+                    ray.Position = nextPoint;
+                    currentError = ray.Position.Z - heightAtNextPoint;
+                }
+
+                if (counter++ == 1000)
+                    break;
+            }
+
+            return ray.Position;
         }
 
         public object Clone()

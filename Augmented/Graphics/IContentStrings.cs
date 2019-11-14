@@ -6,6 +6,5 @@ namespace Augmented.Graphics
     {
         string WoodTexture { get; set; }
         string GrassTexture { get; set; }
-        string SelectionEffect { get; set; }
     }
 }

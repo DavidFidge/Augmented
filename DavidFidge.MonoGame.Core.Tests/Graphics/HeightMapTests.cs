@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 
 using DavidFidge.MonoGame.Core.Graphics.Terrain;
+using DavidFidge.MonoGame.Core.Tests.Services;
 using DavidFidge.TestInfrastructure;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -488,6 +489,213 @@ namespace DavidFidge.MonoGame.Core.Tests.Graphics
 
             // Assert
             Assert.AreEqual(2.5f, result);
+        }
+
+        [TestMethod]
+        public void Linear_Search_For_Length_2_HeightMap_Should_Return_Ray_Containing_Intersection_Point_In_First_Half()
+        {
+            // Arrange
+            var heightMap = new HeightMap(2, 2)
+                .FromArray(new int[2 * 2]
+                {
+                    1, 2,
+                    3, 4
+                });
+
+            var position = new Vector3(0, 0, 2);
+            var direction = new Vector3(0, 1, 0);
+
+            var ray = new Ray(position, direction);
+
+            // Act
+            var result = heightMap.LinearSearch(ray, 2);
+
+            // Assert
+            var expectedPosition = new Vector3(0, 0f, 2);
+            var expectedDirection = new Vector3(0, 0.5f, 0);
+
+            Assert.That.AreEquivalent(expectedPosition, result.Value.Position);
+            Assert.That.AreEquivalent(expectedDirection, result.Value.Direction);
+        }
+
+        [TestMethod]
+        public void Linear_Search_For_Length_2_HeightMap_Should_Return_Ray_Containing_Intersection_Point_In_Last_Half()
+        {
+            // Arrange
+            var heightMap = new HeightMap(2, 2)
+                .FromArray(new int[2 * 2]
+                {
+                    1, 2,
+                    3, 4
+                });
+
+            var position = new Vector3(0, 0, 2.5f);
+            var direction = new Vector3(0, 1, 0);
+
+            var ray = new Ray(position, direction);
+
+            // Act
+            var result = heightMap.LinearSearch(ray, 2);
+
+            // Assert
+            var expectedPosition = new Vector3(0, 0.5f, 2.5f);
+            var expectedDirection = new Vector3(0, 0.5f, 0);
+
+            Assert.That.AreEquivalent(expectedPosition, result.Value.Position);
+            Assert.That.AreEquivalent(expectedDirection, result.Value.Direction);
+        }
+
+        [TestMethod]
+        public void Linear_Search_Should_Return_Null_Ray_If_No_Collision()
+        {
+            // Arrange
+            var heightMap = new HeightMap(2, 2)
+                .FromArray(new int[2 * 2]
+                {
+                    1, 2,
+                    3, 4
+                });
+
+            var position = new Vector3(0, 0, 4f);
+            var direction = new Vector3(0, 1, 0);
+
+            var ray = new Ray(position, direction);
+
+            // Act
+            var result = heightMap.LinearSearch(ray, 2);
+
+            // Assert
+            Assert.IsNull(result);
+        }
+
+        [TestMethod]
+        public void Linear_Search_For_Length_5_HeightMap_With_2_Possible_Intersections_Should_Return_Ray_For_First_Intersection()
+        {
+            // Arrange
+            var heightMap = new HeightMap(5, 5)
+                .FromArray(new int[5 * 5]
+                {
+                    1, 0, 0, 0, 0,
+                    3, 0, 0, 0, 0,
+                    2, 0, 0, 0, 0,
+                    4, 0, 0, 0, 0,
+                    1, 0, 0, 0, 0
+                });
+
+            var position = new Vector3(0, 0, 2.5f);
+            var direction = new Vector3(0, 10, 0);
+
+            var ray = new Ray(position, direction);
+
+            // Act
+            var result = heightMap.LinearSearch(ray, 8);
+
+            // Assert
+            var expectedPosition = new Vector3(0, 0.5f, 2.5f);
+            var expectedDirection = new Vector3(0, 0.5f, 0);
+
+            Assert.That.AreEquivalent(expectedPosition, result.Value.Position);
+            Assert.That.AreEquivalent(expectedDirection, result.Value.Direction);
+        }
+
+        [TestMethod]
+        public void Linear_Search_For_Length_5_HeightMap_With_Diagonal_Ray_Returns_Position_At_Furthest_Corner()
+        {
+            // Arrange
+            var heightMap = new HeightMap(5, 5)
+                .FromArray(new int[5 * 5]
+                {
+                    0, 0, 0, 0, 0,
+                    0, 0, 0, 0, 0,
+                    0, 0, 0, 0, 0,
+                    0, 0, 0, 0, 0,
+                    0, 0, 0, 0, 1
+                });
+
+            var position = new Vector3(0, 0, 1f);
+            var direction = new Vector3(1, 1, 0);
+
+            var ray = new Ray(position, direction);
+
+            // Act
+            var result = heightMap.LinearSearch(ray, 8);
+
+            // Assert
+            var expectedPosition = new Vector3(3.5f, 3.5f, 1f);
+            var expectedDirection = new Vector3(0.5f, 0.5f, 0);
+
+            Assert.That.AreEquivalent(expectedPosition, result.Value.Position);
+            Assert.That.AreEquivalent(expectedDirection, result.Value.Direction);
+        }
+
+        [TestMethod]
+        [DataRow(0.01f)]
+        [DataRow(0.0001f)]
+        public void Binary_Search_Should_Find_Exact_Height_For_Point_In_Second_Half(float accuracy)
+        {
+            // Arrange
+            var heightMap = new HeightMap(2, 2)
+                .FromArray(new int[2 * 2]
+                {
+                    1, 2,
+                    3, 4
+                });
+
+            var position = new Vector3(0, 0, 2.5f);
+            var direction = new Vector3(0, 1, 0);
+
+            var ray = new Ray(position, direction);
+
+            // Act
+            var result = heightMap.BinarySearch(ray, accuracy);
+
+            // Assert
+            var expectedPosition = new Vector3(0, 0.75f, 2.5f);
+
+            Assert.AreEqual(expectedPosition.X, result.X);
+            Assert.AreEqual(expectedPosition.Z, result.Z);
+
+            var height = heightMap.GetExactHeightAt(result.X, result.Y);
+
+            // the exact height should be slightly under i.e. the point
+            // found should slightly hover above if no exact match found
+            Assert.IsTrue(height <= 2.5f);
+            Assert.IsTrue(2.5f - height <= accuracy);
+        }
+
+        [TestMethod]
+        [DataRow(0.01f)]
+        [DataRow(0.0001f)]
+        public void Binary_Search_Should_Find_Exact_Height_For_Point_In_First_Half(float accuracy)
+        {
+            // Arrange
+            var heightMap = new HeightMap(2, 2)
+                .FromArray(new int[2 * 2]
+                {
+                    1, 2,
+                    3, 4
+                });
+
+            var position = new Vector3(0, 0, 1.5f);
+            var direction = new Vector3(0, 1, 0);
+
+            var ray = new Ray(position, direction);
+
+            // Act
+            var result = heightMap.BinarySearch(ray, accuracy);
+
+            // Assert
+            var expectedPosition = new Vector3(0, 0.25f, 1.5f);
+
+            Assert.AreEqual(expectedPosition.X, result.X);
+            Assert.AreEqual(expectedPosition.Z, result.Z);
+
+            var height = heightMap.GetExactHeightAt(result.X, result.Y);
+
+            // the exact height should be slightly under i.e. the point
+            // found should slightly hover above if no exact match found
+            Assert.IsTrue(height <= expectedPosition.Z);
+            Assert.IsTrue(expectedPosition.Z - height <= accuracy);
         }
     }
 }

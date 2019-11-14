@@ -134,6 +134,7 @@
     <Compile Include="Graphics\Terrain\DividingHeightsReducer.cs" />
     <Compile Include="Graphics\Terrain\HeightMap.cs" />
     <Compile Include="Graphics\Terrain\HeightMapGenerator.cs" />
+    <Compile Include="Graphics\SceneGraph\SceneGraphNode.cs" />
     <Compile Include="Interfaces\Graphics\Terrain\IDiamondSquare.cs" />
     <Compile Include="Interfaces\Graphics\Terrain\IDiamondSquareHeightsReducer.cs" />
     <Compile Include="Graphics\Terrain\SubtractingHeightsReducer.cs" />
@@ -144,14 +145,13 @@
     <Compile Include="Configuration\GraphicsSettings.cs" />
     <Compile Include="Interfaces\Graphics\IHeightMapGenerator.cs" />
     <Compile Include="Graphics\Quads\MaterialQuadTemplate.cs" />
-    <Compile Include="Graphics\WorldTransform.cs" />
+    <Compile Include="Graphics\EntityTransform.cs" />
     <Compile Include="Graphics\Quads\TexturedQuadTemplate.cs" />
     <Compile Include="Installers\MediatorInstaller.cs" />
     <Compile Include="Installers\CoreInstaller.cs" />
     <Compile Include="Interfaces\Graphics\ICamera.cs" />
     <Compile Include="Interfaces\Graphics\ITransform.cs" />
-    <Compile Include="Interfaces\Graphics\IWorldTransform.cs" />
-    <Compile Include="Interfaces\Graphics\IWorldTransformable.cs" />
+    <Compile Include="Interfaces\Graphics\ITransformable.cs" />
     <Compile Include="Interfaces\Components\IGame.cs" />
     <Compile Include="Interfaces\Configuration\IConfiguratonSettings.cs" />
     <Compile Include="Interfaces\Services\IGameInputService.cs" />

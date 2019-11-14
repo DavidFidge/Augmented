@@ -1,7 +1,4 @@
 ﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-
-using NGenerics.Patterns.Specification;
 
 namespace DavidFidge.MonoGame.Core.Graphics.Extensions
 {

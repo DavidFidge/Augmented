@@ -5,6 +5,7 @@ using DavidFidge.MonoGame.Core.Graphics.Extensions;
 using DavidFidge.MonoGame.Core.Graphics.Models;
 using DavidFidge.MonoGame.Core.Interfaces.Components;
 
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace Augmented.Graphics.Models
@@ -26,6 +27,8 @@ namespace Augmented.Graphics.Models
                 if (effect is BasicEffect basicEffect)
                     basicEffect.CopyLightingFrom(_gameProvider.Game.EffectCollection.MasterEffectTemplate);
             }
+
+            LocalTransform.ChangeTranslation(new Vector3(0, 0, _boundingBox.Max.Z - _boundingBox.Min.Z) / 2f);
         }
     }
 }

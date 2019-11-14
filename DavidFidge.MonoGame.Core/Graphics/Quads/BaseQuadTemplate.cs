@@ -1,6 +1,5 @@
 ﻿using DavidFidge.MonoGame.Core.Graphics.Extensions;
 using DavidFidge.MonoGame.Core.Interfaces.Components;
-using DavidFidge.MonoGame.Core.Interfaces.Graphics;
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -19,11 +18,9 @@ namespace DavidFidge.MonoGame.Core.Graphics.Quads
         public VertexBuffer VertexBuffer { get; private set; }
         public IndexBuffer IndexBuffer { get; private set; }
 
-        public IWorldTransform WorldTransform { get; }
-
         public bool AlphaEnabled { get; set; }
 
-        public void Draw(Matrix view, Matrix projection)
+        public void Draw(Matrix view, Matrix projection, Matrix world)
         {
             var graphicsDevice = _gameProvider.Game.GraphicsDevice;
 
@@ -34,7 +31,7 @@ namespace DavidFidge.MonoGame.Core.Graphics.Quads
                 return;
 
             Effect.SetWorldViewProjection(
-                WorldTransform.World,
+                world,
                 view,
                 projection
             );
@@ -96,7 +93,6 @@ namespace DavidFidge.MonoGame.Core.Graphics.Quads
         {
             AlphaEnabled = true;
             _gameProvider = gameProvider;
-            WorldTransform = new WorldTransform();
         }
 
         protected void LoadContent(float width, float height)
