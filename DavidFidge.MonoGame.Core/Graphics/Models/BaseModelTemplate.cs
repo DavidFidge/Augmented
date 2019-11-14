@@ -25,7 +25,7 @@ namespace DavidFidge.MonoGame.Core.Graphics.Models
         protected Matrix[] OriginalTransforms;
         private Effect _boundingBoxEffect;
         private VertexBuffer _boundingBoxVertexBuffer;
-        private IndexBuffer _boungingBoxIndexBuffer;
+        private IndexBuffer _boundingBoxIndexBuffer;
         protected BoundingBox _boundingBox;
         private BoundingSphere _boundingSphere;
         private TexturedQuadTemplate _selectionQuad;
@@ -148,14 +148,14 @@ namespace DavidFidge.MonoGame.Core.Graphics.Models
 
                 _boundingBoxVertexBuffer.SetData(boundingBoxVertices);
 
-                _boungingBoxIndexBuffer = new IndexBuffer(
+                _boundingBoxIndexBuffer = new IndexBuffer(
                     _gameProvider.Game.GraphicsDevice,
                     IndexElementSize.ThirtyTwoBits,
                     boundingBoxIndices.Length,
                     BufferUsage.WriteOnly
                 );
 
-                _boungingBoxIndexBuffer.SetData(boundingBoxIndices);
+                _boundingBoxIndexBuffer.SetData(boundingBoxIndices);
 
                 _boundingBoxEffect = _gameProvider.Game.EffectCollection.BuildMaterialEffect(Color.Yellow);
             }
@@ -218,7 +218,7 @@ namespace DavidFidge.MonoGame.Core.Graphics.Models
             {
                 var graphicsDevice = _gameProvider.Game.GraphicsDevice;
 
-                graphicsDevice.Indices = _boungingBoxIndexBuffer;
+                graphicsDevice.Indices = _boundingBoxIndexBuffer;
                 graphicsDevice.SetVertexBuffer(_boundingBoxVertexBuffer);
 
                 _boundingBoxEffect.SetWorldViewProjection(
