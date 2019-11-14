@@ -1,17 +1,13 @@
 ﻿using System.Collections.Generic;
-using System.Xml.Serialization;
 
 using Augmented.Graphics.Models;
 using Augmented.Graphics.TerrainSpace;
 using Augmented.Interfaces;
 
-using DavidFidge.MonoGame.Core.Components;
 using DavidFidge.MonoGame.Core.Graphics;
 using DavidFidge.MonoGame.Core.Interfaces.Graphics;
 
 using Microsoft.Xna.Framework;
-
-using NGenerics.Patterns.Visitor;
 
 namespace Augmented.Components
 {
@@ -39,12 +35,10 @@ namespace Augmented.Components
 
             _augmentedEntities.Add(_augmentedEntityFactory.Create());
 
-            SceneGraph.Root = _terrain.SceneNode;
+            SceneGraph.Initialise(_terrain);
 
             foreach (var entity in _augmentedEntities)
-            {
-                _terrain.SceneNode.Add(entity.SceneNode);
-            }
+                SceneGraph.Add(entity, _terrain);
 
             SceneGraph.LoadContent();
         }
@@ -61,12 +55,7 @@ namespace Augmented.Components
 
         public void Select(Ray ray)
         {
-            SceneGraph.Root.BreadthFirstTraversal(new ActionVisitor<Entity>(
-                e =>
-                {
-                    if (e is ISelectable deselect)
-                        deselect.IsSelected = false;
-                }));
+            SceneGraph.DeselectAll();
 
             var selectedEntity = SceneGraph.Select(ray);
 
@@ -78,7 +67,15 @@ namespace Augmented.Components
 
         public void Action(Ray ray)
         {
-            throw new System.NotImplementedException();
+            var terrainPoint = _terrain.RayToTerrainPoint(ray, SceneGraph);
+
+            if (terrainPoint == null)
+                return;
+
+            foreach (var augmentedEntity in _augmentedEntities)
+            {
+                augmentedEntity.WorldTransform.ChangeTranslation(terrainPoint.Value);
+            }
         }
     }
 }

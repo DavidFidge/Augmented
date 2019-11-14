@@ -85,7 +85,7 @@ namespace DavidFidge.MonoGame.Core.Graphics.Camera
             _cameraRotationLeft = _cameraRotationLeft * additionalRotationLeft;
         }
 
-        protected override void SetViewMatrix()
+        protected void SetViewMatrix()
         {
             var cameraRotation = _cameraRotationUp * _cameraRotationLeft;
             var cameraRotatedTarget = Vector3.Transform(Vector3.Forward, cameraRotation);

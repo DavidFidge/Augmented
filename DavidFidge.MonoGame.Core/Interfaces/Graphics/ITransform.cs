@@ -8,8 +8,8 @@ namespace DavidFidge.MonoGame.Core.Interfaces.Graphics
         void ChangeTranslation(Vector3 translation);
         void ChangeScaleRelative(Vector3 scaleDelta);
         void ChangeScale(Vector3 scale);
-        void ChangeRotationRelative(float x, float y, float z);
-        void ChangeRotation(float x, float y, float z);
+        void ChangeRotationRelative(Quaternion quaternion);
+        void ChangeRotation(Quaternion quaternion);
 
         Vector3 Translation { get; }
         Matrix TranslationMatrix { get; }
@@ -17,6 +17,8 @@ namespace DavidFidge.MonoGame.Core.Interfaces.Graphics
         Vector3 Scale { get; }
         Matrix ScaleMatrix { get; }
 
-        Matrix Rotation { get; }
+        Quaternion Rotation { get; }
+
+        Matrix Transform { get; }
     }
 }

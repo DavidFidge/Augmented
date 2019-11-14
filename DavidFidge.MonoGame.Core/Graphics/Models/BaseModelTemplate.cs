@@ -26,11 +26,11 @@ namespace DavidFidge.MonoGame.Core.Graphics.Models
         private Effect _boundingBoxEffect;
         private VertexBuffer _boundingBoxVertexBuffer;
         private IndexBuffer _boungingBoxIndexBuffer;
-        private BoundingBox _boundingBox;
+        protected BoundingBox _boundingBox;
         private BoundingSphere _boundingSphere;
         private TexturedQuadTemplate _selectionQuad;
 
-        public IWorldTransform WorldTransform { get; }
+        public ITransform Transform { get; }
         public IConfigurationSettings ConfigurationSettings { get; set; }
 
         private Color _selectionColour;
@@ -47,7 +47,7 @@ namespace DavidFidge.MonoGame.Core.Graphics.Models
         protected BaseModelTemplate(IGameProvider gameProvider)
         {
             _gameProvider = gameProvider;
-            WorldTransform = new WorldTransform();
+            Transform = new EntityTransform();
         }
 
         protected void LoadContentInternal(Model model)
@@ -88,15 +88,6 @@ namespace DavidFidge.MonoGame.Core.Graphics.Models
                 );
 
             SelectionColour = Color.Yellow;
-
-            _selectionQuad.WorldTransform.ChangeTranslation(
-                new Vector3(
-                    _boundingBox.Min.X + ((_boundingBox.Max.X - _boundingBox.Min.X) / 2),
-                    _boundingBox.Min.Y + ((_boundingBox.Max.Y - _boundingBox.Min.Y) / 2),
-                    _boundingBox.Min.Z)
-                );
-
-            _selectionQuad.WorldTransform.ChangeScale(new Vector3(2f));
         }
 
         private void SetupBoundingBoxEffect()
@@ -176,18 +167,28 @@ namespace DavidFidge.MonoGame.Core.Graphics.Models
             LoadContentInternal(modelFromContent);
         }
 
-        public void Draw(Matrix view, Matrix projection)
+        public void Draw(Matrix view, Matrix projection, Matrix world)
         {
-            var graphicsDevice = _gameProvider.Game.GraphicsDevice;
-
-            DrawModel(view, projection);
-            DrawBoundingBox(view, projection, graphicsDevice);
+            DrawModel(view, projection, world);
+            DrawBoundingBox(view, projection, world);
 
             if (IsSelected)
-                _selectionQuad.Draw(view, projection);
+            {
+                var selectionQuadTransform = world;
+
+                selectionQuadTransform.Translation +=
+                    new Vector3(
+                        _boundingBox.Min.X + ((_boundingBox.Max.X - _boundingBox.Min.X) / 2),
+                        _boundingBox.Min.Y + ((_boundingBox.Max.Y - _boundingBox.Min.Y) / 2),
+                        _boundingBox.Min.Z);
+
+                selectionQuadTransform.Scale *= new Vector3(2f);
+
+                _selectionQuad.Draw(view, projection, selectionQuadTransform);
+            }
         }
 
-        private void DrawModel(Matrix view, Matrix projection)
+        private void DrawModel(Matrix view, Matrix projection, Matrix world)
         {
             // All the model bone transforms are relative to its parent bone.  Create absolute transforms that shuffle up all values and are relative to the world (i.e. absolute values).  These can then by multiplied by world matrix.
             _model.CopyAbsoluteBoneTransformsTo(ModelTransforms);
@@ -197,7 +198,7 @@ namespace DavidFidge.MonoGame.Core.Graphics.Models
                 foreach (Effect effect in mesh.Effects)
                 {
                     effect.SetWorldViewProjection(
-                        ModelTransforms[mesh.ParentBone.Index] * WorldTransform.World,
+                        ModelTransforms[mesh.ParentBone.Index] * world,
                         view,
                         projection
                     );
@@ -205,22 +206,23 @@ namespace DavidFidge.MonoGame.Core.Graphics.Models
                     foreach (var pass in effect.CurrentTechnique.Passes)
                     {
                         pass.Apply();
-
                         mesh.Draw();
                     }
                 }
             }
         }
 
-        private void DrawBoundingBox(Matrix view, Matrix projection, GraphicsDevice graphicsDevice)
+        private void DrawBoundingBox(Matrix view, Matrix projection, Matrix world)
         {
             if (_boundingBoxVertexBuffer != null)
             {
+                var graphicsDevice = _gameProvider.Game.GraphicsDevice;
+
                 graphicsDevice.Indices = _boungingBoxIndexBuffer;
                 graphicsDevice.SetVertexBuffer(_boundingBoxVertexBuffer);
 
                 _boundingBoxEffect.SetWorldViewProjection(
-                    WorldTransform.World,
+                    world,
                     view,
                     projection
                 );
@@ -241,9 +243,9 @@ namespace DavidFidge.MonoGame.Core.Graphics.Models
 
         public bool IsSelected { get; set; }
 
-        public float? Intersects(Ray ray)
+        public float? Intersects(Ray ray, Matrix worldTransform)
         {
-            return ray.Intersects(_boundingSphere);
+            return ray.Intersects(_boundingSphere.Transform(worldTransform));
         }
     }
 }

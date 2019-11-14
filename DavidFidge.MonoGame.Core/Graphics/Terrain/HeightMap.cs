@@ -30,6 +30,9 @@ namespace DavidFidge.MonoGame.Core.Graphics.Terrain
 
         public int Area => Length * Width;
 
+        public int Min => _heightMap.Min();
+        public int Max => _heightMap.Max();
+
         public HeightMap FromArray(int[] array)
         {
             if (array.Length != Width * Length)
@@ -181,6 +184,147 @@ namespace DavidFidge.MonoGame.Core.Graphics.Terrain
         IEnumerator IEnumerable.GetEnumerator()
         {
             return _heightMap.GetEnumerator();
+        }
+
+        public float? GetExactHeightAt(float xCoord, float yCoord)
+        {
+            var invalid = xCoord < 0;
+            invalid |= yCoord < 0;
+            invalid |= xCoord > Length - 1;
+            invalid |= yCoord > Width - 1;
+
+            if (invalid)
+                return null;
+
+            var xLower = (int)xCoord;
+            var xHigher = xLower + 1;
+            var yLower = (int)yCoord;
+            var yHigher = yLower + 1;
+
+            // If this is the top edge of the height map then we can
+            // use the set of triangles on the final row
+            if (yHigher > Width - 1)
+            {
+                yHigher = Width - 1;
+                yLower = yHigher - 1;
+            }
+
+            // Same for right-most edge
+            if (xHigher > Length - 1)
+            {
+                xHigher = Length - 1;
+                xLower = xHigher - 1;
+            }
+
+            var yRelative = (yCoord - yLower) / ((float)yHigher - (float)yLower);
+            var xRelative = (xCoord - xLower) / ((float)xHigher - (float)xLower);
+
+            var heightLxLy = _heightMap[GetIndex(xLower, yLower)];
+            var heightLxHy = _heightMap[GetIndex(xLower, yHigher)];
+            var heightHxLy = _heightMap[GetIndex(xHigher, yLower)];
+            var heightHxHy = _heightMap[GetIndex(xHigher, yHigher)];
+
+            var pointAboveLowerTriangle = (xRelative + yRelative < 1);
+
+            float finalHeight;
+
+            if (pointAboveLowerTriangle)
+            {
+                finalHeight = heightLxLy;
+                finalHeight += yRelative * (heightLxHy - heightLxLy);
+                finalHeight += xRelative * (heightHxLy - heightLxLy);
+            }
+            else
+            {
+                finalHeight = heightHxHy;
+                finalHeight += (1.0f - yRelative) * (heightHxLy - heightHxHy);
+                finalHeight += (1.0f - xRelative) * (heightLxHy - heightHxHy);
+            }
+
+            return finalHeight;
+        }
+
+        public Ray? LinearSearch(Ray ray, int intervals = 10)
+        {
+            var boundingBox = new BoundingBox(new Vector3(0, 0, Min), new Vector3(Width - 1, Length - 1, Max));
+
+            var intersects = ray.Intersects(boundingBox);
+
+            if (intersects == null)
+                return null;
+
+            var rayAtIntersection = GetRayAtIntersectionWithDirectionAsDistance(ray, intersects, boundingBox);
+            
+            rayAtIntersection.Direction /= intervals;
+
+            var nextPoint = rayAtIntersection.Position + rayAtIntersection.Direction;
+            
+            var heightAtNextPoint = GetExactHeightAt(nextPoint.X, nextPoint.Y);
+
+            while (heightAtNextPoint == null || heightAtNextPoint < nextPoint.Z)
+            {
+                var lastPointFoundHeight = heightAtNextPoint != null;
+
+                rayAtIntersection.Position = nextPoint;
+                nextPoint = rayAtIntersection.Position + rayAtIntersection.Direction;
+                heightAtNextPoint = GetExactHeightAt(nextPoint.X, nextPoint.Y);
+
+                if (HasSearchGonePastHeightMap(heightAtNextPoint, lastPointFoundHeight))
+                    return null;
+            }
+
+            return rayAtIntersection;
+        }
+
+        private Ray GetRayAtIntersectionWithDirectionAsDistance(Ray ray, float? intersects, BoundingBox boundingBox)
+        {
+            var rayAtIntersection = new Ray(ray.Position + (ray.Direction * intersects.Value), ray.Direction);
+
+            var boundingBoxSize = (int)(Math.Abs(Vector3.Distance(boundingBox.Max, boundingBox.Min)) + 1);
+
+            var rayOnOppositeSide = new Ray(
+                rayAtIntersection.Position + (rayAtIntersection.Direction * boundingBoxSize),
+                -rayAtIntersection.Direction
+            );
+
+            var intersectionOpposite = rayOnOppositeSide.Intersects(boundingBox);
+
+            var endPosition = rayOnOppositeSide.Position + (rayOnOppositeSide.Direction * intersectionOpposite.Value);
+
+            rayAtIntersection.Direction = endPosition - rayAtIntersection.Position;
+
+            return rayAtIntersection;
+        }
+
+        private bool HasSearchGonePastHeightMap(float? heightAtNextPoint, bool heightFound)
+        {
+            return heightAtNextPoint == null && heightFound;
+        }
+
+        public Vector3 BinarySearch(Ray ray, float accuracy = 0.01f)
+        {
+            var heightAtStartingPoint = GetExactHeightAt(ray.Position.X, ray.Position.Y);
+
+            var currentError = ray.Position.Z - heightAtStartingPoint;
+            var counter = 0;
+
+            while (currentError > accuracy)
+            {
+                ray.Direction /= 2.0f;
+                var nextPoint = ray.Position + ray.Direction;
+                var heightAtNextPoint = GetExactHeightAt(nextPoint.X, nextPoint.Y);
+                
+                if (nextPoint.Z > heightAtNextPoint)
+                {
+                    ray.Position = nextPoint;
+                    currentError = ray.Position.Z - heightAtNextPoint;
+                }
+
+                if (counter++ == 1000)
+                    break;
+            }
+
+            return ray.Position;
         }
 
         public object Clone()

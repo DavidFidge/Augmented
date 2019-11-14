@@ -34,7 +34,6 @@ namespace Augmented.Graphics.TerrainSpace
             _heightMapGenerator = heightMapGenerator;
             _gameProvider = gameProvider;
             _contentStrings = contentStrings;
-            WorldTransform = new WorldTransform();
 
             _samplerState = new SamplerState
             {
@@ -105,7 +104,9 @@ namespace Augmented.Graphics.TerrainSpace
 
         public void CreateHeightMap(TerrainParameters terrainParameters)
         {
-            _scale = GetScale(terrainParameters);
+            _scale = new Vector3(20f, 20f, 0.005f) * GetScale(terrainParameters);
+
+            LocalTransform.ChangeScale(_scale);
 
             var hillHeight = GetHillHeight(terrainParameters);
 
@@ -116,7 +117,8 @@ namespace Augmented.Graphics.TerrainSpace
                 .DiamondSquare(heightMapSize, -hillHeight, hillHeight, new SubtractingHeightsReducer())
                 .HeightMap();
 
-            WorldTransform.ChangeScale(new Vector3(20f, 20f, 0.005f) * _scale);
+            var min = new Vector3(0, 0, _heightMap.Min);
+            var max = new Vector3(_heightMap.Width - 1, _heightMap.Length - 1, _heightMap.Max);
         }
 
         private int GetHillHeight(TerrainParameters terrainParameters)
@@ -195,7 +197,7 @@ namespace Augmented.Graphics.TerrainSpace
             }
         }
 
-        public void Draw(Matrix view, Matrix projection)
+        public void Draw(Matrix view, Matrix projection, Matrix world)
         {
             var graphicsDevice = _gameProvider.Game.GraphicsDevice;
 
@@ -207,7 +209,7 @@ namespace Augmented.Graphics.TerrainSpace
             if (_effect != null)
             {
                 _effect.SetWorldViewProjection(
-                    WorldTransform.World,
+                    world,
                     view,
                     projection
                 );
@@ -226,6 +228,23 @@ namespace Augmented.Graphics.TerrainSpace
             }
 
             graphicsDevice.SamplerStates[0] = oldSamplerState;
+        }
+        
+        public Vector3? RayToTerrainPoint(Ray ray, ISceneGraph sceneGraph)
+        {
+            var worldTransform = sceneGraph.GetWorldTransformWithLocalTransform(this);
+            var worldTransformInverse = Matrix.Invert(worldTransform);
+
+            var translatedRay = new Ray(Vector3.Transform(ray.Position, worldTransformInverse), Vector3.Transform(Vector3.Normalize(ray.Direction), worldTransformInverse));
+
+            var rayOverFirstHill = _heightMap.LinearSearch(translatedRay);
+
+            if (rayOverFirstHill == null)
+                return null;
+
+            var approximatePositionOnHill = _heightMap.BinarySearch(rayOverFirstHill.Value);
+
+            return Vector3.Transform(approximatePositionOnHill, worldTransform);
         }
     }
 }

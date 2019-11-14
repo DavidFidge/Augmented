@@ -1,11 +1,9 @@
-﻿using DavidFidge.MonoGame.Core.Interfaces.Graphics;
-
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 
 namespace DavidFidge.MonoGame.Core.Graphics
 {
-    public interface IDrawable : IWorldTransformable
+    public interface IDrawable
     {
-        void Draw(Matrix view, Matrix projection);
+        void Draw(Matrix view, Matrix projection, Matrix world);
     }
 }

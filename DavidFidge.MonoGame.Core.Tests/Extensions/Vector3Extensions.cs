@@ -1,14 +1,15 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Microsoft.Xna.Framework;
 
 namespace DavidFidge.MonoGame.Core.Tests.Services
 {
     public static class Vector3Extensions
     {
-        public static void IsEquivalentTo(this Vector3 source, Vector3 equivalent)
+        public static void AreEquivalent(this Assert assert, Vector3 expected, Vector3 actual)
         {
-            source.X.IsEquivalentTo(equivalent.X);
-            source.Y.IsEquivalentTo(equivalent.Y);
-            source.Z.IsEquivalentTo(equivalent.Z);
+            Assert.That.AreEquivalent(expected.X, actual.X);
+            Assert.That.AreEquivalent(expected.Y, actual.Y);
+            Assert.That.AreEquivalent(expected.Z, actual.Z);
         }
     }
 }

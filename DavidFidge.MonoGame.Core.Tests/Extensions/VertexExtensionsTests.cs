@@ -74,13 +74,13 @@ namespace DavidFidge.MonoGame.Core.Tests.Services
                 new Vector3(1, -1, -1)
             );
 
-            vertexPositionNormalTextures[0].Normal.IsEquivalentTo(Vector3.Normalize(expectedNormalTriangle1));
+            Assert.That.AreEquivalent(vertexPositionNormalTextures[0].Normal, Vector3.Normalize(expectedNormalTriangle1));
 
-            vertexPositionNormalTextures[1].Normal.IsEquivalentTo(Vector3.Normalize(expectedNormalTriangle1 + expectedNormalTriangle2));
+            Assert.That.AreEquivalent(vertexPositionNormalTextures[1].Normal, Vector3.Normalize(expectedNormalTriangle1 + expectedNormalTriangle2));
 
-            vertexPositionNormalTextures[2].Normal.IsEquivalentTo(Vector3.Normalize(expectedNormalTriangle1 + expectedNormalTriangle2));
+            Assert.That.AreEquivalent(vertexPositionNormalTextures[2].Normal, Vector3.Normalize(expectedNormalTriangle1 + expectedNormalTriangle2));
 
-            vertexPositionNormalTextures[3].Normal.IsEquivalentTo(Vector3.Normalize(expectedNormalTriangle2));
+            Assert.That.AreEquivalent(vertexPositionNormalTextures[3].Normal, Vector3.Normalize(expectedNormalTriangle2));
         }
 
         [TestMethod]
@@ -115,9 +115,9 @@ namespace DavidFidge.MonoGame.Core.Tests.Services
             // Assert
             var nanNormal = Vector3.Normalize(Vector3.Zero);
 
-            nanNormal.IsEquivalentTo(vertexPositionNormalTextures[0].Normal);
-            nanNormal.IsEquivalentTo(vertexPositionNormalTextures[1].Normal);
-            nanNormal.IsEquivalentTo(vertexPositionNormalTextures[2].Normal);
+            Assert.That.AreEquivalent(nanNormal, vertexPositionNormalTextures[0].Normal);
+            Assert.That.AreEquivalent(nanNormal, vertexPositionNormalTextures[1].Normal);
+            Assert.That.AreEquivalent(nanNormal, vertexPositionNormalTextures[2].Normal);
         }
 
         [TestMethod]
@@ -171,13 +171,13 @@ namespace DavidFidge.MonoGame.Core.Tests.Services
 
             var nanNormal = Vector3.Normalize(Vector3.Zero);
 
-            vertexPositionNormalTextures[0].Normal.IsEquivalentTo(Vector3.Normalize(expectedNormalTriangle1));
+            Assert.That.AreEquivalent(vertexPositionNormalTextures[0].Normal, Vector3.Normalize(expectedNormalTriangle1));
 
-            vertexPositionNormalTextures[1].Normal.IsEquivalentTo(Vector3.Normalize(expectedNormalTriangle1));
+            Assert.That.AreEquivalent(vertexPositionNormalTextures[1].Normal, Vector3.Normalize(expectedNormalTriangle1));
 
-            vertexPositionNormalTextures[2].Normal.IsEquivalentTo(Vector3.Normalize(expectedNormalTriangle1));
+            Assert.That.AreEquivalent(vertexPositionNormalTextures[2].Normal, Vector3.Normalize(expectedNormalTriangle1));
 
-            vertexPositionNormalTextures[3].Normal.IsEquivalentTo(nanNormal);
+            Assert.That.AreEquivalent(vertexPositionNormalTextures[3].Normal, nanNormal);
         }
     }
 }
