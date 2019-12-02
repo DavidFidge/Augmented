@@ -3,11 +3,14 @@ using System.Threading;
 using System.Threading.Tasks;
 
 using Augmented.Graphics;
+using Augmented.Graphics.Models;
 using Augmented.Interfaces;
 using Augmented.UserInterface.Data;
 
 using DavidFidge.MonoGame.Core.Graphics;
+using DavidFidge.MonoGame.Core.Graphics.Models;
 using DavidFidge.MonoGame.Core.Interfaces.Components;
+using DavidFidge.MonoGame.Core.Interfaces.Graphics;
 using DavidFidge.MonoGame.Core.Interfaces.Services;
 using DavidFidge.MonoGame.Core.Messages;
 using DavidFidge.MonoGame.Core.Services;
@@ -31,8 +34,7 @@ namespace Augmented
         private readonly IUserInterface _userInterface;
         private readonly IGameOptionsStore _gameOptionsStore;
         private readonly IScreenManager _screenManager;
-        private readonly IContentStrings _contentStrings;
-        public ICoreContent CoreContent => _contentStrings;
+        private readonly IAssetProvider _assetProvider;
 
         private bool _isExiting;
 
@@ -49,8 +51,7 @@ namespace Augmented
             IUserInterface userInterface,
             IGameOptionsStore gameOptionsStore,
             IScreenManager screenManager,
-            IAugmentedGameWorld augmentedGameWorld,
-            IContentStrings contentStrings
+            IAssetProvider assetProvider
             )
         {
             _logger = logger;
@@ -66,7 +67,7 @@ namespace Augmented
             Content.RootDirectory = "Content";
 
             _screenManager = screenManager;
-            _contentStrings = contentStrings;
+            _assetProvider = assetProvider;
 
             EffectCollection = new EffectCollection(_gameProvider);
         }
@@ -131,10 +132,7 @@ namespace Augmented
         /// </summary>
         protected override void LoadContent()
         {
-            Content.Load<Texture2D>(_contentStrings.WoodTexture);
-            Content.Load<Texture2D>(_contentStrings.GrassTexture);
-            Content.Load<Texture2D>(_contentStrings.SelectionTexture);
-            EffectCollection.Add(_contentStrings.SelectionEffect, Content.Load<Effect>(_contentStrings.SelectionEffect));
+            _assetProvider.LoadContent();
         }
 
         /// <summary>

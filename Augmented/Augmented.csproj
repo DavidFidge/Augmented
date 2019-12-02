@@ -41,9 +41,14 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Graphics\AssetProvider.cs" />
+    <Compile Include="Graphics\Models\AugmentedModel.cs" />
+    <Compile Include="Graphics\Models\SelectionModelDrawer.cs" />
+    <Compile Include="Graphics\Models\SelectionModel.cs" />
+    <Compile Include="Graphics\Models\AugmentedModelDrawer.cs" />
+    <Compile Include="Interfaces\ISelectionModelDrawer.cs" />
+    <Compile Include="Interfaces\IAugmentedModelDrawer.cs" />
     <Compile Include="Interfaces\IAugmentedEntityFactory.cs" />
-    <Compile Include="Graphics\IContentStrings.cs" />
-    <Compile Include="Graphics\ContentStrings.cs" />
     <Compile Include="Components\AugmentedGameWorld.cs" />
     <Compile Include="Graphics\GameView3D.cs" />
     <Compile Include="Graphics\Models\AugmentedEntity.cs" />
@@ -51,6 +56,7 @@
     <Compile Include="Graphics\TerrainSpace\Terrain.cs" />
     <Compile Include="Interfaces\IAugmentedGameWorld.cs" />
     <Compile Include="Installers\GameInstaller.cs" />
+    <Compile Include="Interfaces\IAssetProvider.cs" />
     <Compile Include="Messages\Console\ExecuteConsoleCommandRequest.cs" />
     <Compile Include="Messages\GameSpeed\ChangeGameSpeedRequest.cs" />
     <Compile Include="Messages\Game\NewGameRequest.cs" />

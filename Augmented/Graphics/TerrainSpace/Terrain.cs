@@ -1,5 +1,7 @@
 ﻿using System;
 
+using Augmented.Interfaces;
+
 using DavidFidge.MonoGame.Core.Components;
 using DavidFidge.MonoGame.Core.Graphics;
 using DavidFidge.MonoGame.Core.Graphics.Extensions;
@@ -18,7 +20,7 @@ namespace Augmented.Graphics.TerrainSpace
     {
         private readonly IHeightMapGenerator _heightMapGenerator;
         private readonly IGameProvider _gameProvider;
-        private readonly IContentStrings _contentStrings;
+        private readonly IAssetProvider _assetProvider;
         private IndexBuffer _terrainIndexBuffer;
         private VertexBuffer _terrainVertexBuffer;
         private Effect _effect;
@@ -29,11 +31,11 @@ namespace Augmented.Graphics.TerrainSpace
         public Terrain(
             IHeightMapGenerator heightMapGenerator,
             IGameProvider gameProvider,
-            IContentStrings contentStrings)
+            IAssetProvider assetProvider)
         {
             _heightMapGenerator = heightMapGenerator;
             _gameProvider = gameProvider;
-            _contentStrings = contentStrings;
+            _assetProvider = assetProvider;
 
             _samplerState = new SamplerState
             {
@@ -193,7 +195,7 @@ namespace Augmented.Graphics.TerrainSpace
 
             if (_effect == null)
             {
-                _effect = _gameProvider.Game.EffectCollection.BuildTextureEffect(_contentStrings.GrassTexture);
+                _effect = _gameProvider.Game.EffectCollection.BuildTextureEffect(_assetProvider.GrassTexture);
             }
         }
 
