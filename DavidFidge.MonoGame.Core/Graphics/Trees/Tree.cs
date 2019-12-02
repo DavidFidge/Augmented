@@ -8,10 +8,13 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace DavidFidge.MonoGame.Core.Graphics.Trees
 {
-    public class Tree : BaseModelTemplate
+    public class Tree
     {
-        public Tree(IGameProvider gameProvider) : base(gameProvider)
+        private readonly IGameProvider _gameProvider;
+
+        public Tree(IGameProvider gameProvider)
         {
+            _gameProvider = gameProvider;
         }
 
         public void LoadContent(string woodTexture)
@@ -43,8 +46,6 @@ namespace DavidFidge.MonoGame.Core.Graphics.Trees
             );
 
             trunk.CreateTrunkEffect(trunkModelMeshPart);
-
-            LoadContentInternal(model);
         }
     }
 }

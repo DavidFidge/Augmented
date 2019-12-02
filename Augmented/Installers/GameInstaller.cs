@@ -21,6 +21,7 @@ using Castle.Windsor;
 using DavidFidge.MonoGame.Core.Graphics;
 using DavidFidge.MonoGame.Core.Graphics.Camera;
 using DavidFidge.MonoGame.Core.Graphics.Cylinder;
+using DavidFidge.MonoGame.Core.Graphics.Models;
 using DavidFidge.MonoGame.Core.Graphics.Terrain;
 using DavidFidge.MonoGame.Core.Graphics.Trees;
 using DavidFidge.MonoGame.Core.Installers;
@@ -60,9 +61,8 @@ namespace Augmented.Installers
 
             container.Register(
 
-                Component.For<IContentStrings>()
-                    .ImplementedBy<ContentStrings>()
-                    .Forward<ICoreContent>(),
+                Component.For<IAssetProvider>()
+                    .ImplementedBy<AssetProvider>(),
 
                 Component.For<IGame>()
                     .Forward<IRequestHandler<ExitGameRequest, Unit>>()
@@ -96,6 +96,14 @@ namespace Augmented.Installers
 
                 Component.For<IAugmentedEntityFactory>()
                     .AsFactory(),
+
+                Component.For<IAugmentedModelDrawer>()
+                    .ImplementedBy<AugmentedModelDrawer>()
+                    .LifeStyle.Transient,
+
+                Component.For<ISelectionModelDrawer>()
+                    .ImplementedBy<SelectionModelDrawer>()
+                    .LifeStyle.Transient,
 
                 Component.For<Cylinder>()
                     .LifeStyle.Transient,

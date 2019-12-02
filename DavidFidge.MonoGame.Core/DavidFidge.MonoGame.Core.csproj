@@ -102,10 +102,16 @@
     <Compile Include="Components\BaseComponent.cs" />
     <Compile Include="Configuration\BaseConfigurationSectionHandler.cs" />
     <Compile Include="ConsoleCommands\ConsoleCommand.cs" />
+    <Compile Include="Graphics\Extensions\BoundingBoxExtensions.cs" />
     <Compile Include="Graphics\Extensions\RayExtensions.cs" />
     <Compile Include="Graphics\IActionable.cs" />
     <Compile Include="Graphics\ISelectable.cs" />
     <Compile Include="Graphics\ILoadContent.cs" />
+    <Compile Include="Graphics\Models\BoundingBoxDrawer.cs" />
+    <Compile Include="Graphics\Models\BoundingBoxModel.cs" />
+    <Compile Include="Graphics\Models\GameModel.cs" />
+    <Compile Include="Interfaces\Graphics\IModelDrawer.cs" />
+    <Compile Include="Graphics\Models\ModelDrawer.cs" />
     <Compile Include="Graphics\SceneGraph\DrawVisitor.cs" />
     <Compile Include="Graphics\SceneGraph\SelectVisitor.cs" />
     <Compile Include="Interfaces\Graphics\ISceneGraph.cs" />
@@ -121,8 +127,6 @@
     <Compile Include="Graphics\Cylinder\Cylinder.cs" />
     <Compile Include="Graphics\Extensions\EffectExtensions.cs" />
     <Compile Include="Graphics\Extensions\BasicEffectExtensions.cs" />
-    <Compile Include="Graphics\ICoreContent.cs" />
-    <Compile Include="Graphics\Models\BaseModelTemplate.cs" />
     <Compile Include="Graphics\Quads\BaseQuadTemplate.cs" />
     <Compile Include="Graphics\Camera\CameraMovement.cs" />
     <Compile Include="Graphics\Camera\CameraResetOptions.cs" />

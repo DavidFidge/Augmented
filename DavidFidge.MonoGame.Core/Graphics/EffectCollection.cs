@@ -41,22 +41,32 @@ namespace DavidFidge.MonoGame.Core.Graphics
 
         public BasicEffect BuildTextureEffect(string texture)
         {
+            return BuildTextureEffect(_gameProvider.Game.Content.Load<Texture2D>(texture));
+        }
+
+        public BasicEffect BuildTextureEffect(Texture2D texture)
+        {
             var basicEffect = (BasicEffect)MasterEffectTemplate.Clone();
 
             basicEffect.CopyTextureFrom(TextureEffectTemplate);
 
-            basicEffect.Texture = _gameProvider.Game.Content.Load<Texture2D>(texture);
+            basicEffect.Texture = texture;
 
             return basicEffect;
         }
 
         public BasicEffect BuildMaterialTextureEffect(string texture)
         {
+            return BuildMaterialTextureEffect(_gameProvider.Game.Content.Load<Texture2D>(texture));
+        }
+
+        public BasicEffect BuildMaterialTextureEffect(Texture2D texture)
+        {
             var basicEffect = (BasicEffect)MasterEffectTemplate.Clone();
 
             basicEffect.CopyTextureFrom(TextureEffectTemplate);
 
-            basicEffect.Texture = _gameProvider.Game.Content.Load<Texture2D>(texture);
+            basicEffect.Texture = texture;
 
             basicEffect.DiffuseColor = Color.White.ToVector3();
             basicEffect.LightingEnabled = false;

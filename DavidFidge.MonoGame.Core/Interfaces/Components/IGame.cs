@@ -17,8 +17,6 @@ namespace DavidFidge.MonoGame.Core.Interfaces.Components
         IDisposable
     {
         GameComponentCollection Components { get; }
-        bool IsActive { get; }
-        bool IsMouseVisible { get; set; }
         GameServiceContainer Services { get; }
         ContentManager Content { get; set; }
         GraphicsDevice GraphicsDevice { get; }
@@ -26,6 +24,5 @@ namespace DavidFidge.MonoGame.Core.Interfaces.Components
         CustomGraphicsDeviceManager CustomGraphicsDeviceManager { get; }
         void Run();
         EffectCollection EffectCollection { get; }
-        ICoreContent CoreContent { get; }
     }
 }

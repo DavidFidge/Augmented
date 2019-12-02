@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 using Augmented.Graphics.Models;
 using Augmented.Graphics.TerrainSpace;
@@ -34,6 +35,9 @@ namespace Augmented.Components
             _terrain.CreateHeightMap(new TerrainParameters(WorldSize.Medium, HillHeight.Medium));
 
             _augmentedEntities.Add(_augmentedEntityFactory.Create());
+            _augmentedEntities.Add(_augmentedEntityFactory.Create());
+
+            _augmentedEntities[0].WorldTransform.ChangeTranslation(new Vector3(50, 0, 0));
 
             SceneGraph.Initialise(_terrain);
 
@@ -72,7 +76,7 @@ namespace Augmented.Components
             if (terrainPoint == null)
                 return;
 
-            foreach (var augmentedEntity in _augmentedEntities)
+            foreach (var augmentedEntity in _augmentedEntities.Where(e => e.IsSelected))
             {
                 augmentedEntity.WorldTransform.ChangeTranslation(terrainPoint.Value);
             }

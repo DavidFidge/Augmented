@@ -13,25 +13,25 @@ namespace DavidFidge.MonoGame.Core.Graphics.Quads
             _gameProvider = gameProvider;
         }
 
-        public void LoadContent(float width, float height, string textureName)
+        public void LoadContent(float width, float height, Texture2D texture)
         {
             LoadContent(width, height);
 
-            Effect = _gameProvider.Game.EffectCollection.BuildMaterialTextureEffect(textureName);
+            Effect = _gameProvider.Game.EffectCollection.BuildMaterialTextureEffect(texture);
         }
         
-        public void LoadContent(float width, float height, string textureName, string effectName)
+        public void LoadContent(float width, float height, Texture2D texture, Effect effect)
         {
             LoadContent(width, height);
 
-            Effect = _gameProvider.Game.EffectCollection[effectName];
+            Effect = effect;
 
-            Effect.Parameters["Texture"].SetValue(_gameProvider.Game.Content.Load<Texture2D>(textureName));
+            Effect.Parameters["Texture"].SetValue(texture);
         }
 
-        public void LoadContent(Vector2 size, string textureName)
+        public void LoadContent(Vector2 size, Texture2D texture)
         {
-            LoadContent(size.X, size.Y, textureName);
+            LoadContent(size.X, size.Y, texture);
         }
     }
 }
