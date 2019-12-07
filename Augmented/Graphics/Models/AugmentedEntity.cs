@@ -10,13 +10,14 @@ using IDrawable = DavidFidge.MonoGame.Core.Graphics.IDrawable;
 
 namespace Augmented.Graphics.Models
 {
-    public class AugmentedEntity : Entity, IDrawable, ISelectable
+    public class AugmentedEntity : Entity, IDrawable, ISelectable, IActionable
     {
         protected readonly IGameProvider _gameProvider;
         private readonly IAugmentedModelDrawer _augmentedModelDrawer;
         private readonly ISelectionModelDrawer _selectionModelDrawer;
 
         public bool IsSelected { get; set; }
+        public bool IsTargeted { get; set; }
 
         public AugmentedEntity(
             IGameProvider gameProvider,

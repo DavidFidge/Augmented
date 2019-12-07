@@ -69,6 +69,18 @@ namespace Augmented.Components
             }
         }
 
+        public void Target(Ray ray)
+        {
+            SceneGraph.DeselectAll();
+
+            var selectedEntity = SceneGraph.Select(ray);
+
+            if (selectedEntity != null && selectedEntity is IActionable selectable)
+            {
+                selectable.IsTargeted = true;
+            }
+        }
+
         public void Action(Ray ray)
         {
             var terrainPoint = _terrain.RayToTerrainPoint(ray, SceneGraph);

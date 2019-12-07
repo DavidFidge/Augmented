@@ -1,7 +1,7 @@
 ﻿namespace DavidFidge.MonoGame.Core.Graphics
 {
-    public interface IActionable
+    public interface IActionable : IBaseSelectable
     {
-        void Action();
+        bool IsTargeted { get; set; }
     }
 }

@@ -105,6 +105,7 @@
     <Compile Include="Graphics\Extensions\BoundingBoxExtensions.cs" />
     <Compile Include="Graphics\Extensions\RayExtensions.cs" />
     <Compile Include="Graphics\IActionable.cs" />
+    <Compile Include="Graphics\IBaseSelectable.cs" />
     <Compile Include="Graphics\ISelectable.cs" />
     <Compile Include="Graphics\ILoadContent.cs" />
     <Compile Include="Graphics\Models\BoundingBoxDrawer.cs" />

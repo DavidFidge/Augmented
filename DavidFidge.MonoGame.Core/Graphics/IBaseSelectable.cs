@@ -2,8 +2,8 @@
 
 namespace DavidFidge.MonoGame.Core.Graphics
 {
-    public interface ISelectable : IBaseSelectable
+    public interface IBaseSelectable
     {
-        bool IsSelected { get; set; }
+        float? Intersects(Ray ray, Matrix worldTransform);
     }
 }
