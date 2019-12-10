@@ -15,6 +15,9 @@ namespace Augmented.Graphics.Models
         protected readonly IGameProvider _gameProvider;
         private readonly IAugmentedModelDrawer _augmentedModelDrawer;
         private readonly ISelectionModelDrawer _selectionModelDrawer;
+        private readonly StateMachine<AugmentedEntity> _stateMachine;
+        private readonly MovingState _movingState;
+        private readonly IdleState _idleState;
 
         public bool IsSelected { get; set; }
         public bool IsTargeted { get; set; }
@@ -24,6 +27,10 @@ namespace Augmented.Graphics.Models
             IAugmentedModelDrawer augmentedModelDrawer,
             ISelectionModelDrawer selectionModelDrawer)
         {
+            _stateMachine = new StateMachine<AugmentedEntity>(this);
+            _movingState = new MovingState();
+            _idleState = new IdleState();
+
             _gameProvider = gameProvider;
             _augmentedModelDrawer = augmentedModelDrawer;
             _selectionModelDrawer = selectionModelDrawer;
@@ -45,6 +52,52 @@ namespace Augmented.Graphics.Models
         public float? Intersects(Ray ray, Matrix worldTransform)
         {
             return ray.Intersects(_augmentedModelDrawer.BoundingSphere.Transform(worldTransform));
+        }
+
+        public void MoveTo(Vector3 target)
+        {
+            _movingState.Target = target;
+            _stateMachine.ChangeState(_movingState);
+        }
+
+        public class MovingState : State<AugmentedEntity>
+        {
+            public Vector3 Target { get; set; }
+
+            public override void Enter(AugmentedEntity entity)
+            {
+            }
+
+            public override void Execute(AugmentedEntity entity)
+            {
+            }
+
+            public override void Exit(AugmentedEntity entity)
+            {
+            }
+
+            public override void Reset(AugmentedEntity entity)
+            {
+            }
+        }
+
+        public class IdleState : State<AugmentedEntity>
+        {
+            public override void Enter(AugmentedEntity entity)
+            {
+            }
+
+            public override void Execute(AugmentedEntity entity)
+            {
+            }
+
+            public override void Exit(AugmentedEntity entity)
+            {
+            }
+
+            public override void Reset(AugmentedEntity entity)
+            {
+            }
         }
     }
 }

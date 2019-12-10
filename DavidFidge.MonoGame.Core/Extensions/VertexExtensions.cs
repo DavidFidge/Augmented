@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace DavidFidge.MonoGame.Core.Graphics.Extensions
+namespace DavidFidge.MonoGame.Core.Extensions
 {
     public static class VertexExtensions
     {

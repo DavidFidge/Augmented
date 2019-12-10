@@ -1,4 +1,4 @@
-﻿using DavidFidge.MonoGame.Core.Graphics.Extensions;
+﻿using DavidFidge.MonoGame.Core.Extensions;
 using DavidFidge.TestInfrastructure;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -10,7 +10,6 @@ namespace DavidFidge.MonoGame.Core.Tests.Services
     [TestClass]
     public class VertexExtensionsTests : BaseTest
     {
-
         [TestInitialize]
         public override void Setup()
         {

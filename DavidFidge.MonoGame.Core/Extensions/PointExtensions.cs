@@ -4,7 +4,7 @@ using System.Linq;
 
 using Microsoft.Xna.Framework;
 
-namespace DavidFidge.MonoGame.Core.Graphics.Extensions
+namespace DavidFidge.MonoGame.Core.Extensions
 {
     public static class PointExtensions
     {

@@ -1,6 +1,6 @@
 ﻿using Augmented.Interfaces;
 
-using DavidFidge.MonoGame.Core.Graphics.Extensions;
+using DavidFidge.MonoGame.Core.Extensions;
 
 using Microsoft.Xna.Framework;
 

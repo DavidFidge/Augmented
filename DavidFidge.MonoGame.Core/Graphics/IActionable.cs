@@ -2,6 +2,5 @@
 {
     public interface IActionable : IBaseSelectable
     {
-        bool IsTargeted { get; set; }
     }
 }

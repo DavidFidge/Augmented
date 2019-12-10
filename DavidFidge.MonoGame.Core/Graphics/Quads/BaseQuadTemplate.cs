@@ -1,4 +1,4 @@
-﻿using DavidFidge.MonoGame.Core.Graphics.Extensions;
+﻿using DavidFidge.MonoGame.Core.Extensions;
 using DavidFidge.MonoGame.Core.Interfaces.Components;
 
 using Microsoft.Xna.Framework;

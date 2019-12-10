@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-using DavidFidge.MonoGame.Core.Graphics.Extensions;
+using DavidFidge.MonoGame.Core.Extensions;
 using DavidFidge.MonoGame.Core.Interfaces.Components;
 using DavidFidge.MonoGame.Core.Interfaces.Graphics.Terrain;
 

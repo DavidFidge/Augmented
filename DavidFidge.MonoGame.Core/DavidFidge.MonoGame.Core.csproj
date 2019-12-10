@@ -96,14 +96,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Components\Entity.cs" />
+    <Compile Include="Components\StateMachine\State.cs" />
+    <Compile Include="Components\StateMachine\StateMachine.cs" />
     <Compile Include="ConsoleCommands\ConsoleCommandAttribute.cs" />
     <Compile Include="ConsoleCommands\ConsoleCommandServiceFactory.cs" />
     <Compile Include="Components\Random.cs" />
     <Compile Include="Components\BaseComponent.cs" />
     <Compile Include="Configuration\BaseConfigurationSectionHandler.cs" />
     <Compile Include="ConsoleCommands\ConsoleCommand.cs" />
-    <Compile Include="Graphics\Extensions\BoundingBoxExtensions.cs" />
-    <Compile Include="Graphics\Extensions\RayExtensions.cs" />
+    <Compile Include="Extensions\BoundingBoxExtensions.cs" />
+    <Compile Include="Extensions\Vector3Extensions.cs" />
+    <Compile Include="Extensions\RayExtensions.cs" />
     <Compile Include="Graphics\IActionable.cs" />
     <Compile Include="Graphics\IBaseSelectable.cs" />
     <Compile Include="Graphics\ISelectable.cs" />
@@ -126,13 +129,13 @@
     <Compile Include="Graphics\Camera\StrategyGameCamera.cs" />
     <Compile Include="Graphics\Cylinder\CylinderGenerator.cs" />
     <Compile Include="Graphics\Cylinder\Cylinder.cs" />
-    <Compile Include="Graphics\Extensions\EffectExtensions.cs" />
-    <Compile Include="Graphics\Extensions\BasicEffectExtensions.cs" />
+    <Compile Include="Extensions\EffectExtensions.cs" />
+    <Compile Include="Extensions\BasicEffectExtensions.cs" />
     <Compile Include="Graphics\Quads\BaseQuadTemplate.cs" />
     <Compile Include="Graphics\Camera\CameraMovement.cs" />
     <Compile Include="Graphics\Camera\CameraResetOptions.cs" />
-    <Compile Include="Graphics\Extensions\PointExtensions.cs" />
-    <Compile Include="Graphics\Extensions\VertexExtensions.cs" />
+    <Compile Include="Extensions\PointExtensions.cs" />
+    <Compile Include="Extensions\VertexExtensions.cs" />
     <Compile Include="Graphics\IDrawable.cs" />
     <Compile Include="Graphics\EffectCollection.cs" />
     <Compile Include="Graphics\Terrain\DiamondSquare.cs" />
@@ -172,6 +175,7 @@
     <Compile Include="Messages\GameTimeUpdateNotification.cs" />
     <Compile Include="Messages\UpdateViewRequest.cs" />
     <Compile Include="Messages\ExitGameRequest.cs" />
+    <Compile Include="Physics\MovableComponent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Components\GameProvider.cs" />
     <Compile Include="Graphics\CustomGraphicsDeviceManager.cs" />

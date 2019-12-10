@@ -69,20 +69,29 @@ namespace Augmented.Components
             }
         }
 
-        public void Target(Ray ray)
+        private IActionable GetTarget(Ray ray)
         {
             SceneGraph.DeselectAll();
 
             var selectedEntity = SceneGraph.Select(ray);
 
-            if (selectedEntity != null && selectedEntity is IActionable selectable)
+            if (selectedEntity != null && selectedEntity is IActionable actionable)
             {
-                selectable.IsTargeted = true;
+                return actionable;
             }
+
+            return null;
         }
 
         public void Action(Ray ray)
         {
+            var targetedEntity = GetTarget(ray);
+
+            if (targetedEntity != null)
+                // Todo - do something
+                return;
+
+
             var terrainPoint = _terrain.RayToTerrainPoint(ray, SceneGraph);
 
             if (terrainPoint == null)
@@ -90,7 +99,7 @@ namespace Augmented.Components
 
             foreach (var augmentedEntity in _augmentedEntities.Where(e => e.IsSelected))
             {
-                augmentedEntity.WorldTransform.ChangeTranslation(terrainPoint.Value);
+                augmentedEntity.MoveTo(terrainPoint.Value);
             }
         }
     }
