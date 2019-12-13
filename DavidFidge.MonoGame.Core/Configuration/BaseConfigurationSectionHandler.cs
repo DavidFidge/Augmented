@@ -2,9 +2,7 @@
 using System.Configuration;
 using System.Linq;
 using System.Xml;
-
-using ExtendedXmlSerializer.Configuration;
-using ExtendedXmlSerializer.ExtensionModel.Xml;
+using System.Xml.Serialization;
 
 namespace DavidFidge.MonoGame.Core.Configuration
 {
@@ -13,9 +11,7 @@ namespace DavidFidge.MonoGame.Core.Configuration
     {
         public object Create(object parent, object configContext, XmlNode section)
         {
-            var serialiser = new ConfigurationContainer()
-                .EnableImplicitTyping(GetType())
-                .Create();
+            var serialiser = new XmlSerializer(typeof(GraphicsSettings));
 
             var deserialisedSetting = serialiser.Deserialize(new XmlNodeReader(section.ParentNode)) as GraphicsSettings;
 

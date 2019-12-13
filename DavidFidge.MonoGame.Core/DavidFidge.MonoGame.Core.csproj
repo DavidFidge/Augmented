@@ -36,9 +36,6 @@
     <Reference Include="Castle.Windsor, Version=4.0.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
       <HintPath>..\packages\Castle.Windsor.4.1.1\lib\net45\Castle.Windsor.dll</HintPath>
     </Reference>
-    <Reference Include="ExtendedXmlSerializer, Version=2.1.17.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ExtendedXmlSerializer.2.1.17\lib\net45\ExtendedXmlSerializer.dll</HintPath>
-    </Reference>
     <Reference Include="InputHandlers, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\InputHandlers.MonoGame.WindowsDX.1.1.0\lib\net45\InputHandlers.dll</HintPath>
     </Reference>
