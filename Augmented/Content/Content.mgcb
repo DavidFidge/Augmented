@@ -10,7 +10,7 @@
 
 #-------------------------------- References --------------------------------#
 
-/reference:..\..\packages\GeonBit.UI.3.3.0\lib\geonbitui\DataTypes.dll
+/reference:..\..\libs\DataTypes.dll
 /reference:..\..\DavidFidge.MonoGame.Core.ContentPipeline\bin\Debug\DavidFidge.MonoGame.Core.ContentPipeline.dll
 
 #---------------------------------- Content ---------------------------------#
