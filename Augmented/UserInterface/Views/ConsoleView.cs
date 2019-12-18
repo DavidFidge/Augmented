@@ -32,7 +32,7 @@ namespace Augmented.UserInterface.Views
 
             RootPanel.AddChild(containerPanel);
 
-            var consolePanel = new Panel(new Vector2(-1, -1))
+            var consolePanel = new Panel(new Vector2(0, 0))
             {
                 Padding = new Vector2(30f, 30f)
             };
