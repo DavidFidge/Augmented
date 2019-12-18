@@ -1,4 +1,5 @@
-﻿using DavidFidge.MonoGame.Core.Interfaces.Graphics;
+﻿using DavidFidge.MonoGame.Core.Graphics.Extensions;
+using DavidFidge.MonoGame.Core.Interfaces.Graphics;
 
 using Microsoft.Xna.Framework;
 
@@ -8,7 +9,7 @@ namespace DavidFidge.MonoGame.Core.Graphics
     {
         public EntityTransform(Matrix matrix)
         {
-            Scale = matrix.Scale;
+            Scale = matrix.Scale();
             Translation = matrix.Translation;
             Rotation = Quaternion.CreateFromRotationMatrix(matrix);
 
