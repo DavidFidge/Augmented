@@ -30,7 +30,9 @@ namespace Augmented.Graphics.Models
                     BoundingBox.Min.Y + ((BoundingBox.Max.Y - BoundingBox.Min.Y) / 2),
                     BoundingBox.Min.Z);
 
-            selectionQuadTransform.Scale *= new Vector3(BoundingBox.Width(), BoundingBox.Length(), 1f) * new Vector3(2f);
+            var scaleVector = new Vector3(BoundingBox.Width(), BoundingBox.Length(), 1f) * new Vector3(2f);
+
+            selectionQuadTransform = scaleVector.CreateScale() * selectionQuadTransform;
 
             _selectionModel.Draw(view, projection, selectionQuadTransform);
         }

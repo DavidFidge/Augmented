@@ -21,7 +21,7 @@ namespace DavidFidge.MonoGame.Core.UserInterface
         
         public void Initialize(string panelIdentifier)
         {
-            _panel = new Panel(new Vector2(-1, -1), PanelSkin.None)
+            _panel = new Panel(new Vector2(0, 0), PanelSkin.None)
                 .NoPadding()
                 .Hidden();
 

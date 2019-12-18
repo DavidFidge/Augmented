@@ -22,14 +22,14 @@ namespace Augmented.UserInterface.Views
 
         protected override void InitializeInternal()
         {
-            var containerPanel = new Panel(new Vector2(-1, -1), PanelSkin.None)
+            var containerPanel = new Panel(new Vector2(0, 0), PanelSkin.None)
             {
                 Padding = new Vector2(20f, 20f)
             };
 
             RootPanel.AddChild(containerPanel);
 
-            var videoOptionsPanel = new Panel(new Vector2(-1, -1))
+            var videoOptionsPanel = new Panel(new Vector2(0, 0))
             {
                 Padding = new Vector2(30f, 30f)
             };

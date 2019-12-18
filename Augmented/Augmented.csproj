@@ -15,6 +15,8 @@
     <MonoGamePlatform>Windows</MonoGamePlatform>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <TargetFrameworkProfile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -125,61 +127,18 @@
     <Compile Include="UserInterface\ViewModels\VideoOptionsViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Castle.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
-      <HintPath>..\packages\Castle.Core.4.3.1\lib\net45\Castle.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="Castle.Windsor, Version=4.0.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
-      <HintPath>..\packages\Castle.Windsor.4.1.1\lib\net45\Castle.Windsor.dll</HintPath>
-    </Reference>
     <Reference Include="DataTypes, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\GeonBit.UI.3.3.0\lib\geonbitui\DataTypes.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\libs\DataTypes.dll</HintPath>
     </Reference>
     <Reference Include="GeonBit.UI, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\GeonBit.UI.3.3.0\lib\geonbitui\GeonBit.UI.dll</HintPath>
-    </Reference>
-    <Reference Include="InputHandlers, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\InputHandlers.MonoGame.WindowsDX.1.1.0\lib\net45\InputHandlers.dll</HintPath>
-    </Reference>
-    <Reference Include="MediatR, Version=5.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\MediatR.5.1.0\lib\net45\MediatR.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\libs\GeonBit.UI.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="MonoGame.Framework, Version=3.6.0.1625, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\MonoGame.Framework.WindowsDX.3.6.0.1625\lib\net40\MonoGame.Framework.dll</HintPath>
-    </Reference>
-    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.12.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="NGenerics, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\NGenerics.1.5.3\lib\netstandard2.0\NGenerics.dll</HintPath>
-    </Reference>
-    <Reference Include="Serilog, Version=2.0.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
-      <HintPath>..\packages\Serilog.2.7.1\lib\net46\Serilog.dll</HintPath>
-    </Reference>
-    <Reference Include="Serilog.Formatting.Compact, Version=1.0.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
-      <HintPath>..\packages\Serilog.Formatting.Compact.1.0.0\lib\net45\Serilog.Formatting.Compact.dll</HintPath>
-    </Reference>
-    <Reference Include="Serilog.Sinks.Console, Version=3.1.1.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
-      <HintPath>..\packages\Serilog.Sinks.Console.3.1.1\lib\net45\Serilog.Sinks.Console.dll</HintPath>
-    </Reference>
-    <Reference Include="Serilog.Sinks.File, Version=2.0.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
-      <HintPath>..\packages\Serilog.Sinks.File.4.0.0\lib\net45\Serilog.Sinks.File.dll</HintPath>
-    </Reference>
-    <Reference Include="Serilog.Sinks.PeriodicBatching, Version=2.0.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
-      <HintPath>..\packages\Serilog.Sinks.PeriodicBatching.2.1.1\lib\net45\Serilog.Sinks.PeriodicBatching.dll</HintPath>
-    </Reference>
-    <Reference Include="Serilog.Sinks.Seq, Version=4.0.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
-      <HintPath>..\packages\Serilog.Sinks.Seq.4.0.0\lib\net45\Serilog.Sinks.Seq.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Collections.Immutable, Version=1.2.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Collections.Immutable.1.4.0\lib\netstandard2.0\System.Collections.Immutable.dll</HintPath>
-    </Reference>
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
-    <Reference Include="System.Interactive, Version=3.0.1000.0, Culture=neutral, PublicKeyToken=94bc3704cddfc263, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Interactive.3.1.1\lib\net45\System.Interactive.dll</HintPath>
-    </Reference>
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Runtime.Remoting" />
     <Reference Include="System.Web" />
@@ -187,198 +146,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Effects\Selection.fx" />
-    <Content Include="Content\GeonBit.UI\themes\editor\effects\disabled.fx" />
-    <Content Include="Content\GeonBit.UI\themes\editor\effects\silhouette.fx" />
-    <Content Include="Content\GeonBit.UI\themes\editor\styles\Button-Default.xml" />
-    <Content Include="Content\GeonBit.UI\themes\editor\styles\Button-MouseDown.xml" />
-    <Content Include="Content\GeonBit.UI\themes\editor\styles\Button-MouseHover.xml" />
-    <Content Include="Content\GeonBit.UI\themes\editor\styles\ButtonParagraph-Default.xml" />
-    <Content Include="Content\GeonBit.UI\themes\editor\styles\ButtonParagraph-MouseDown.xml" />
-    <Content Include="Content\GeonBit.UI\themes\editor\styles\ButtonParagraph-MouseHover.xml" />
-    <Content Include="Content\GeonBit.UI\themes\editor\styles\CheckBox-Default.xml" />
-    <Content Include="Content\GeonBit.UI\themes\editor\styles\CheckBox-MouseDown.xml" />
-    <Content Include="Content\GeonBit.UI\themes\editor\styles\CheckBox-MouseHover.xml" />
-    <Content Include="Content\GeonBit.UI\themes\editor\styles\CheckBoxParagraph-Default.xml" />
-    <Content Include="Content\GeonBit.UI\themes\editor\styles\CheckBoxParagraph-MouseDown.xml" />
-    <Content Include="Content\GeonBit.UI\themes\editor\styles\CheckBoxParagraph-MouseHover.xml" />
-    <Content Include="Content\GeonBit.UI\themes\editor\styles\ColoredRectangle-Default.xml" />
-    <Content Include="Content\GeonBit.UI\themes\editor\styles\ColoredRectangle-MouseDown.xml" />
-    <Content Include="Content\GeonBit.UI\themes\editor\styles\ColoredRectangle-MouseHover.xml" />
-    <Content Include="Content\GeonBit.UI\themes\editor\styles\DropDown-Default.xml" />
-    <Content Include="Content\GeonBit.UI\themes\editor\styles\DropDown-MouseDown.xml" />
-    <Content Include="Content\GeonBit.UI\themes\editor\styles\DropDown-MouseHover.xml" />
-    <Content Include="Content\GeonBit.UI\themes\editor\styles\DropDownParagraph-Default.xml" />
-    <Content Include="Content\GeonBit.UI\themes\editor\styles\DropDownParagraph-MouseDown.xml" />
-    <Content Include="Content\GeonBit.UI\themes\editor\styles\DropDownParagraph-MouseHover.xml" />
-    <Content Include="Content\GeonBit.UI\themes\editor\styles\DropDownSelectedParagraph-Default.xml" />
-    <Content Include="Content\GeonBit.UI\themes\editor\styles\DropDownSelectedParagraph-MouseDown.xml" />
-    <Content Include="Content\GeonBit.UI\themes\editor\styles\DropDownSelectedParagraph-MouseHover.xml" />
-    <Content Include="Content\GeonBit.UI\themes\editor\styles\Entity-Default.xml" />
-    <Content Include="Content\GeonBit.UI\themes\editor\styles\Entity-MouseDown.xml" />
-    <Content Include="Content\GeonBit.UI\themes\editor\styles\Entity-MouseHover.xml" />
-    <Content Include="Content\GeonBit.UI\themes\editor\styles\example.xml" />
-    <Content Include="Content\GeonBit.UI\themes\editor\styles\Header-Default.xml" />
-    <Content Include="Content\GeonBit.UI\themes\editor\styles\Header-MouseDown.xml" />
-    <Content Include="Content\GeonBit.UI\themes\editor\styles\Header-MouseHover.xml" />
-    <Content Include="Content\GeonBit.UI\themes\editor\styles\HorizontalLine-Default.xml" />
-    <Content Include="Content\GeonBit.UI\themes\editor\styles\HorizontalLine-MouseDown.xml" />
-    <Content Include="Content\GeonBit.UI\themes\editor\styles\HorizontalLine-MouseHover.xml" />
-    <Content Include="Content\GeonBit.UI\themes\editor\styles\Icon-Default.xml" />
-    <Content Include="Content\GeonBit.UI\themes\editor\styles\Icon-MouseDown.xml" />
-    <Content Include="Content\GeonBit.UI\themes\editor\styles\Icon-MouseHover.xml" />
-    <Content Include="Content\GeonBit.UI\themes\editor\styles\Image-Default.xml" />
-    <Content Include="Content\GeonBit.UI\themes\editor\styles\Image-MouseDown.xml" />
-    <Content Include="Content\GeonBit.UI\themes\editor\styles\Image-MouseHover.xml" />
-    <Content Include="Content\GeonBit.UI\themes\editor\styles\Label-Default.xml" />
-    <Content Include="Content\GeonBit.UI\themes\editor\styles\Label-MouseDown.xml" />
-    <Content Include="Content\GeonBit.UI\themes\editor\styles\Label-MouseHover.xml" />
-    <Content Include="Content\GeonBit.UI\themes\editor\styles\Panel-Default.xml" />
-    <Content Include="Content\GeonBit.UI\themes\editor\styles\Panel-MouseDown.xml" />
-    <Content Include="Content\GeonBit.UI\themes\editor\styles\Panel-MouseHover.xml" />
-    <Content Include="Content\GeonBit.UI\themes\editor\styles\PanelTabsButton-Default.xml" />
-    <Content Include="Content\GeonBit.UI\themes\editor\styles\PanelTabsButton-MouseDown.xml" />
-    <Content Include="Content\GeonBit.UI\themes\editor\styles\PanelTabsButton-MouseHover.xml" />
-    <Content Include="Content\GeonBit.UI\themes\editor\styles\PanelTabsButtonParagraph-Default.xml" />
-    <Content Include="Content\GeonBit.UI\themes\editor\styles\PanelTabsButtonParagraph-MouseDown.xml" />
-    <Content Include="Content\GeonBit.UI\themes\editor\styles\PanelTabsButtonParagraph-MouseHover.xml" />
-    <Content Include="Content\GeonBit.UI\themes\editor\styles\Paragraph-Default.xml" />
-    <Content Include="Content\GeonBit.UI\themes\editor\styles\Paragraph-MouseDown.xml" />
-    <Content Include="Content\GeonBit.UI\themes\editor\styles\Paragraph-MouseHover.xml" />
-    <Content Include="Content\GeonBit.UI\themes\editor\styles\ProgressBar-Default.xml" />
-    <Content Include="Content\GeonBit.UI\themes\editor\styles\ProgressBar-MouseDown.xml" />
-    <Content Include="Content\GeonBit.UI\themes\editor\styles\ProgressBar-MouseHover.xml" />
-    <Content Include="Content\GeonBit.UI\themes\editor\styles\ProgressBarFill-Default.xml" />
-    <Content Include="Content\GeonBit.UI\themes\editor\styles\ProgressBarFill-MouseDown.xml" />
-    <Content Include="Content\GeonBit.UI\themes\editor\styles\ProgressBarFill-MouseHover.xml" />
-    <Content Include="Content\GeonBit.UI\themes\editor\styles\RadioButton-Default.xml" />
-    <Content Include="Content\GeonBit.UI\themes\editor\styles\RadioButton-MouseDown.xml" />
-    <Content Include="Content\GeonBit.UI\themes\editor\styles\RadioButton-MouseHover.xml" />
-    <Content Include="Content\GeonBit.UI\themes\editor\styles\RadioButtonParagraph-Default.xml" />
-    <Content Include="Content\GeonBit.UI\themes\editor\styles\RadioButtonParagraph-MouseDown.xml" />
-    <Content Include="Content\GeonBit.UI\themes\editor\styles\RadioButtonParagraph-MouseHover.xml" />
-    <Content Include="Content\GeonBit.UI\themes\editor\styles\SelectList-Default.xml" />
-    <Content Include="Content\GeonBit.UI\themes\editor\styles\SelectList-MouseDown.xml" />
-    <Content Include="Content\GeonBit.UI\themes\editor\styles\SelectList-MouseHover.xml" />
-    <Content Include="Content\GeonBit.UI\themes\editor\styles\SelectListParagraph-Default.xml" />
-    <Content Include="Content\GeonBit.UI\themes\editor\styles\SelectListParagraph-MouseDown.xml" />
-    <Content Include="Content\GeonBit.UI\themes\editor\styles\SelectListParagraph-MouseHover.xml" />
-    <Content Include="Content\GeonBit.UI\themes\editor\styles\Slider-Default.xml" />
-    <Content Include="Content\GeonBit.UI\themes\editor\styles\Slider-MouseDown.xml" />
-    <Content Include="Content\GeonBit.UI\themes\editor\styles\Slider-MouseHover.xml" />
-    <Content Include="Content\GeonBit.UI\themes\editor\styles\TextInput-Default.xml" />
-    <Content Include="Content\GeonBit.UI\themes\editor\styles\TextInput-MouseDown.xml" />
-    <Content Include="Content\GeonBit.UI\themes\editor\styles\TextInput-MouseHover.xml" />
-    <Content Include="Content\GeonBit.UI\themes\editor\styles\TextInputParagraph-Default.xml" />
-    <Content Include="Content\GeonBit.UI\themes\editor\styles\TextInputParagraph-MouseDown.xml" />
-    <Content Include="Content\GeonBit.UI\themes\editor\styles\TextInputParagraph-MouseHover.xml" />
-    <Content Include="Content\GeonBit.UI\themes\editor\styles\TextInputPlaceholder-Default.xml" />
-    <Content Include="Content\GeonBit.UI\themes\editor\styles\TextInputPlaceholder-MouseDown.xml" />
-    <Content Include="Content\GeonBit.UI\themes\editor\styles\TextInputPlaceholder-MouseHover.xml" />
-    <Content Include="Content\GeonBit.UI\themes\editor\styles\VerticalScrollbar-Default.xml" />
-    <Content Include="Content\GeonBit.UI\themes\editor\styles\VerticalScrollbar-MouseDown.xml" />
-    <Content Include="Content\GeonBit.UI\themes\editor\styles\VerticalScrollbar-MouseHover.xml" />
-    <Content Include="Content\GeonBit.UI\themes\editor\textures\arrow_down.png" />
-    <Content Include="Content\GeonBit.UI\themes\editor\textures\arrow_up.png" />
-    <Content Include="Content\GeonBit.UI\themes\editor\textures\button_alternative.png" />
-    <Content Include="Content\GeonBit.UI\themes\editor\textures\button_alternative_down.png" />
-    <Content Include="Content\GeonBit.UI\themes\editor\textures\button_alternative_hover.png" />
-    <Content Include="Content\GeonBit.UI\themes\editor\textures\button_alternative_md.xml" />
-    <Content Include="Content\GeonBit.UI\themes\editor\textures\button_default.png" />
-    <Content Include="Content\GeonBit.UI\themes\editor\textures\button_default_down.png" />
-    <Content Include="Content\GeonBit.UI\themes\editor\textures\button_default_hover.png" />
-    <Content Include="Content\GeonBit.UI\themes\editor\textures\button_default_md.xml" />
-    <Content Include="Content\GeonBit.UI\themes\editor\textures\button_fancy.png" />
-    <Content Include="Content\GeonBit.UI\themes\editor\textures\button_fancy_down.png" />
-    <Content Include="Content\GeonBit.UI\themes\editor\textures\button_fancy_hover.png" />
-    <Content Include="Content\GeonBit.UI\themes\editor\textures\button_fancy_md.xml" />
-    <Content Include="Content\GeonBit.UI\themes\editor\textures\checkbox.png" />
-    <Content Include="Content\GeonBit.UI\themes\editor\textures\checkbox_down.png" />
-    <Content Include="Content\GeonBit.UI\themes\editor\textures\checkbox_hover.png" />
-    <Content Include="Content\GeonBit.UI\themes\editor\textures\cursor_default.png" />
-    <Content Include="Content\GeonBit.UI\themes\editor\textures\cursor_default_md.xml" />
-    <Content Include="Content\GeonBit.UI\themes\editor\textures\cursor_ibeam.png" />
-    <Content Include="Content\GeonBit.UI\themes\editor\textures\cursor_ibeam_md.xml" />
-    <Content Include="Content\GeonBit.UI\themes\editor\textures\cursor_pointer.png" />
-    <Content Include="Content\GeonBit.UI\themes\editor\textures\cursor_pointer_md.xml" />
-    <Content Include="Content\GeonBit.UI\themes\editor\textures\horizontal_line.png" />
-    <Content Include="Content\GeonBit.UI\themes\editor\textures\icons\Apple.png" />
-    <Content Include="Content\GeonBit.UI\themes\editor\textures\icons\Armor.png" />
-    <Content Include="Content\GeonBit.UI\themes\editor\textures\icons\Axe.png" />
-    <Content Include="Content\GeonBit.UI\themes\editor\textures\icons\background.png" />
-    <Content Include="Content\GeonBit.UI\themes\editor\textures\icons\BloodySword.png" />
-    <Content Include="Content\GeonBit.UI\themes\editor\textures\icons\Bone.png" />
-    <Content Include="Content\GeonBit.UI\themes\editor\textures\icons\Book.png" />
-    <Content Include="Content\GeonBit.UI\themes\editor\textures\icons\Cubes.png" />
-    <Content Include="Content\GeonBit.UI\themes\editor\textures\icons\Diamond.png" />
-    <Content Include="Content\GeonBit.UI\themes\editor\textures\icons\Explanation.png" />
-    <Content Include="Content\GeonBit.UI\themes\editor\textures\icons\Feather.png" />
-    <Content Include="Content\GeonBit.UI\themes\editor\textures\icons\FloppyDisk.png" />
-    <Content Include="Content\GeonBit.UI\themes\editor\textures\icons\GoldCoins.png" />
-    <Content Include="Content\GeonBit.UI\themes\editor\textures\icons\GoldShard.png" />
-    <Content Include="Content\GeonBit.UI\themes\editor\textures\icons\Heart.png" />
-    <Content Include="Content\GeonBit.UI\themes\editor\textures\icons\Helmet.png" />
-    <Content Include="Content\GeonBit.UI\themes\editor\textures\icons\Key.png" />
-    <Content Include="Content\GeonBit.UI\themes\editor\textures\icons\MagicBook.png" />
-    <Content Include="Content\GeonBit.UI\themes\editor\textures\icons\MagicWand.png" />
-    <Content Include="Content\GeonBit.UI\themes\editor\textures\icons\Map.png" />
-    <Content Include="Content\GeonBit.UI\themes\editor\textures\icons\None.png" />
-    <Content Include="Content\GeonBit.UI\themes\editor\textures\icons\OrbBlue.png" />
-    <Content Include="Content\GeonBit.UI\themes\editor\textures\icons\OrbGreen.png" />
-    <Content Include="Content\GeonBit.UI\themes\editor\textures\icons\OrbRed.png" />
-    <Content Include="Content\GeonBit.UI\themes\editor\textures\icons\Pistol.png" />
-    <Content Include="Content\GeonBit.UI\themes\editor\textures\icons\PotionBlue.png" />
-    <Content Include="Content\GeonBit.UI\themes\editor\textures\icons\PotionCyan.png" />
-    <Content Include="Content\GeonBit.UI\themes\editor\textures\icons\PotionGreen.png" />
-    <Content Include="Content\GeonBit.UI\themes\editor\textures\icons\PotionPurple.png" />
-    <Content Include="Content\GeonBit.UI\themes\editor\textures\icons\PotionRed.png" />
-    <Content Include="Content\GeonBit.UI\themes\editor\textures\icons\PotionYellow.png" />
-    <Content Include="Content\GeonBit.UI\themes\editor\textures\icons\Ring.png" />
-    <Content Include="Content\GeonBit.UI\themes\editor\textures\icons\RingGold.png" />
-    <Content Include="Content\GeonBit.UI\themes\editor\textures\icons\RingGoldRuby.png" />
-    <Content Include="Content\GeonBit.UI\themes\editor\textures\icons\RingRuby.png" />
-    <Content Include="Content\GeonBit.UI\themes\editor\textures\icons\RubyBlue.png" />
-    <Content Include="Content\GeonBit.UI\themes\editor\textures\icons\RubyGreen.png" />
-    <Content Include="Content\GeonBit.UI\themes\editor\textures\icons\RubyPink.png" />
-    <Content Include="Content\GeonBit.UI\themes\editor\textures\icons\RubyPurple.png" />
-    <Content Include="Content\GeonBit.UI\themes\editor\textures\icons\RubyRed.png" />
-    <Content Include="Content\GeonBit.UI\themes\editor\textures\icons\Sack.png" />
-    <Content Include="Content\GeonBit.UI\themes\editor\textures\icons\Scroll.png" />
-    <Content Include="Content\GeonBit.UI\themes\editor\textures\icons\Shield.png" />
-    <Content Include="Content\GeonBit.UI\themes\editor\textures\icons\ShieldAndSword.png" />
-    <Content Include="Content\GeonBit.UI\themes\editor\textures\icons\Shovel.png" />
-    <Content Include="Content\GeonBit.UI\themes\editor\textures\icons\SilverShard.png" />
-    <Content Include="Content\GeonBit.UI\themes\editor\textures\icons\Skull.png" />
-    <Content Include="Content\GeonBit.UI\themes\editor\textures\icons\Sword.png" />
-    <Content Include="Content\GeonBit.UI\themes\editor\textures\icons\Trap.png" />
-    <Content Include="Content\GeonBit.UI\themes\editor\textures\icons\ZoomIn.png" />
-    <Content Include="Content\GeonBit.UI\themes\editor\textures\icons\ZoomOut.png" />
-    <Content Include="Content\GeonBit.UI\themes\editor\textures\panel_default.png" />
-    <Content Include="Content\GeonBit.UI\themes\editor\textures\panel_default_md.xml" />
-    <Content Include="Content\GeonBit.UI\themes\editor\textures\panel_fancy.png" />
-    <Content Include="Content\GeonBit.UI\themes\editor\textures\panel_fancy_md.xml" />
-    <Content Include="Content\GeonBit.UI\themes\editor\textures\panel_golden.png" />
-    <Content Include="Content\GeonBit.UI\themes\editor\textures\panel_golden_md.xml" />
-    <Content Include="Content\GeonBit.UI\themes\editor\textures\panel_listbackground.png" />
-    <Content Include="Content\GeonBit.UI\themes\editor\textures\panel_listbackground_md.xml" />
-    <Content Include="Content\GeonBit.UI\themes\editor\textures\panel_simple.png" />
-    <Content Include="Content\GeonBit.UI\themes\editor\textures\panel_simple_md.xml" />
-    <Content Include="Content\GeonBit.UI\themes\editor\textures\progressbar.png" />
-    <Content Include="Content\GeonBit.UI\themes\editor\textures\progressbar_fill.png" />
-    <Content Include="Content\GeonBit.UI\themes\editor\textures\progressbar_md.xml" />
-    <Content Include="Content\GeonBit.UI\themes\editor\textures\radio.png" />
-    <Content Include="Content\GeonBit.UI\themes\editor\textures\radio_down.png" />
-    <Content Include="Content\GeonBit.UI\themes\editor\textures\radio_hover.png" />
-    <Content Include="Content\GeonBit.UI\themes\editor\textures\scrollbar.png" />
-    <Content Include="Content\GeonBit.UI\themes\editor\textures\scrollbar_mark.png" />
-    <Content Include="Content\GeonBit.UI\themes\editor\textures\scrollbar_md.xml" />
-    <Content Include="Content\GeonBit.UI\themes\editor\textures\slider_default.png" />
-    <Content Include="Content\GeonBit.UI\themes\editor\textures\slider_default_mark.png" />
-    <Content Include="Content\GeonBit.UI\themes\editor\textures\slider_default_md.xml" />
-    <Content Include="Content\GeonBit.UI\themes\editor\textures\slider_fancy.png" />
-    <Content Include="Content\GeonBit.UI\themes\editor\textures\slider_fancy_mark.png" />
-    <Content Include="Content\GeonBit.UI\themes\editor\textures\slider_fancy_md.xml" />
-    <Content Include="Content\GeonBit.UI\themes\editor\textures\white_texture.png" />
-    <Content Include="Content\GeonBit.UI\themes\editor\ThemeData.xml" />
     <Content Include="Content\GeonBit.UI\themes\hd\effects\disabled.fx" />
     <Content Include="Content\GeonBit.UI\themes\hd\effects\silhouette.fx" />
     <Content Include="Content\GeonBit.UI\themes\hd\styles\Button-Default.xml" />
@@ -464,26 +231,6 @@
     <Content Include="Content\GeonBit.UI\themes\hd\styles\TextInputParagraph-MouseDown.xml" />
     <Content Include="Content\GeonBit.UI\themes\hd\styles\TextInputParagraph-MouseHover.xml" />
     <Content Include="Content\GeonBit.UI\themes\hd\styles\TextInputPlaceholder-Default.xml" />
-    <Content Include="Content\GeonBit.UI\themes\hd\styles\TextInputPlaceholder-MouseDown.xml" />
-    <Content Include="Content\GeonBit.UI\themes\hd\styles\TextInputPlaceholder-MouseHover.xml" />
-    <Content Include="Content\GeonBit.UI\themes\hd\styles\VerticalScrollbar-Default.xml" />
-    <Content Include="Content\GeonBit.UI\themes\hd\styles\VerticalScrollbar-MouseDown.xml" />
-    <Content Include="Content\GeonBit.UI\themes\hd\styles\VerticalScrollbar-MouseHover.xml" />
-    <Content Include="Content\GeonBit.UI\themes\hd\textures\arrow_down.png" />
-    <Content Include="Content\GeonBit.UI\themes\hd\textures\arrow_up.png" />
-    <Content Include="Content\GeonBit.UI\themes\hd\textures\button_alternative.png" />
-    <Content Include="Content\GeonBit.UI\themes\hd\textures\button_alternative_down.png" />
-    <Content Include="Content\GeonBit.UI\themes\hd\textures\button_alternative_hover.png" />
-    <Content Include="Content\GeonBit.UI\themes\hd\textures\button_alternative_md.xml" />
-    <Content Include="Content\GeonBit.UI\themes\hd\textures\button_default.png" />
-    <Content Include="Content\GeonBit.UI\themes\hd\textures\button_default_down.png" />
-    <Content Include="Content\GeonBit.UI\themes\hd\textures\button_default_hover.png" />
-    <Content Include="Content\GeonBit.UI\themes\hd\textures\button_default_md.xml" />
-    <Content Include="Content\GeonBit.UI\themes\hd\textures\button_fancy.png" />
-    <Content Include="Content\GeonBit.UI\themes\hd\textures\button_fancy_down.png" />
-    <Content Include="Content\GeonBit.UI\themes\hd\textures\button_fancy_hover.png" />
-    <Content Include="Content\GeonBit.UI\themes\hd\textures\button_fancy_md.xml" />
-    <Content Include="Content\GeonBit.UI\themes\hd\textures\checkbox.png" />
     <Content Include="Content\GeonBit.UI\themes\hd\textures\checkbox_down.png" />
     <Content Include="Content\GeonBit.UI\themes\hd\textures\checkbox_hover.png" />
     <Content Include="Content\GeonBit.UI\themes\hd\textures\cursor_default.png" />
@@ -493,57 +240,6 @@
     <Content Include="Content\GeonBit.UI\themes\hd\textures\cursor_pointer.png" />
     <Content Include="Content\GeonBit.UI\themes\hd\textures\cursor_pointer_md.xml" />
     <Content Include="Content\GeonBit.UI\themes\hd\textures\horizontal_line.png" />
-    <Content Include="Content\GeonBit.UI\themes\hd\textures\icons\Apple.png" />
-    <Content Include="Content\GeonBit.UI\themes\hd\textures\icons\Armor.png" />
-    <Content Include="Content\GeonBit.UI\themes\hd\textures\icons\Axe.png" />
-    <Content Include="Content\GeonBit.UI\themes\hd\textures\icons\background.png" />
-    <Content Include="Content\GeonBit.UI\themes\hd\textures\icons\BloodySword.png" />
-    <Content Include="Content\GeonBit.UI\themes\hd\textures\icons\Bone.png" />
-    <Content Include="Content\GeonBit.UI\themes\hd\textures\icons\Book.png" />
-    <Content Include="Content\GeonBit.UI\themes\hd\textures\icons\Cubes.png" />
-    <Content Include="Content\GeonBit.UI\themes\hd\textures\icons\Diamond.png" />
-    <Content Include="Content\GeonBit.UI\themes\hd\textures\icons\Explanation.png" />
-    <Content Include="Content\GeonBit.UI\themes\hd\textures\icons\Feather.png" />
-    <Content Include="Content\GeonBit.UI\themes\hd\textures\icons\FloppyDisk.png" />
-    <Content Include="Content\GeonBit.UI\themes\hd\textures\icons\GoldCoins.png" />
-    <Content Include="Content\GeonBit.UI\themes\hd\textures\icons\GoldShard.png" />
-    <Content Include="Content\GeonBit.UI\themes\hd\textures\icons\Heart.png" />
-    <Content Include="Content\GeonBit.UI\themes\hd\textures\icons\Helmet.png" />
-    <Content Include="Content\GeonBit.UI\themes\hd\textures\icons\Key.png" />
-    <Content Include="Content\GeonBit.UI\themes\hd\textures\icons\MagicBook.png" />
-    <Content Include="Content\GeonBit.UI\themes\hd\textures\icons\MagicWand.png" />
-    <Content Include="Content\GeonBit.UI\themes\hd\textures\icons\Map.png" />
-    <Content Include="Content\GeonBit.UI\themes\hd\textures\icons\None.png" />
-    <Content Include="Content\GeonBit.UI\themes\hd\textures\icons\OrbBlue.png" />
-    <Content Include="Content\GeonBit.UI\themes\hd\textures\icons\OrbGreen.png" />
-    <Content Include="Content\GeonBit.UI\themes\hd\textures\icons\OrbRed.png" />
-    <Content Include="Content\GeonBit.UI\themes\hd\textures\icons\Pistol.png" />
-    <Content Include="Content\GeonBit.UI\themes\hd\textures\icons\PotionBlue.png" />
-    <Content Include="Content\GeonBit.UI\themes\hd\textures\icons\PotionCyan.png" />
-    <Content Include="Content\GeonBit.UI\themes\hd\textures\icons\PotionGreen.png" />
-    <Content Include="Content\GeonBit.UI\themes\hd\textures\icons\PotionPurple.png" />
-    <Content Include="Content\GeonBit.UI\themes\hd\textures\icons\PotionRed.png" />
-    <Content Include="Content\GeonBit.UI\themes\hd\textures\icons\PotionYellow.png" />
-    <Content Include="Content\GeonBit.UI\themes\hd\textures\icons\Ring.png" />
-    <Content Include="Content\GeonBit.UI\themes\hd\textures\icons\RingGold.png" />
-    <Content Include="Content\GeonBit.UI\themes\hd\textures\icons\RingGoldRuby.png" />
-    <Content Include="Content\GeonBit.UI\themes\hd\textures\icons\RingRuby.png" />
-    <Content Include="Content\GeonBit.UI\themes\hd\textures\icons\RubyBlue.png" />
-    <Content Include="Content\GeonBit.UI\themes\hd\textures\icons\RubyGreen.png" />
-    <Content Include="Content\GeonBit.UI\themes\hd\textures\icons\RubyPink.png" />
-    <Content Include="Content\GeonBit.UI\themes\hd\textures\icons\RubyPurple.png" />
-    <Content Include="Content\GeonBit.UI\themes\hd\textures\icons\RubyRed.png" />
-    <Content Include="Content\GeonBit.UI\themes\hd\textures\icons\Sack.png" />
-    <Content Include="Content\GeonBit.UI\themes\hd\textures\icons\Scroll.png" />
-    <Content Include="Content\GeonBit.UI\themes\hd\textures\icons\Shield.png" />
-    <Content Include="Content\GeonBit.UI\themes\hd\textures\icons\ShieldAndSword.png" />
-    <Content Include="Content\GeonBit.UI\themes\hd\textures\icons\Shovel.png" />
-    <Content Include="Content\GeonBit.UI\themes\hd\textures\icons\SilverShard.png" />
-    <Content Include="Content\GeonBit.UI\themes\hd\textures\icons\Skull.png" />
-    <Content Include="Content\GeonBit.UI\themes\hd\textures\icons\Sword.png" />
-    <Content Include="Content\GeonBit.UI\themes\hd\textures\icons\Trap.png" />
-    <Content Include="Content\GeonBit.UI\themes\hd\textures\icons\ZoomIn.png" />
-    <Content Include="Content\GeonBit.UI\themes\hd\textures\icons\ZoomOut.png" />
     <Content Include="Content\GeonBit.UI\themes\hd\textures\panel_default.png" />
     <Content Include="Content\GeonBit.UI\themes\hd\textures\panel_default_md.xml" />
     <Content Include="Content\GeonBit.UI\themes\hd\textures\panel_fancy.png" />
@@ -570,200 +266,6 @@
     <Content Include="Content\GeonBit.UI\themes\hd\textures\slider_fancy_mark.png" />
     <Content Include="Content\GeonBit.UI\themes\hd\textures\slider_fancy_md.xml" />
     <Content Include="Content\GeonBit.UI\themes\hd\textures\white_texture.png" />
-    <Content Include="Content\GeonBit.UI\themes\hd\ThemeData.xml" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\effects\disabled.fx" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\effects\silhouette.fx" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\styles\Button-Default.xml" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\styles\Button-MouseDown.xml" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\styles\Button-MouseHover.xml" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\styles\ButtonParagraph-Default.xml" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\styles\ButtonParagraph-MouseDown.xml" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\styles\ButtonParagraph-MouseHover.xml" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\styles\CheckBox-Default.xml" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\styles\CheckBox-MouseDown.xml" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\styles\CheckBox-MouseHover.xml" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\styles\CheckBoxParagraph-Default.xml" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\styles\CheckBoxParagraph-MouseDown.xml" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\styles\CheckBoxParagraph-MouseHover.xml" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\styles\ColoredRectangle-Default.xml" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\styles\ColoredRectangle-MouseDown.xml" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\styles\ColoredRectangle-MouseHover.xml" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\styles\DropDown-Default.xml" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\styles\DropDown-MouseDown.xml" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\styles\DropDown-MouseHover.xml" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\styles\DropDownParagraph-Default.xml" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\styles\DropDownParagraph-MouseDown.xml" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\styles\DropDownParagraph-MouseHover.xml" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\styles\DropDownSelectedParagraph-Default.xml" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\styles\DropDownSelectedParagraph-MouseDown.xml" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\styles\DropDownSelectedParagraph-MouseHover.xml" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\styles\Entity-Default.xml" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\styles\Entity-MouseDown.xml" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\styles\Entity-MouseHover.xml" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\styles\example.xml" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\styles\Header-Default.xml" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\styles\Header-MouseDown.xml" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\styles\Header-MouseHover.xml" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\styles\HorizontalLine-Default.xml" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\styles\HorizontalLine-MouseDown.xml" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\styles\HorizontalLine-MouseHover.xml" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\styles\Icon-Default.xml" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\styles\Icon-MouseDown.xml" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\styles\Icon-MouseHover.xml" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\styles\Image-Default.xml" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\styles\Image-MouseDown.xml" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\styles\Image-MouseHover.xml" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\styles\Label-Default.xml" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\styles\Label-MouseDown.xml" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\styles\Label-MouseHover.xml" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\styles\Panel-Default.xml" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\styles\Panel-MouseDown.xml" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\styles\Panel-MouseHover.xml" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\styles\PanelTabsButton-Default.xml" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\styles\PanelTabsButton-MouseDown.xml" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\styles\PanelTabsButton-MouseHover.xml" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\styles\PanelTabsButtonParagraph-Default.xml" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\styles\PanelTabsButtonParagraph-MouseDown.xml" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\styles\PanelTabsButtonParagraph-MouseHover.xml" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\styles\Paragraph-Default.xml" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\styles\Paragraph-MouseDown.xml" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\styles\Paragraph-MouseHover.xml" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\styles\ProgressBar-Default.xml" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\styles\ProgressBar-MouseDown.xml" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\styles\ProgressBar-MouseHover.xml" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\styles\ProgressBarFill-Default.xml" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\styles\ProgressBarFill-MouseDown.xml" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\styles\ProgressBarFill-MouseHover.xml" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\styles\RadioButton-Default.xml" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\styles\RadioButton-MouseDown.xml" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\styles\RadioButton-MouseHover.xml" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\styles\RadioButtonParagraph-Default.xml" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\styles\RadioButtonParagraph-MouseDown.xml" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\styles\RadioButtonParagraph-MouseHover.xml" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\styles\SelectList-Default.xml" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\styles\SelectList-MouseDown.xml" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\styles\SelectList-MouseHover.xml" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\styles\SelectListParagraph-Default.xml" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\styles\SelectListParagraph-MouseDown.xml" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\styles\SelectListParagraph-MouseHover.xml" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\styles\Slider-Default.xml" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\styles\Slider-MouseDown.xml" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\styles\Slider-MouseHover.xml" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\styles\TextInput-Default.xml" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\styles\TextInput-MouseDown.xml" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\styles\TextInput-MouseHover.xml" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\styles\TextInputParagraph-Default.xml" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\styles\TextInputParagraph-MouseDown.xml" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\styles\TextInputParagraph-MouseHover.xml" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\styles\TextInputPlaceholder-Default.xml" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\styles\TextInputPlaceholder-MouseDown.xml" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\styles\TextInputPlaceholder-MouseHover.xml" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\styles\VerticalScrollbar-Default.xml" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\styles\VerticalScrollbar-MouseDown.xml" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\styles\VerticalScrollbar-MouseHover.xml" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\textures\arrow_down.png" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\textures\arrow_up.png" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\textures\button_alternative.png" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\textures\button_alternative_down.png" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\textures\button_alternative_hover.png" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\textures\button_alternative_md.xml" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\textures\button_default.png" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\textures\button_default_down.png" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\textures\button_default_hover.png" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\textures\button_default_md.xml" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\textures\button_fancy.png" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\textures\button_fancy_down.png" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\textures\button_fancy_hover.png" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\textures\button_fancy_md.xml" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\textures\checkbox.png" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\textures\checkbox_down.png" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\textures\checkbox_hover.png" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\textures\cursor_default.png" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\textures\cursor_default_md.xml" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\textures\cursor_ibeam.png" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\textures\cursor_ibeam_md.xml" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\textures\cursor_pointer.png" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\textures\cursor_pointer_md.xml" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\textures\dot.png" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\textures\horizontal_line.png" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\textures\icons\Apple.png" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\textures\icons\Armor.png" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\textures\icons\Axe.png" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\textures\icons\background.png" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\textures\icons\BloodySword.png" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\textures\icons\Bone.png" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\textures\icons\Book.png" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\textures\icons\Cubes.png" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\textures\icons\Diamond.png" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\textures\icons\Explanation.png" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\textures\icons\Feather.png" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\textures\icons\FloppyDisk.png" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\textures\icons\GoldCoins.png" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\textures\icons\GoldShard.png" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\textures\icons\Heart.png" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\textures\icons\Helmet.png" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\textures\icons\Key.png" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\textures\icons\MagicBook.png" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\textures\icons\MagicWand.png" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\textures\icons\Map.png" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\textures\icons\None.png" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\textures\icons\OrbBlue.png" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\textures\icons\OrbGreen.png" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\textures\icons\OrbRed.png" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\textures\icons\Pistol.png" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\textures\icons\PotionBlue.png" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\textures\icons\PotionCyan.png" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\textures\icons\PotionGreen.png" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\textures\icons\PotionPurple.png" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\textures\icons\PotionRed.png" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\textures\icons\PotionYellow.png" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\textures\icons\Ring.png" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\textures\icons\RingGold.png" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\textures\icons\RingGoldRuby.png" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\textures\icons\RingRuby.png" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\textures\icons\RubyBlue.png" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\textures\icons\RubyGreen.png" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\textures\icons\RubyPink.png" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\textures\icons\RubyPurple.png" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\textures\icons\RubyRed.png" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\textures\icons\Sack.png" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\textures\icons\Scroll.png" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\textures\icons\Shield.png" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\textures\icons\ShieldAndSword.png" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\textures\icons\Shovel.png" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\textures\icons\SilverShard.png" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\textures\icons\Skull.png" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\textures\icons\Sword.png" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\textures\icons\Trap.png" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\textures\icons\ZoomIn.png" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\textures\icons\ZoomOut.png" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\textures\panel_default.png" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\textures\panel_default_md.xml" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\textures\panel_fancy.png" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\textures\panel_fancy_md.xml" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\textures\panel_golden.png" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\textures\panel_golden_md.xml" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\textures\panel_listbackground.png" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\textures\panel_listbackground_md.xml" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\textures\panel_simple.png" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\textures\panel_simple_md.xml" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\textures\progressbar.png" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\textures\progressbar_fill.png" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\textures\progressbar_md.xml" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\textures\radio.png" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\textures\radio_down.png" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\textures\radio_hover.png" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\textures\scrollbar.png" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\textures\scrollbar_mark.png" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\textures\scrollbar_md.xml" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\textures\slider_default.png" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\textures\slider_default_mark.png" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\textures\slider_default_md.xml" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\textures\slider_fancy.png" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\textures\slider_fancy_mark.png" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\textures\slider_fancy_md.xml" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\textures\white_texture.png" />
-    <Content Include="Content\GeonBit.UI\themes\lowres\ThemeData.xml" />
     <Content Include="Content\Sprites\selection.png" />
     <Content Include="Content\Terrain\Grass.png" />
     <Content Include="Content\Terrain\Wood.png" />
@@ -775,19 +277,397 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="app.manifest" />
-    <None Include="Content\GeonBit.UI\themes\editor\fonts\Bold.spritefont" />
-    <None Include="Content\GeonBit.UI\themes\editor\fonts\Italic.spritefont" />
-    <None Include="Content\GeonBit.UI\themes\editor\fonts\Regular.spritefont" />
-    <None Include="Content\GeonBit.UI\themes\hd\fonts\Bold.spritefont" />
-    <None Include="Content\GeonBit.UI\themes\hd\fonts\Italic.spritefont" />
-    <None Include="Content\GeonBit.UI\themes\hd\fonts\Regular.spritefont" />
-    <None Include="Content\GeonBit.UI\themes\lowres\fonts\Bold.spritefont" />
-    <None Include="Content\GeonBit.UI\themes\lowres\fonts\Italic.spritefont" />
-    <None Include="Content\GeonBit.UI\themes\lowres\fonts\Regular.spritefont" />
     <Content Include="Content\Models\Augmented.fbx" />
-    <None Include="packages.config">
-      <SubType>Designer</SubType>
-    </None>
+    <None Include="Content\GeonBit.UI\themes\editor\effects\disabled.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\effects\silhouette.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\fonts\Bold.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\fonts\Italic.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\fonts\Regular.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\styles\Button-Default.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\styles\Button-MouseDown.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\styles\Button-MouseHover.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\styles\ButtonParagraph-Default.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\styles\ButtonParagraph-MouseDown.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\styles\ButtonParagraph-MouseHover.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\styles\CheckBox-Default.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\styles\CheckBox-MouseDown.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\styles\CheckBox-MouseHover.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\styles\CheckBoxParagraph-Default.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\styles\CheckBoxParagraph-MouseDown.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\styles\CheckBoxParagraph-MouseHover.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\styles\ColoredRectangle-Default.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\styles\ColoredRectangle-MouseDown.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\styles\ColoredRectangle-MouseHover.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\styles\DropDown-Default.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\styles\DropDown-MouseDown.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\styles\DropDown-MouseHover.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\styles\DropDownParagraph-Default.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\styles\DropDownParagraph-MouseDown.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\styles\DropDownParagraph-MouseHover.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\styles\DropDownSelectedParagraph-Default.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\styles\DropDownSelectedParagraph-MouseDown.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\styles\DropDownSelectedParagraph-MouseHover.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\styles\Entity-Default.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\styles\Entity-MouseDown.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\styles\Entity-MouseHover.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\styles\example.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\styles\Header-Default.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\styles\Header-MouseDown.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\styles\Header-MouseHover.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\styles\HorizontalLine-Default.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\styles\HorizontalLine-MouseDown.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\styles\HorizontalLine-MouseHover.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\styles\Icon-Default.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\styles\Icon-MouseDown.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\styles\Icon-MouseHover.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\styles\Image-Default.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\styles\Image-MouseDown.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\styles\Image-MouseHover.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\styles\Label-Default.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\styles\Label-MouseDown.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\styles\Label-MouseHover.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\styles\Panel-Default.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\styles\Panel-MouseDown.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\styles\Panel-MouseHover.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\styles\PanelTabsButton-Default.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\styles\PanelTabsButton-MouseDown.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\styles\PanelTabsButton-MouseHover.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\styles\PanelTabsButtonParagraph-Default.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\styles\PanelTabsButtonParagraph-MouseDown.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\styles\PanelTabsButtonParagraph-MouseHover.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\styles\Paragraph-Default.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\styles\Paragraph-MouseDown.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\styles\Paragraph-MouseHover.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\styles\ProgressBar-Default.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\styles\ProgressBar-MouseDown.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\styles\ProgressBar-MouseHover.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\styles\ProgressBarFill-Default.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\styles\ProgressBarFill-MouseDown.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\styles\ProgressBarFill-MouseHover.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\styles\RadioButton-Default.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\styles\RadioButton-MouseDown.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\styles\RadioButton-MouseHover.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\styles\RadioButtonParagraph-Default.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\styles\RadioButtonParagraph-MouseDown.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\styles\RadioButtonParagraph-MouseHover.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\styles\SelectList-Default.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\styles\SelectList-MouseDown.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\styles\SelectList-MouseHover.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\styles\SelectListParagraph-Default.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\styles\SelectListParagraph-MouseDown.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\styles\SelectListParagraph-MouseHover.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\styles\Slider-Default.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\styles\Slider-MouseDown.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\styles\Slider-MouseHover.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\styles\TextInput-Default.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\styles\TextInput-MouseDown.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\styles\TextInput-MouseHover.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\styles\TextInputParagraph-Default.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\styles\TextInputParagraph-MouseDown.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\styles\TextInputParagraph-MouseHover.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\styles\TextInputPlaceholder-Default.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\styles\TextInputPlaceholder-MouseDown.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\styles\TextInputPlaceholder-MouseHover.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\styles\VerticalScrollbar-Default.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\styles\VerticalScrollbar-MouseDown.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\styles\VerticalScrollbar-MouseHover.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\textures\arrow_down.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\textures\arrow_up.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\textures\button_alternative.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\textures\button_alternative_down.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\textures\button_alternative_hover.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\textures\button_alternative_md.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\textures\button_default.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\textures\button_default_down.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\textures\button_default_hover.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\textures\button_default_md.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\textures\button_fancy.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\textures\button_fancy_down.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\textures\button_fancy_hover.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\textures\button_fancy_md.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\textures\checkbox.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\textures\checkbox_down.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\textures\checkbox_hover.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\textures\cursor_default.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\textures\cursor_default_md.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\textures\cursor_ibeam.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\textures\cursor_ibeam_md.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\textures\cursor_pointer.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\textures\cursor_pointer_md.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\textures\horizontal_line.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\textures\icons\Apple.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\textures\icons\Armor.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\textures\icons\Axe.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\textures\icons\background.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\textures\icons\BloodySword.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\textures\icons\Bone.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\textures\icons\Book.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\textures\icons\Cubes.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\textures\icons\Diamond.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\textures\icons\Explanation.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\textures\icons\Feather.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\textures\icons\FloppyDisk.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\textures\icons\GoldCoins.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\textures\icons\GoldShard.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\textures\icons\Heart.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\textures\icons\Helmet.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\textures\icons\Key.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\textures\icons\MagicBook.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\textures\icons\MagicWand.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\textures\icons\Map.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\textures\icons\None.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\textures\icons\OrbBlue.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\textures\icons\OrbGreen.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\textures\icons\OrbRed.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\textures\icons\Pistol.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\textures\icons\PotionBlue.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\textures\icons\PotionCyan.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\textures\icons\PotionGreen.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\textures\icons\PotionPurple.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\textures\icons\PotionRed.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\textures\icons\PotionYellow.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\textures\icons\Ring.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\textures\icons\RingGold.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\textures\icons\RingGoldRuby.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\textures\icons\RingRuby.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\textures\icons\RubyBlue.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\textures\icons\RubyGreen.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\textures\icons\RubyPink.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\textures\icons\RubyPurple.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\textures\icons\RubyRed.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\textures\icons\Sack.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\textures\icons\Scroll.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\textures\icons\Shield.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\textures\icons\ShieldAndSword.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\textures\icons\Shovel.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\textures\icons\SilverShard.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\textures\icons\Skull.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\textures\icons\Sword.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\textures\icons\Trap.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\textures\icons\ZoomIn.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\textures\icons\ZoomOut.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\textures\panel_default.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\textures\panel_default_md.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\textures\panel_fancy.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\textures\panel_fancy_md.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\textures\panel_golden.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\textures\panel_golden_md.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\textures\panel_listbackground.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\textures\panel_listbackground_md.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\textures\panel_simple.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\textures\panel_simple_md.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\textures\progressbar.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\textures\progressbar_fill.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\textures\progressbar_md.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\textures\radio.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\textures\radio_down.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\textures\radio_hover.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\textures\scrollbar.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\textures\scrollbar_mark.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\textures\scrollbar_md.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\textures\slider_default.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\textures\slider_default_mark.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\textures\slider_default_md.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\textures\slider_fancy.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\textures\slider_fancy_mark.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\textures\slider_fancy_md.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\textures\white_texture.xnb" />
+    <None Include="Content\GeonBit.UI\themes\editor\ThemeData.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\effects\disabled.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\effects\silhouette.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\fonts\Bold.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\fonts\Italic.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\fonts\Regular.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\styles\Button-Default.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\styles\Button-MouseDown.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\styles\Button-MouseHover.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\styles\ButtonParagraph-Default.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\styles\ButtonParagraph-MouseDown.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\styles\ButtonParagraph-MouseHover.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\styles\CheckBox-Default.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\styles\CheckBox-MouseDown.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\styles\CheckBox-MouseHover.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\styles\CheckBoxParagraph-Default.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\styles\CheckBoxParagraph-MouseDown.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\styles\CheckBoxParagraph-MouseHover.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\styles\ColoredRectangle-Default.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\styles\ColoredRectangle-MouseDown.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\styles\ColoredRectangle-MouseHover.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\styles\DropDown-Default.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\styles\DropDown-MouseDown.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\styles\DropDown-MouseHover.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\styles\DropDownParagraph-Default.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\styles\DropDownParagraph-MouseDown.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\styles\DropDownParagraph-MouseHover.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\styles\DropDownSelectedParagraph-Default.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\styles\DropDownSelectedParagraph-MouseDown.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\styles\DropDownSelectedParagraph-MouseHover.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\styles\Entity-Default.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\styles\Entity-MouseDown.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\styles\Entity-MouseHover.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\styles\example.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\styles\Header-Default.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\styles\Header-MouseDown.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\styles\Header-MouseHover.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\styles\HorizontalLine-Default.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\styles\HorizontalLine-MouseDown.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\styles\HorizontalLine-MouseHover.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\styles\Icon-Default.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\styles\Icon-MouseDown.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\styles\Icon-MouseHover.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\styles\Image-Default.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\styles\Image-MouseDown.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\styles\Image-MouseHover.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\styles\Label-Default.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\styles\Label-MouseDown.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\styles\Label-MouseHover.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\styles\Panel-Default.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\styles\Panel-MouseDown.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\styles\Panel-MouseHover.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\styles\PanelTabsButton-Default.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\styles\PanelTabsButton-MouseDown.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\styles\PanelTabsButton-MouseHover.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\styles\PanelTabsButtonParagraph-Default.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\styles\PanelTabsButtonParagraph-MouseDown.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\styles\PanelTabsButtonParagraph-MouseHover.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\styles\Paragraph-Default.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\styles\Paragraph-MouseDown.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\styles\Paragraph-MouseHover.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\styles\ProgressBar-Default.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\styles\ProgressBar-MouseDown.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\styles\ProgressBar-MouseHover.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\styles\ProgressBarFill-Default.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\styles\ProgressBarFill-MouseDown.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\styles\ProgressBarFill-MouseHover.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\styles\RadioButton-Default.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\styles\RadioButton-MouseDown.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\styles\RadioButton-MouseHover.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\styles\RadioButtonParagraph-Default.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\styles\RadioButtonParagraph-MouseDown.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\styles\RadioButtonParagraph-MouseHover.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\styles\SelectList-Default.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\styles\SelectList-MouseDown.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\styles\SelectList-MouseHover.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\styles\SelectListParagraph-Default.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\styles\SelectListParagraph-MouseDown.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\styles\SelectListParagraph-MouseHover.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\styles\Slider-Default.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\styles\Slider-MouseDown.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\styles\Slider-MouseHover.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\styles\TextInput-Default.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\styles\TextInput-MouseDown.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\styles\TextInput-MouseHover.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\styles\TextInputParagraph-Default.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\styles\TextInputParagraph-MouseDown.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\styles\TextInputParagraph-MouseHover.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\styles\TextInputPlaceholder-Default.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\styles\TextInputPlaceholder-MouseDown.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\styles\TextInputPlaceholder-MouseHover.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\styles\VerticalScrollbar-Default.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\styles\VerticalScrollbar-MouseDown.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\styles\VerticalScrollbar-MouseHover.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\textures\arrow_down.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\textures\arrow_up.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\textures\button_alternative.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\textures\button_alternative_down.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\textures\button_alternative_hover.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\textures\button_alternative_md.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\textures\button_default.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\textures\button_default_down.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\textures\button_default_hover.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\textures\button_default_md.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\textures\button_fancy.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\textures\button_fancy_down.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\textures\button_fancy_hover.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\textures\button_fancy_md.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\textures\checkbox.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\textures\checkbox_down.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\textures\checkbox_hover.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\textures\cursor_default.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\textures\cursor_default_md.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\textures\cursor_ibeam.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\textures\cursor_ibeam_md.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\textures\cursor_pointer.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\textures\cursor_pointer_md.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\textures\horizontal_line.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\textures\icons\Apple.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\textures\icons\Armor.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\textures\icons\Axe.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\textures\icons\background.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\textures\icons\BloodySword.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\textures\icons\Bone.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\textures\icons\Book.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\textures\icons\Cubes.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\textures\icons\Diamond.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\textures\icons\Explanation.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\textures\icons\Feather.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\textures\icons\FloppyDisk.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\textures\icons\GoldCoins.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\textures\icons\GoldShard.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\textures\icons\Heart.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\textures\icons\Helmet.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\textures\icons\Key.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\textures\icons\MagicBook.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\textures\icons\MagicWand.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\textures\icons\Map.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\textures\icons\None.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\textures\icons\OrbBlue.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\textures\icons\OrbGreen.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\textures\icons\OrbRed.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\textures\icons\Pistol.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\textures\icons\PotionBlue.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\textures\icons\PotionCyan.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\textures\icons\PotionGreen.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\textures\icons\PotionPurple.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\textures\icons\PotionRed.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\textures\icons\PotionYellow.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\textures\icons\Ring.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\textures\icons\RingGold.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\textures\icons\RingGoldRuby.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\textures\icons\RingRuby.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\textures\icons\RubyBlue.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\textures\icons\RubyGreen.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\textures\icons\RubyPink.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\textures\icons\RubyPurple.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\textures\icons\RubyRed.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\textures\icons\Sack.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\textures\icons\Scroll.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\textures\icons\Shield.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\textures\icons\ShieldAndSword.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\textures\icons\Shovel.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\textures\icons\SilverShard.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\textures\icons\Skull.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\textures\icons\Sword.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\textures\icons\Trap.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\textures\icons\ZoomIn.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\textures\icons\ZoomOut.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\textures\panel_default.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\textures\panel_default_md.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\textures\panel_fancy.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\textures\panel_fancy_md.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\textures\panel_golden.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\textures\panel_golden_md.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\textures\panel_listbackground.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\textures\panel_listbackground_md.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\textures\panel_simple.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\textures\panel_simple_md.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\textures\progressbar.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\textures\progressbar_fill.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\textures\progressbar_md.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\textures\radio.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\textures\radio_down.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\textures\radio_hover.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\textures\scrollbar.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\textures\scrollbar_mark.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\textures\scrollbar_md.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\textures\slider_default.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\textures\slider_default_mark.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\textures\slider_default_md.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\textures\slider_fancy.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\textures\slider_fancy_mark.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\textures\slider_fancy_md.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\textures\white_texture.xnb" />
+    <None Include="Content\GeonBit.UI\themes\hd\ThemeData.xnb" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DavidFidge.MonoGame.Core.ContentPipeline\DavidFidge.MonoGame.Core.ContentPipeline.csproj">
@@ -805,6 +685,89 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Entities\" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Castle.Core">
+      <Version>4.4.0</Version>
+    </PackageReference>
+    <PackageReference Include="Castle.Windsor">
+      <Version>4.1.1</Version>
+    </PackageReference>
+    <PackageReference Include="InputHandlers.MonoGame.WindowsDX">
+      <Version>1.2.0</Version>
+    </PackageReference>
+    <PackageReference Include="MediatR">
+      <Version>7.0.0</Version>
+    </PackageReference>
+    <PackageReference Include="MonoGame.Framework.WindowsDX">
+      <Version>3.7.1.189</Version>
+    </PackageReference>
+    <PackageReference Include="Newtonsoft.Json">
+      <Version>12.0.1</Version>
+    </PackageReference>
+    <PackageReference Include="NGenerics">
+      <Version>1.5.3</Version>
+    </PackageReference>
+    <PackageReference Include="Serilog">
+      <Version>2.7.1</Version>
+    </PackageReference>
+    <PackageReference Include="Serilog.Formatting.Compact">
+      <Version>1.0.0</Version>
+    </PackageReference>
+    <PackageReference Include="Serilog.Sinks.Console">
+      <Version>3.1.1</Version>
+    </PackageReference>
+    <PackageReference Include="Serilog.Sinks.File">
+      <Version>4.0.0</Version>
+    </PackageReference>
+    <PackageReference Include="Serilog.Sinks.PeriodicBatching">
+      <Version>2.1.1</Version>
+    </PackageReference>
+    <PackageReference Include="Serilog.Sinks.Seq">
+      <Version>4.0.0</Version>
+    </PackageReference>
+    <PackageReference Include="SharpDX">
+      <Version>4.0.1</Version>
+    </PackageReference>
+    <PackageReference Include="SharpDX.Direct2D1">
+      <Version>4.0.1</Version>
+    </PackageReference>
+    <PackageReference Include="SharpDX.Direct3D11">
+      <Version>4.0.1</Version>
+    </PackageReference>
+    <PackageReference Include="SharpDX.Direct3D9">
+      <Version>4.0.1</Version>
+    </PackageReference>
+    <PackageReference Include="SharpDX.DXGI">
+      <Version>4.0.1</Version>
+    </PackageReference>
+    <PackageReference Include="SharpDX.Mathematics">
+      <Version>4.0.1</Version>
+    </PackageReference>
+    <PackageReference Include="SharpDX.MediaFoundation">
+      <Version>4.0.1</Version>
+    </PackageReference>
+    <PackageReference Include="SharpDX.XAudio2">
+      <Version>4.0.1</Version>
+    </PackageReference>
+    <PackageReference Include="SharpDX.XInput">
+      <Version>4.0.1</Version>
+    </PackageReference>
+    <PackageReference Include="System.Collections.Immutable">
+      <Version>1.4.0</Version>
+    </PackageReference>
+    <PackageReference Include="System.ComponentModel">
+      <Version>4.3.0</Version>
+    </PackageReference>
+    <PackageReference Include="System.Interactive">
+      <Version>3.1.1</Version>
+    </PackageReference>
+    <PackageReference Include="System.Reflection.Emit.Lightweight">
+      <Version>4.3.0</Version>
+    </PackageReference>
+    <PackageReference Include="System.Xml.XmlSerializer">
+      <Version>4.3.0</Version>
+    </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\MonoGame\v3.0\MonoGame.Content.Builder.targets" />
